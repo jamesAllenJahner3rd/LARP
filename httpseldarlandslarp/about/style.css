@@ -47,9 +47,7 @@ body *{
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-
 }
-
 
 
 
@@ -171,135 +169,6 @@ margin: 1px;
   height:100%;
     align-items: center;
 }
-
-/* MAIN *//* MAIN *//* MAIN *//* MAIN *//* MAIN *//* MAIN *//* MAIN *//* MAIN *//* MAIN *//* MAIN *//* MAIN */
-/* MAIN *//* MAIN *//* MAIN *//* MAIN *//* MAIN *//* MAIN *//* MAIN *//* MAIN *//* MAIN *//* MAIN *//* MAIN */
-/* MAIN *//* MAIN *//* MAIN *//* MAIN *//* MAIN *//* MAIN *//* MAIN *//* MAIN *//* MAIN *//* MAIN *//* MAIN */
-
-banner{
-  position: relative;
-}
-.bannerButtons{
-  justify-content: space-around;
-  position: absolute;
-  width: 400px;
-  height: 50px;
-  top: 61%;
-  align-self: center;
-  flex-direction: row;
-}
-.lefty{
-  visibility: hidden;
-  /* position: absolute; */
-  font: 12px Uncial Antiqua;
-  color: #c6c6c6;
-  text-shadow: 1px 1px black, -1px -1px rgb(0, 0, 0);
-  top: 65%;
-  text-align: center;
-  align-self: center;
-  animation: slideRight 3s ease 6s forwards;
-}
-@keyframes slideRight {
-  from {
-    transform: translate( -300%,0);
-    visibility:visible;
-  }
-  to {
-    transform: translate( 0,0);
-    visibility: visible;
-  }
-}
-.righty{
-  
-  visibility: hidden;
-  font: 12px Uncial Antiqua;
-  color: #c6c6c6;
-  text-shadow: 1px 1px black, -1px -1px rgb(0, 0, 0);
-  top: 65%;
-  text-align: center;
-  align-self: center;
-  animation: slideLeft 3s ease 6s forwards;
-}
-@keyframes slideLeft {
-  from {
-    transform: translate( 300%,0);
-    visibility:visible;
-  }
-  to {
-    transform: translate( 20%,0);
-    visibility: visible;
-  }
-}
-.fadeIn{
-  opacity: 0;
-  position: absolute;
-  font: 24px Uncial Antiqua;
-  color: #c6c6c6;
-  text-shadow: 1px 1px black, -1px -1px rgb(0, 0, 0);
-  top: 55%;
-  text-align: center;
-  align-self: center;
-  animation: fadeIn 2s ease 4s forwards;
-}
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-.bannerScale{
-  /* visibility: hidden; */
-  scale:0;
-  position: absolute;
-  font: 56px Uncial Antiqua;
-  color: #423d38;
-   text-shadow: 1px 1px black, -1px -1px rgb(0, 0, 0);
-  top: 30%;
-  align-self: center;
-  animation: scaler 2s ease 2s forwards;
-}
-@keyframes scaler{
-  0%{
-    visibility: visible;
-    scale:(0);
-  }
-  90%{
-    scale:1.2;
-    color: rgb(82, 0, 0);
-  }
-  100%{
-    scale:1;
-  }
-}
-
-.bannerText{
-  display: flex;
-  position: absolute;
-  font:4vw Uncial Antiqua;
-  color: #929292;
-  letter-spacing: 5.2px;
-  text-shadow: 1px 1px #423d38, -1px -1px #423d38, -1px 1px #423d38, 1px -1px #423d38;
-  top: 81%;
-  align-self: center;
-  animation: moveUp 2s ease-out;
-}
-@keyframes moveUp{
-  from{
-    top:200%;
-  }
-  to{
-    top:81%;
-  }
-}
-
-
-
-
-
-
-
 /******************************************
 /* ADDITIONAL STYLES
 *****************************************
