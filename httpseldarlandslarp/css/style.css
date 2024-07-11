@@ -1,8 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Uncial+Antiqua&display=swap');
 
 @import url('https://fonts.googleapis.com/css2?family=Laila:wght@300;400;500;600;700&family=Uncial+Antiqua&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap');
 
 
+
+.caveat {
+  font-family: "Caveat", cursive;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
 .laila-light {
   font-family: "Laila", serif;
   font-weight: 300;
@@ -47,8 +55,10 @@ body *{
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-
+ 
+ 
 }
+
 
 
 
@@ -58,9 +68,25 @@ body *{
 /* LAYOUT
 /*******************************************/
 html{
-  font:400 62.5% Laila,Verdana,Times,Tahoma,'Palatino Linotype',Garamond,Courier, Arial;
+  font:400 62.5% Caveat,Laila,Verdana,Times,Tahoma,'Palatino Linotype',Garamond,Courier, Arial;
   color: black;
 }
+body{
+/* background:linear-gradient(to left top, #FCF5E5, #ebd5b3);
+background: radial-gradient( rgba(255, 255, 255, 0) 60%, black 200%);
+background-image: url("/images/03.png"); */
+/* background:linear-gradient(to left top, #FCF5E5, #ebd5b3),radial-gradient( rgba(255, 255, 255, 0) 60%, black 200%), url("/images/03.png"); */
+/* background: 
+linear-gradient(to left top, #FCF5E5, #ebd5b3),
+url("/images/03.png"),radial-gradient(rgba(255, 255, 255, 0) 60%, black 200%);
+background-blend-mode: overlay; /* Optional: This blends the layers in an interesting way */
+background-image: url(/images/parchment.jpg),radial-gradient( rgba(255, 255, 255, 0) 60%, rgba(0, 0, 0, 0.902) 120%);
+background-size:auto; /* Adjusts the size of the image to cover the element*/
+background-position: center;
+background-blend-mode: overlay;
+
+}
+
 a{
   list-style-type:none ;
   text-decoration: none;
@@ -184,7 +210,7 @@ banner{
   width: 100vw;
   height:auto;
   /* 365px; */
-  /* overflow: hidden; */
+  overflow: hidden;
 }
 .bannerButtons{
   justify-content: space-around;
@@ -228,10 +254,11 @@ banner{
 }
 @keyframes slideRight {
   from {
-    transform: translate( -300%,0);
+    transform: translate( -1000%,0);
     visibility:visible;
   }
   to {
+
     transform: translate( 0,0);
     visibility: visible;
   }
@@ -250,7 +277,7 @@ banner{
 }
 @keyframes slideLeft {
   from {
-    transform: translate( 300%,0);
+    transform: translate(1000%,0);
     visibility:visible;
   }
   to {
@@ -312,7 +339,8 @@ banner{
   top: 0%;
   align-self: center;
   animation: floaters2 100s ease  infinite forwards ;
-  z-index: 1;
+  z-index: 4;
+  overflow: hidden;
 }
 @keyframes floaters2{
   0%{
@@ -340,6 +368,7 @@ banner{
   align-self: center;
   animation: floaters 75s ease  infinite forwards ;
   z-index: 1;
+  overflow: hidden;
 }
 @keyframes floaters{
   0%{
@@ -383,7 +412,9 @@ banner{
 main {
   margin: 2%;
 }
-
+.list{
+  margin: 2% 10%;
+}
 article span {
   text-align: center;
   font-size: large;
@@ -398,21 +429,140 @@ hr {
   height: 5px;
  
 }
+.list p{
+  font-size: 2rem;
+}
 
 hr::after {
-  background: #fff;
+  /* background: #fff; */
   content: '§';
   padding: 0 4px;
   position: relative;
   top: -13px;
- 
+}
+/* THE MESS *//* THE MESS *//* THE MESS *//* THE MESS *//* THE MESS *//* THE MESS *//* THE MESS *//* THE MESS *//* THE MESS *//* THE MESS *//* THE MESS */
+/* THE MESS *//* THE MESS *//* THE MESS *//* THE MESS *//* THE MESS *//* THE MESS *//* THE MESS *//* THE MESS *//* THE MESS *//* THE MESS *//* THE MESS */
+/* THE MESS *//* THE MESS *//* THE MESS *//* THE MESS *//* THE MESS *//* THE MESS *//* THE MESS *//* THE MESS *//* THE MESS *//* THE MESS *//* THE MESS */
+
+.row{
+  flex-direction: row;
+  max-height: 290px;
+}
+.row li{
+  margin:1%;
 }
 p{
   text-indent: 10rem;
 }
+img[class*=mess]+ div p{
+  text-indent: 10px;
 
+}
+img[class*=mess]{
+  width:290px
+}
+/* mess1 *//* mess1 *//* mess1 *//* mess1 *//* mess1 *//* mess1 *//* mess1 *//* mess1 *//* mess1 *//* mess1 *//* mess1 *//* mess1 *//* mess1 *//* mess1 */
+img[class*=mess1]{
+  transform:rotate(-25deg) translate(50%,10%);
+  box-shadow: 1px 1px 1px black;
+  transition: box-shadow 10s;
+  transition: transform 3s ease 1s;
+}
+img[class=mess1] +div{
+  opacity: 0; 
+  text-align: center;
+  transition: opacity 1s ;
+}
+img[class*=mess1]:hover{
+  transform:rotate(0) translate(0,0);
+  box-shadow: 10px 10px 10px black;
+  z-index: 2;
+} 
+img[class=mess1]:hover +div{
+  opacity: 100; 
+  transition: opacity 1s 2s;
+}
+div[class*=sticky]{
+  width: 290px;
+  height:100px;
+  position: relative;
+  top: -80%;
+  opacity: 0;
+  transition: top 1s ease-out, opacity 0s ease-out 1s;
+  z-index: -1;
+ 
+}
+div[class*=sticky] *{
+  position: absolute;
+  width: 100px;
+  height:100px;
+  text-align: center;
+  justify-content: flex-end;
+  box-shadow: 1px 1px 1px rgb(63, 63, 63);
+ 
+}
+img[class*=mess]:hover ~ div[class*=sticky],
+div[class*=sticky]:hover {
+  top: -60%;
+  opacity: 1;
+  transition: top 3s ease-out 3s, opacity 1s ease-out 3s;
+}
+/* img.mess1:hover ~ div.sticky1,div.sticky1:hover{
+  top: -60%;
+  opacity: 1;
+  transition: opacity 1s ease-out 3s,top 3s ease-out 3s;
+  z-index: -1;
+} */
+/* mess2 *//* mess2 *//* mess2 *//* mess2 *//* mess2 *//* mess2 *//* mess2 *//* mess2 *//* mess2 *//* mess2 *//* mess2 *//* mess2 *//* mess2 *//* mess2 */
+img[class=mess2]{
+  transform:rotate(135deg);
+  box-shadow: 3px -3px 3px black;
+  transition: box-shadow 3s;
+  transition: transform 3s ease 1s;
+}
+img[class=mess2] +div{
+  opacity: 0;
+  text-align: center;
+  transition: opacity 1s ;
+  }
+  img[class=mess2]+ div h3{
+    text-indent: 20px;
+  }
+  img[class*=mess2]:hover{
+    transform:rotate(0) translate(0,0);
+    box-shadow: 10px 10px 10px black;
+    z-index: 2;
+    transition: box-shadow 3s;
+    transition: transform 3s ease ;
+  } 
+img[class=mess2]:hover +div{
+    opacity: 100; 
+    transition: opacity 1s 2s;
+}
 
+/* mess3 *//* mess3 *//* mess3 *//* mess3 *//* mess3 *//* mess3 *//* mess3 *//* mess3 *//* mess3 *//* mess3 *//* mess3 *//* mess3 *//* mess3 *//* mess3 *//* mess3 *//* mess3 */
+img[class=mess3]{
+  transform:rotate(70deg)translate(-38%,50%);
+  box-shadow: 5px -5px 5px black;
+  transition: box-shadow 3s;
+  transition: transform 3s ease 1s;
+}
 
+img[class=mess3] + div{
+opacity: 0;
+text-align: center;
+transition: opacity 1s ;
+}
+
+img[class*=mess3]:hover{
+  transform:rotate(0) translate(0,0);
+  box-shadow: 10px 10px 10px black;
+  z-index: 2;
+} 
+img[class=mess3]:hover +div{
+  opacity: 100; 
+  transition: opacity 1s 2s;
+}
 /******************************************
 /* ADDITIONAL STYLES
 *****************************************
