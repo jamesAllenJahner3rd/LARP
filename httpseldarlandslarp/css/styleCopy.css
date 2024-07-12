@@ -68,10 +68,18 @@ body *{
 /* LAYOUT
 /*******************************************/
 html{
-  font:400 0.9765625vw Caveat,Laila,Verdana,Times,Tahoma,'Palatino Linotype',Garamond,Courier, Arial;
+  font:400 62.5% Caveat,Laila,Verdana,Times,Tahoma,'Palatino Linotype',Garamond,Courier, Arial;
   color: black;
 }
 body{
+/* background:linear-gradient(to left top, #FCF5E5, #ebd5b3);
+background: radial-gradient( rgba(255, 255, 255, 0) 60%, black 200%);
+background-image: url("/images/03.png"); */
+/* background:linear-gradient(to left top, #FCF5E5, #ebd5b3),radial-gradient( rgba(255, 255, 255, 0) 60%, black 200%), url("/images/03.png"); */
+/* background: 
+linear-gradient(to left top, #FCF5E5, #ebd5b3),
+url("/images/03.png"),radial-gradient(rgba(255, 255, 255, 0) 60%, black 200%);
+background-blend-mode: overlay; /* Optional: This blends the layers in an interesting way */
 background-image: url(/images/parchment.jpg),radial-gradient( rgba(255, 255, 255, 0) 60%, rgba(0, 0, 0, 0.902) 120%);
 background-size:auto; /* Adjusts the size of the image to cover the element*/
 background-position: center;
@@ -85,13 +93,12 @@ a{
   color: black;
 }
 .btn{
-  border: .09765625vw solid black;
-  padding: 0.48828125vw;
-  border-radius: 0.48828125vw;
+  border: 1px solid black;
+  padding: .5rem;
+  border-radius: 5px;
   background-color:  rgb(102, 3, 3);
-  box-shadow: 0.1953125vw 0.1953125vw 0.1953125vw black;
+  box-shadow: 2px 2px 2px black;
   transition: box-shadow .2s ease-in-out;
-  z-index: 5;
 }
 .btn:active{
   box-shadow: 0 0 0 black;
@@ -100,19 +107,13 @@ a{
   visibility: hidden;
 }
 p{
-  text-indent: 5.9765625vw;
+  text-indent: 10rem;
 }
 /* nav *//* nav *//* nav *//* nav *//* nav *//* nav *//* nav *//* nav */
 /* nav *//* nav *//* nav *//* nav *//* nav *//* nav *//* nav *//* nav */
 /* nav *//* nav *//* nav *//* nav *//* nav *//* nav *//* nav *//* nav */
-nav{
-  position: sticky;
-  top: 0;
-  z-index: 5;
-  height: 3.32vw;
-
-}
 .nav{
+  position: sticky;
   flex-direction: row;
   justify-content:space-evenly ;
   width: 100vw;
@@ -121,9 +122,7 @@ nav{
   padding: 0;
   align-items: center;
   margin: 0;
-  height: 3.32vw;
-  
-  
+  height: 34px;
 }
 nav a{
   color:wheat
@@ -139,7 +138,7 @@ nav *{
   z-index: 5;
 }
   a[href*= checkout] {
-  margin: 0 1.953125vw;
+  margin: 0 2rem;
   
 }
 .dropDown{
@@ -156,16 +155,15 @@ display: flex;
 .nav.about{
   z-index: 3;
   display: none;
-  padding: .2929vw;
+  padding: 3px;
   width:fit-content;
   margin: 0 auto;
-  border-radius: 0 0 0.48828125vw 0.48828125vw;
+  border-radius: 0 0 5px 5px;
   position: absolute;
-  top: 03.32vw;
+  top: 34px;
 }
 .nav.about li{
-margin: 0 .2929vw;
-}
+margin: 0 2px;}
 .login{
   height: 100%;
   align-items: center;
@@ -176,24 +174,21 @@ margin: 0 .2929vw;
   z-index: 5;
 }
 .nav.login{
-
+  position: relative;
   flex-direction: column;
   display: none;
-  padding: 0 .2929vw;
+  padding: 0 3px;
   width:fit-content;
   margin: 0 auto;
-  border-radius: 0 0 0.48828125vw 0.48828125vw;
+  border-radius: 0 0 5px 5px;
   position: absolute;
-  top:  3.32vw;
-
-  /* left:25%; */
-  height:9.765625vw;
-  min-height: 100px;
-  /* 100px; */
-  
+  top: 33px;
+  left:25%;
+  height: 100px;
+  z-index: 5;
 }
 .nav .login li{
-  padding: 0.0976vw;
+  padding: 1px;
 }
 .nav.login input[type*=submit]{
 text-align: center;
@@ -204,18 +199,17 @@ z-index: 5;
 
  .revealPassword{
   position: relative;
-border: 0.09765625vw solid black;
+border: 1px solid black;
 width: 20px;
 height: 20px;
-border-radius: 0.48828125vw;
+border-radius: 5px;
 justify-content: center;
 align-self: flex-start;
-margin: 0.09765625vw;
+margin: 1px;
 }
 .membership, .membership a{
   height:100%;
     align-items: center;
-    position: relative;
 }
 /* banner *//* banner *//* banner *//* banner *//* banner *//* banner *//* banner *//* banner *//* banner *//* banner *//* banner *//* banner *//* banner *//* banner */
 /* banner *//* banner *//* banner *//* banner *//* banner *//* banner *//* banner *//* banner *//* banner *//* banner *//* banner *//* banner *//* banner *//* banner */
@@ -235,7 +229,7 @@ banner{
   top: 62%;
   align-self: center;
   flex-direction: row;
- 
+  z-index: 3;
 }
 .dust{
   z-index: 1;
@@ -258,14 +252,14 @@ banner{
 .lefty{
   visibility: hidden;
   /* position: absolute; */
-  font: 1.171875 Uncial Antiqua;
+  font: 12px Uncial Antiqua;
   color: #c6c6c6;
-  text-shadow: 0.09765625vw  0.09765625vw black, -0.09765625vw -0.09765625vw rgb(0, 0, 0);
+  text-shadow: 1px 1px black, -1px -1px rgb(0, 0, 0);
   /* top: 68%; */
   text-align: center;
   align-self: center;
   animation: slideRight 3s ease 6s forwards;
-
+  z-index: 3;
 }
 @keyframes slideRight {
   from {
@@ -281,14 +275,14 @@ banner{
 .righty{
   
   visibility: hidden;
-  font: 1.171875vw Uncial Antiqua;
+  font: 12px Uncial Antiqua;
   color: #c6c6c6;
-  text-shadow: 0.09765625vw 0.09765625vw black, -0.09765625vw -0.09765625vw rgb(0, 0, 0);
+  text-shadow: 1px 1px black, -1px -1px rgb(0, 0, 0);
   /* top: 69%; */
   text-align: center;
   align-self: center;
   animation: slideLeft 3s ease 6s forwards;
-
+  z-index: 3;
 }
 @keyframes slideLeft {
   from {
@@ -303,9 +297,9 @@ banner{
 .fadeIn{
   opacity: 0;
   position: absolute;
-  font: 2.34375vw Uncial Antiqua;
+  font: 24px Uncial Antiqua;
   color: #c6c6c6;
-  text-shadow: 0.09765625vw 0.09765625vw black, -0.09765625vw -0.09765625vw rgb(0, 0, 0);
+  text-shadow: 1px 1px black, -1px -1px rgb(0, 0, 0);
   top: 55%;
   text-align: center;
   align-self: center;
@@ -324,9 +318,9 @@ banner{
   /* visibility: hidden; */
   scale:0;
   position: absolute;
-  font: 5.46875vw Uncial Antiqua;
+  font: 56px Uncial Antiqua;
   color: #5f5c5a;
-   text-shadow: 0.09765625vw 0.09765625vw black,-0.09765625vw 0.09765625vw black,0.09765625vw -0.09765625vw black, -0.09765625vw -0.09765625vw rgb(0, 0, 0),0.29296875vw 0.29296875vw 0.29296875vw black;
+   text-shadow: 1px 1px black,-1px 1px black,1px -1px black, -1px -1px rgb(0, 0, 0),3px 3px 3px black;
   top: 30%;
   align-self: center;
   animation: scaler 2s ease 2s forwards;
@@ -350,7 +344,7 @@ banner{
   position: absolute;
   
   color: #5f5c5a;
-  text-shadow: 0.09765625vw 0.09765625vw black,-0.09765625vw 0.09765625vw black,0.09765625vw -0.09765625vw black, -0.09765625vw -0.09765625vw rgb(0, 0, 0),0.29296875vw 0.29296875vw 0.29296875vw black;
+   text-shadow: 1px 1px black,-1px 1px black,1px -1px black, -1px -1px rgb(0, 0, 0),3px 3px 3px black;
   top: 0%;
   align-self: center;
   animation: floaters2 100s ease  infinite forwards ;
@@ -378,7 +372,7 @@ banner{
   position: absolute;
   
   color: #5f5c5a;
-  text-shadow: 0.09765625vw 0.09765625vw black,-0.09765625vw 0.09765625vw black,0.09765625vw -0.09765625vw black, -0.09765625vw -0.09765625vw rgb(0, 0, 0),0.29296875vw 0.29296875vw 0.29296875vw black;
+   text-shadow: 1px 1px black,-1px 1px black,1px -1px black, -1px -1px rgb(0, 0, 0),3px 3px 3px black;
   top: 0%;
   align-self: center;
   animation: floaters 75s ease  infinite forwards ;
@@ -406,8 +400,8 @@ banner{
   position: absolute;
   font:4vw Uncial Antiqua;
   color: #929292;
-  letter-spacing: 0.5078125vw;
-  text-shadow: 0.09765625vw 0.09765625vw #423d38, -0.09765625vw -0.09765625vw #423d38, -0.09765625vw 0.09765625vw #423d38, 0.09765625vw -0.09765625vw #423d38;
+  letter-spacing: 5.2px;
+  text-shadow: 1px 1px #423d38, -1px -1px #423d38, -1px 1px #423d38, 1px -1px #423d38;
   top: 81%;
   align-self: center;
   animation: moveUp 2s ease-out;
@@ -437,135 +431,138 @@ article span {
 
 hr {
   border: none;
-  border-top: 0.1953125vw double #333;
+  border-top: 3px double #333;
   color: #333;
   overflow: visible;
   text-align: center;
-  height: 0.48828125vw;
+  height: 5px;
  
 }
 .list p{
-  font-size: 1.953125vw;
+  font-size: 2rem;
 }
 
 hr::after {
   /* background: #fff; */
   content: '§';
-  padding: 0 0.390625vw;
+  padding: 0 4px;
   position: relative;
-  top: -1.26953125vw;
+  top: -13px;
 }
 /* THE MESS *//* THE MESS *//* THE MESS *//* THE MESS *//* THE MESS *//* THE MESS *//* THE MESS *//* THE MESS *//* THE MESS *//* THE MESS *//* THE MESS */
 /* THE MESS *//* THE MESS *//* THE MESS *//* THE MESS *//* THE MESS *//* THE MESS *//* THE MESS *//* THE MESS *//* THE MESS *//* THE MESS *//* THE MESS */
 /* THE MESS *//* THE MESS *//* THE MESS *//* THE MESS *//* THE MESS *//* THE MESS *//* THE MESS *//* THE MESS *//* THE MESS *//* THE MESS *//* THE MESS */
-
-.row{
+.row {
+  display: flex;
   flex-direction: row;
-  max-height: 29.296875vw;
+  max-height: 290px;
 }
-.row li{
-  margin:1%;
-  flex-shrink: 1;
+
+.row li {
+  position: relative; /* Ensure the sticky note is positioned relative to the list item */
+  margin: 1%;
 }
-img[class*=mess]{
-   /* width:28.3203125vw;  */
- width: 100%;
-  z-index: 1;
+
+img[class*=mess] {
+  width: 290px;
 }
-img[class*=mess]:hover{
-  transform:rotate(0) translate(0,0);
+
+img[class*=mess] + div p {
+  text-indent: 10px;
+}
+
+/* Hover Styles for the List Item */
+.row li:hover img[class*=mess],
+.row li:hover div[class*=sticky] {
+  top: 50%;
+  opacity: 1;
+  transition: top 1s ease-out, opacity 1s ease-out;
+}
+
+.row li:hover img[class*=mess] {
+  z-index: 2; /* Bring the image to the front */
+}
+
+.row li:hover div[class*=sticky] {
+  z-index: 1; /* Ensure the sticky note stays behind the image */
+}
+
+div[class*=sticky] {
+  min-height: 100px;
+  position: absolute; /* Position relative to the list item */
+  top: 40%;
+  opacity: 0;
+  transition: top 1s ease-out, opacity 0s ease-out 1s;
+}
+
+div[class*=sticky] * {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  text-align: center;
+  justify-content: flex-end;
+  box-shadow: 1px 1px 1px rgb(63, 63, 63);
+}
+
+/* Specific Styles for mess1 */
+img[class*=mess1] {
+  transform: rotate(-25deg) translate(50%, 10%);
+  box-shadow: 1px 1px 1px black;
+  transition: transform 1s ease-out, box-shadow 1s ease-out;
+}
+
+img[class=mess1] + div {
+  opacity: 0;
+  text-align: center;
+  transition: opacity 1s;
+}
+
+.row li:hover .mess1,
+.row li:hover .sticky1 {
+  transform: rotate(0) translate(0, 0);
   box-shadow: 10px 10px 10px black;
   z-index: 2;
 }
-img[class*=mess] +div{
-  opacity: 0; 
-  text-align: center;
-  transition: opacity 1s ;
-} 
-img[class*=mess]:hover +div{
-  opacity: 1; 
-  transition: opacity 1s 2s;
-}
-img[class*=mess]+ div p{
-  text-indent: 10px;
-}
-img[class*=mess]+ div h3{
-  text-indent: 4vw;
-  
-  
+
+/* Specific Styles for mess2 */
+img[class=mess2] {
+  transform: rotate(135deg);
+  box-shadow: 3px -3px 3px black;
+  transition: transform 1s ease-out, box-shadow 1s ease-out;
 }
 
-img[class*=mess]:hover ~ div[class*=sticky],
-div[class*=sticky]:hover {
-  top: -60%;
-  opacity: 1;
-  transition: top 3s ease-out 3s, opacity 1s ease-out 3.7s;
-}
-div[class*=sticky]{
-  min-height:100px;
-  position: relative;
-  top: -80%;
+img[class=mess2] + div {
   opacity: 0;
-  transition: top 1s ease-out, opacity 0s ease-out 1s;
-  z-index:0 ;
-}
-div[class*=sticky] * {
-  position: absolute;
-  width: 9.765625vw;
-  height:9.765625vw;
   text-align: center;
-  justify-content: flex-end;
-  box-shadow: 0.09765625vw 0.09765625vw 0.09765625vw rgb(63, 63, 63);
+  transition: opacity 1s;
 }
 
-/* mess1 *//* mess1 *//* mess1 *//* mess1 *//* mess1 *//* mess1 *//* mess1 *//* mess1 *//* mess1 *//* mess1 *//* mess1 *//* mess1 *//* mess1 *//* mess1 */
-img[class*=mess1]{
-  transform:rotate(-25deg) translate(50%,10%);
-  box-shadow: 0.09765625vw  0.09765625vw 0.09765625vw black;
-  transition: box-shadow 10s, transform 3s ease 1s;
+.row li:hover .mess2,
+.row li:hover .sticky2 {
+  transform: rotate(0) translate(0, 0);
+  box-shadow: 10px 10px 10px black;
+  z-index: 2;
 }
-/* mess2 *//* mess2 *//* mess2 *//* mess2 *//* mess2 *//* mess2 *//* mess2 *//* mess2 *//* mess2 *//* mess2 *//* mess2 *//* mess2 *//* mess2 *//* mess2 */
-img[class*=mess2]{
-  transform:rotate(135deg);
-  box-shadow: 0.29296875vw -0.29296875vw 0.29296875vw black;
-  transition: box-shadow 3s, transform 3s ease 1s;
-}
-/* mess3 *//* mess3 *//* mess3 *//* mess3 *//* mess3 *//* mess3 *//* mess3 *//* mess3 *//* mess3 *//* mess3 *//* mess3 *//* mess3 *//* mess3 *//* mess3 *//* mess3 *//* mess3 */
-img[class*=mess3]{
-  transform:rotate(70deg)translate(-38%,50%);
-  box-shadow: 0.48828125vw -0.48828125vw 0.48828125vw black;
-  transition: box-shadow 3s, transform 3s ease 1s;
-}
-/* Discover the Eldarlands World *//* Discover the Eldarlands World *//* Discover the Eldarlands World *//* Discover the Eldarlands World *//* Discover the Eldarlands World */
-div.row{
-  max-width: 100vw;
-}
-div.row div{
-  max-width: 50%;
-}
-.twoRem{
-font-size: 1.953125vw;
-}
-div.row ul{
-flex-direction: row;
-justify-content: center;
-align-items: center;
-flex: 1 1 50%;
-justify-content: space-evenly;
 
+/* Specific Styles for mess3 */
+img[class=mess3] {
+  transform: rotate(70deg) translate(-38%, 50%);
+  box-shadow: 5px -5px 5px black;
+  transition: transform 1s ease-out, box-shadow 1s ease-out;
 }
-div.row ul li{
 
+img[class=mess3] + div {
+  opacity: 0;
+  text-align: center;
+  transition: opacity 1s;
 }
-div.row li a{
-  font: 1.171875vw Uncial Antiqua,Laila,Arial;
-  scale: 1.5;
-  color:wheat;
-  align-self: center;
-  
-}
-/* Up Coming Events */
 
+.row li:hover .mess3,
+.row li:hover .sticky3 {
+  transform: rotate(0) translate(0, 0);
+  box-shadow: 10px 10px 10px black;
+  z-index: 2;
+}
 
 /******************************************
 /* ADDITIONAL STYLES
