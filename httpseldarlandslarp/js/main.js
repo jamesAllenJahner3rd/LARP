@@ -10,6 +10,11 @@ Array.from(imgStraighten).forEach((element,index) =>   element.addEventListener(
         stickyNoteSlide[index].style.opacity = '1';
         messText[index].style.opacity='1';
     }));
+let tableAppear = document.querySelector(".practiceDates");
+let scrollAppear =document.querySelector(".scroll");
+tableAppear.addEventListener("click", () => { scrollAppear.removeAttribute("hidden");
+
+});
 
 
 
