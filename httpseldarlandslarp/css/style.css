@@ -73,7 +73,7 @@ html{
 }
 body{
 background-image: url(/images/parchment.jpg),radial-gradient( rgba(255, 255, 255, 0) 60%, rgba(0, 0, 0, 0.902) 120%);
-background-size:100vw; /* Adjusts the size of the image to cover the element*/
+background-size:auto; /* Adjusts the size of the image to cover the element*/
 background-position: center;
 background-blend-mode: overlay;
 
@@ -130,9 +130,8 @@ nav a{
 }
 
 nav img{
-  position: relative;
-  max-height: 3.3203125vw;
-  /* width: 100px; */
+  
+  width: 100px;
  
 }
 nav *{
@@ -431,17 +430,13 @@ main {
 .list{
   margin: 2% 10%;
 }
-article{
-  display: block;
-  flex-wrap: wrap;
-}
 article span {
   text-align: center;
-  font-size: 1.953125vw;
+  font-size: large;
 }
 
 hr {
-  border: none; 
+  border: none;
   border-top: 0.1953125vw double #333;
   color: #333;
   overflow: visible;
@@ -452,15 +447,13 @@ hr {
 .list p{
   font-size: 1.953125vw;
 }
-hr {
-  display: block;
-}
+
 hr::after {
+  /* background: #fff; */
   content: '§';
   padding: 0 0.390625vw;
   position: relative;
   top: -1.26953125vw;
-  font-size: 1.953125vw;
 }
 /* THE MESS *//* THE MESS *//* THE MESS *//* THE MESS *//* THE MESS *//* THE MESS *//* THE MESS *//* THE MESS *//* THE MESS *//* THE MESS *//* THE MESS */
 /* THE MESS *//* THE MESS *//* THE MESS *//* THE MESS *//* THE MESS *//* THE MESS *//* THE MESS *//* THE MESS *//* THE MESS *//* THE MESS *//* THE MESS */
@@ -566,101 +559,14 @@ div.row ul li{
 }
 div.row li a{
   font: 1.171875vw Uncial Antiqua,Laila,Arial;
-  scale: 1.3;
+  scale: 1.5;
   color:wheat;
   align-self: center;
   
 }
-.icon{
-  z-index: 5;
-}
-/* Up Coming Events *//* Up Coming Events *//* Up Coming Events *//* Up Coming Events *//* Up Coming Events *//* Up Coming Events */
-/* Up Coming Events *//* Up Coming Events *//* Up Coming Events *//* Up Coming Events *//* Up Coming Events *//* Up Coming Events */
-/* Up Coming Events *//* Up Coming Events *//* Up Coming Events *//* Up Coming Events *//* Up Coming Events *//* Up Coming Events */
-.upcomingEvents div {
-  /* put the upcoming Events and hr's in a row */
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
-  text-align: center;
-}
-.upcomingEvents div div hr,.upcomingEvents div h1{
-width: 34vw;
-}
-.events {
-font-size: 2vw;
-}
+/* Up Coming Events */
 
-.scroll p{
-  margin-top: .1vw;
-  width: 60vw;
-}
 
-div.scroll{
-  flex-direction: column;
-  align-self: flex-end;
-  justify-content:center;
-  align-items: center;
-  background-image:url("../images/rolledScroll.png") ;
-  background-size: 250vw 345vw;
-  background-position:  50% 43%;
-background-blend-mode: overlay;
-background-repeat:no-repeat;
-z-index:2;
-height:100vw ;
-width:  65vw;
-margin: 5vw;
-}
-
-tr{
-  flex-direction: row;
-}
-td{
-  border:1px solid black;
-  width:17vw ;
-  height: 17vw;
-}
-/* Footer *//* Footer *//* Footer *//* Footer *//* Footer *//* Footer *//* Footer *//* Footer *//* Footer *//* Footer */
-/* Footer *//* Footer *//* Footer *//* Footer *//* Footer *//* Footer *//* Footer *//* Footer *//* Footer *//* Footer */
-/* Footer *//* Footer *//* Footer *//* Footer *//* Footer *//* Footer *//* Footer *//* Footer *//* Footer *//* Footer */
-
-footer{
-  height:3.3203125vw ;
-  background-color: #000000b9;
-  flex-direction: row;
-  justify-content: center;
-  position: sticky;
-  bottom: 0%;
-  z-index: 6;
-}
-footer img{
-  height: 3.3203125vw;
-  width: auto;
-  flex: 0 0 3.3203125vw;
-  margin: 0 10vw;
-}
-footer small{
-  font-size:1.171875vw;
-  text-align: center;
-  justify-content: center;
-  margin: 0 10vw;
-}
-.icon{
-  width: 3.3203125vw;
-  height: 3.3203125vw;
-  background-image:url("../images/socialMediaEmailIcons.jpg");
-  background-size: 710%;
-  margin:0 1vw ;
-}
-.faceBook{
-  background-position:-4.6vw -0.86vw ;
-}
-.email{
-  background-position:4.25vw 4.2vw ;
-}
-.slack{
-  background-position:-4.65vw 4.3vw ;
-}
 /******************************************
 /* ADDITIONAL STYLES
 *****************************************
