@@ -10,28 +10,6 @@ Array.from(imgStraighten).forEach((element,index) =>   element.addEventListener(
         stickyNoteSlide[index].style.opacity = '1';
         messText[index].style.opacity='1';
     }));
-<<<<<<< Updated upstream
-=======
-document.querySelectorAll(".scrollTitle").forEach((element,index)=>
-    element.addEventListener("click", () => openScroll(index)));
-function openScroll(index) {
-    const scroll = document.querySelectorAll(".scroll")[index];
-    const isHidden = scroll.querySelector("p").hasAttribute("hidden");
-    if (isHidden) {
-         // Open the scroll
-        scroll.querySelectorAll("p,span,table").forEach(element=>element.toggleAttribute("hidden"));
-        scroll.style.backgroundPosition="50% 6%";
-            scroll.style.height = "79vw"; 
-    } else {
-         // Close the scroll
-         scroll.querySelectorAll('p, span, table').forEach(element => element.setAttribute('hidden', true));
-            scroll.style.backgroundPosition = "45% 100%";
-            scroll.style.height = "22vw";
-    }
-};
-
-
->>>>>>> Stashed changes
 
 
 

@@ -6,48 +6,41 @@
 
 
 .caveat {
-
   font-family: "Caveat", cursive;
   font-optical-sizing: auto;
   font-weight: 400;
   font-style: normal;
 }
 .laila-light {
-
   font-family: "Laila", serif;
   font-weight: 300;
   font-style: normal;
 }
 
 .laila-regular {
-
   font-family: "Laila", serif;
   font-weight: 400;
   font-style: normal;
 }
 
 .laila-medium {
-
   font-family: "Laila", serif;
   font-weight: 500;
   font-style: normal;
 }
 
 .laila-semibold {
-
   font-family: "Laila", serif;
   font-weight: 600;
   font-style: normal;
 }
 
 .laila-bold {
-
   font-family: "Laila", serif;
   font-weight: 700;
   font-style: normal;
 }
 .uncial-antiqua-regular {
-
   font-family: "Uncial Antiqua", system-ui;
   font-weight: 400;
   font-style: normal;
@@ -60,6 +53,10 @@
 /* Box Model Hack */
 body *{
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+ 
+ 
 }
 
 
@@ -71,39 +68,23 @@ body *{
 /* LAYOUT
 /*******************************************/
 html{
-  flex-direction:column;
-  display: flex;
   font:400 0.9765625vw Caveat,Laila,Verdana,Times,Tahoma,'Palatino Linotype',Garamond,Courier, Arial;
-  color: rgb(33, 35, 68);
+  color: black;
 }
 body{
-<<<<<<< Updated upstream
 background-image: url(/images/parchment.jpg),radial-gradient( rgba(255, 255, 255, 0) 60%, rgba(0, 0, 0, 0.902) 120%);
 background-size:auto; /* Adjusts the size of the image to cover the element*/
 background-position: center;
 background-blend-mode: overlay;
-=======
-  flex-direction:column;
-  display: flex;
-  background-image: url("../images/woodPlanks.jpg");
-  background-size:94vw; /* Adjusts the size of the image to cover the element*/
-  background-position: center;
-  /* background-blend-mode: overlay; */
- 
->>>>>>> Stashed changes
 
 }
 
 a{
-  flex-direction:column;
-  display: flex;
   list-style-type:none ;
   text-decoration: none;
-  color: rgb(33, 35, 68);
+  color: black;
 }
 .btn{
-  flex-direction:column;
-  display: flex;
   border: .09765625vw solid black;
   padding: 0.48828125vw;
   border-radius: 0.48828125vw;
@@ -113,37 +94,25 @@ a{
   z-index: 5;
 }
 .btn:active{
-  flex-direction:column;
-  display: flex;
   box-shadow: 0 0 0 black;
 }
 .hidden{
-  flex-direction:column;
-  display: flex;
   visibility: hidden;
 }
 p{
-  flex-direction:column;
-  display: flex;
   text-indent: 5.9765625vw;
 }
 /* nav *//* nav *//* nav *//* nav *//* nav *//* nav *//* nav *//* nav */
 /* nav *//* nav *//* nav *//* nav *//* nav *//* nav *//* nav *//* nav */
 /* nav *//* nav *//* nav *//* nav *//* nav *//* nav *//* nav *//* nav */
 nav{
-  flex-direction:row;
-  display: flex;
   position: sticky;
   top: 0;
-  z-index: 6;
+  z-index: 5;
   height: 3.32vw;
-}
-nav *{
-  flex-direction:row;
-  display: flex;
+
 }
 .nav{
-  display: flex;
   flex-direction: row;
   justify-content:space-evenly ;
   width: 100vw;
@@ -157,39 +126,23 @@ nav *{
   
 }
 nav a{
-  flex-direction:row;
-  display: flex;
   color:wheat
 }
 
 nav img{
-<<<<<<< Updated upstream
   
   width: 100px;
-=======
-  flex-direction:row;
-  display: flex;
-  position: relative;
-  max-height: 3.3203125vw;
-  /* width: 100px; */
->>>>>>> Stashed changes
  
 }
 nav *{
-  flex-direction:row;
-  display: flex;
   flex-direction: row;
   z-index: 5;
 }
   a[href*= checkout] {
-  flex-direction:row;
-  display: flex;
   margin: 0 1.953125vw;
   
 }
 .dropDown{
-  flex-direction:row;
-  display: flex;
   z-index: 5;
   position: relative;
   height: 100%;
@@ -197,13 +150,10 @@ nav *{
   
 }
 .dropDown:hover +.nav.about,.nav.about:hover{
-flex-direction:row;
 display: flex;
 
 }
 .nav.about{
-  flex-direction:row;
-  display: flex;
   z-index: 3;
   display: none;
   padding: .2929vw;
@@ -214,26 +164,20 @@ display: flex;
   top: 03.32vw;
 }
 .nav.about li{
-  flex-direction:row;
-  display: flex;
-  margin: 0 .2929vw;
+margin: 0 .2929vw;
 }
 .login{
-  flex-direction:row;
-  display: flex;
   height: 100%;
   align-items: center;
   z-index: 5;
 }
 .login:hover ~.nav.login,.nav.login:hover {
-  flex-direction:row;
-  display: flex;
   display: flex;
   z-index: 5;
 }
 .nav.login{
-  flex-direction:row;
-  display: flex;
+
+  flex-direction: column;
   display: none;
   padding: 0 .2929vw;
   width:fit-content;
@@ -249,13 +193,9 @@ display: flex;
   
 }
 .nav .login li{
-  flex-direction:column;
-  display: flex;
   padding: 0.0976vw;
 }
 .nav.login input[type*=submit]{
-  flex-direction:column;
-  display: flex;
 text-align: center;
 color: wheat;
 z-index: 5;
@@ -263,8 +203,6 @@ z-index: 5;
 }
 
  .revealPassword{
-  flex-direction:column;
-  display: flex;
   position: relative;
 border: 0.09765625vw solid black;
 width: 20px;
@@ -275,8 +213,6 @@ align-self: flex-start;
 margin: 0.09765625vw;
 }
 .membership, .membership a{
-  flex-direction:column;
-  display: flex;
   height:100%;
     align-items: center;
     position: relative;
@@ -285,31 +221,13 @@ margin: 0.09765625vw;
 /* banner *//* banner *//* banner *//* banner *//* banner *//* banner *//* banner *//* banner *//* banner *//* banner *//* banner *//* banner *//* banner *//* banner */
 /* banner *//* banner *//* banner *//* banner *//* banner *//* banner *//* banner *//* banner *//* banner *//* banner *//* banner *//* banner *//* banner *//* banner */
 banner{
-  flex-direction:column;
-  display: flex;
   position: relative;
   width: 100vw;
   height:auto;
   /* 365px; */
   overflow: hidden;
-  display: flex;
 }
-banner*{
-  flex-direction:column;
-  display: flex;
-}
-banner div{
-display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
- 
-  
-}
-
 .bannerButtons{
-  flex-direction:column;
-  display: flex;
   justify-content: space-around;
   position: absolute;
   width: 400px;
@@ -319,10 +237,7 @@ display: flex;
   flex-direction: row;
  
 }
-
 .dust{
-  flex-direction:column;
-  display: flex;
   z-index: 1;
   position: absolute;
   /* background-color: green; */
@@ -330,23 +245,17 @@ display: flex;
   height: 100%;
   scale:1.3;
 }
-.foreground{
-  flex-direction:column;
-  display: flex;
+.forground{
   z-index: 2;
   position: absolute;
   width: 100vw;
 }
 .background{
-  flex-direction:column;
-  display: flex;
   z-index: 0;
   /* visibility: hidden; */
 }
 
 .lefty{
-  flex-direction:column;
-  display: flex;
   visibility: hidden;
   /* position: absolute; */
   font: 1.171875 Uncial Antiqua;
@@ -360,22 +269,16 @@ display: flex;
 }
 @keyframes slideRight {
   from {
-  flex-direction:column;
-  display: flex;
     transform: translate( -1000%,0);
     visibility:visible;
   }
   to {
-  flex-direction:column;
-  display: flex;
 
     transform: translate( 0,0);
     visibility: visible;
   }
 }
 .righty{
-  flex-direction:column;
-  display: flex;
   
   visibility: hidden;
   font: 1.171875vw Uncial Antiqua;
@@ -389,21 +292,15 @@ display: flex;
 }
 @keyframes slideLeft {
   from {
-  flex-direction:column;
-  display: flex;
     transform: translate(1000%,0);
     visibility:visible;
   }
   to {
-  flex-direction:column;
-  display: flex;
     transform: translate( 20%,0);
     visibility: visible;
   }
 }
 .fadeIn{
-  flex-direction:column;
-  display: flex;
   opacity: 0;
   position: absolute;
   font: 2.34375vw Uncial Antiqua;
@@ -417,19 +314,13 @@ display: flex;
 }
 @keyframes fadeIn {
   from {
-  flex-direction:column;
-  display: flex;
     opacity: 0;
   }
   to {
-  flex-direction:column;
-  display: flex;
     opacity: 1;
   }
 }
 .bannerScale{
-  flex-direction:column;
-  display: flex;
   /* visibility: hidden; */
   scale:0;
   position: absolute;
@@ -442,7 +333,6 @@ display: flex;
   z-index: 3;
 }
 @keyframes scaler{
-
   0%{
     visibility: visible;
     scale:(0);
@@ -452,14 +342,11 @@ display: flex;
     color: rgb(82, 0, 0);
   }
   100%{
-
     scale:1;
   }
 }
 .dust2{
-  flex-direction:column;
-  display: flex;
-
+  
   position: absolute;
   
   color: #5f5c5a;
@@ -472,8 +359,6 @@ display: flex;
 }
 @keyframes floaters2{
   0%{
-  flex-direction:column;
-  display: flex;
     
     scale:1;
     transform: rotate(180);
@@ -489,9 +374,9 @@ display: flex;
   }
 }
 .dust{
-  flex-direction:column;
-  display: flex;  
-  position: absolute;  
+  
+  position: absolute;
+  
   color: #5f5c5a;
   text-shadow: 0.09765625vw 0.09765625vw black,-0.09765625vw 0.09765625vw black,0.09765625vw -0.09765625vw black, -0.09765625vw -0.09765625vw rgb(0, 0, 0),0.29296875vw 0.29296875vw 0.29296875vw black;
   top: 0%;
@@ -501,7 +386,8 @@ display: flex;
   overflow: hidden;
 }
 @keyframes floaters{
-  0%{    
+  0%{
+    
     scale:1.1;
     transform: rotate(0);
   }
@@ -516,7 +402,6 @@ display: flex;
   }
 }
 .bannerText{
-  flex-direction:column;
   display: flex;
   position: absolute;
   font:4vw Uncial Antiqua;
@@ -540,43 +425,18 @@ display: flex;
 /* MAIN *//* MAIN *//* MAIN *//* MAIN *//* MAIN *//* MAIN *//* MAIN *//* MAIN *//* MAIN *//* MAIN *//* MAIN */
 /* MAIN *//* MAIN *//* MAIN *//* MAIN *//* MAIN *//* MAIN *//* MAIN *//* MAIN *//* MAIN *//* MAIN *//* MAIN */
 main {
-  background-image: url(../images/parchment.jpg),radial-gradient( rgba(255, 255, 255, 0) 60%, rgba(0, 0, 0, 0.902) 120%);
-  background-size:94vw; /* Adjusts the size of the image to cover the element*/
-  background-position: center;
-  background-blend-mode: overlay;
-  flex-direction:column;
-  display: flex;
   margin: 2%;
-  display: flex;
 }
 .list{
-  flex-direction:column;
-  display: flex;
   margin: 2% 10%;
 }
-<<<<<<< Updated upstream
 article span {
-=======
-article{
-  display: block;
-  flex-wrap: wrap;
-}
-article span {  
-  flex-direction:column;
-  display: flex;
->>>>>>> Stashed changes
   text-align: center;
   font-size: large;
 }
 
 hr {
-<<<<<<< Updated upstream
   border: none;
-=======
-  flex-direction:column;
-  display: flex;
-  border: none; 
->>>>>>> Stashed changes
   border-top: 0.1953125vw double #333;
   color: #333;
   overflow: visible;
@@ -585,23 +445,11 @@ hr {
  
 }
 .list p{
-  flex-direction:column;
-  display: flex;
   font-size: 1.953125vw;
 }
-<<<<<<< Updated upstream
 
 hr::after {
   /* background: #fff; */
-=======
-hr {
-
-  display: block;
-}
-hr::after {
-  flex-direction:column;
-  display: flex;
->>>>>>> Stashed changes
   content: '§';
   padding: 0 0.390625vw;
   position: relative;
@@ -612,66 +460,48 @@ hr::after {
 /* THE MESS *//* THE MESS *//* THE MESS *//* THE MESS *//* THE MESS *//* THE MESS *//* THE MESS *//* THE MESS *//* THE MESS *//* THE MESS *//* THE MESS */
 
 .row{
-  flex-direction:column;
-  display: flex;
   flex-direction: row;
   max-height: 29.296875vw;
 }
 .row li{
-  flex-direction:column;
-  display: flex;
   margin:1%;
   flex-shrink: 1;
 }
 img[class*=mess]{
-  flex-direction:column;
-  display: flex;
    /* width:28.3203125vw;  */
  width: 100%;
   z-index: 1;
 }
 img[class*=mess]:hover{
-  flex-direction:column;
-  display: flex;
   transform:rotate(0) translate(0,0);
   box-shadow: 10px 10px 10px black;
   z-index: 2;
 }
 img[class*=mess] +div{
-  flex-direction:column;
-  display: flex;
   opacity: 0; 
   text-align: center;
   transition: opacity 1s ;
 } 
 img[class*=mess]:hover +div{
-  flex-direction:column;
-  display: flex;
   opacity: 1; 
   transition: opacity 1s 2s;
 }
 img[class*=mess]+ div p{
-  flex-direction:column;
-  display: flex;
   text-indent: 10px;
 }
 img[class*=mess]+ div h3{
-  flex-direction:column;
-  display: flex;
   text-indent: 4vw;
+  
+  
 }
 
 img[class*=mess]:hover ~ div[class*=sticky],
 div[class*=sticky]:hover {
-  flex-direction:column;
-  display: flex;
   top: -60%;
   opacity: 1;
   transition: top 3s ease-out 3s, opacity 1s ease-out 3.7s;
 }
 div[class*=sticky]{
-  flex-direction:column;
-  display: flex;
   min-height:100px;
   position: relative;
   top: -80%;
@@ -680,8 +510,6 @@ div[class*=sticky]{
   z-index:0 ;
 }
 div[class*=sticky] * {
-  flex-direction:column;
-  display: flex;
   position: absolute;
   width: 9.765625vw;
   height:9.765625vw;
@@ -692,253 +520,53 @@ div[class*=sticky] * {
 
 /* mess1 *//* mess1 *//* mess1 *//* mess1 *//* mess1 *//* mess1 *//* mess1 *//* mess1 *//* mess1 *//* mess1 *//* mess1 *//* mess1 *//* mess1 *//* mess1 */
 img[class*=mess1]{
-  flex-direction:column;
-  display: flex;
   transform:rotate(-25deg) translate(50%,10%);
   box-shadow: 0.09765625vw  0.09765625vw 0.09765625vw black;
   transition: box-shadow 10s, transform 3s ease 1s;
 }
 /* mess2 *//* mess2 *//* mess2 *//* mess2 *//* mess2 *//* mess2 *//* mess2 *//* mess2 *//* mess2 *//* mess2 *//* mess2 *//* mess2 *//* mess2 *//* mess2 */
 img[class*=mess2]{
-  flex-direction:column;
-  display: flex;
   transform:rotate(135deg);
   box-shadow: 0.29296875vw -0.29296875vw 0.29296875vw black;
   transition: box-shadow 3s, transform 3s ease 1s;
 }
 /* mess3 *//* mess3 *//* mess3 *//* mess3 *//* mess3 *//* mess3 *//* mess3 *//* mess3 *//* mess3 *//* mess3 *//* mess3 *//* mess3 *//* mess3 *//* mess3 *//* mess3 *//* mess3 */
 img[class*=mess3]{
-  flex-direction:column;
-  display: flex;
   transform:rotate(70deg)translate(-38%,50%);
   box-shadow: 0.48828125vw -0.48828125vw 0.48828125vw black;
   transition: box-shadow 3s, transform 3s ease 1s;
 }
 /* Discover the Eldarlands World *//* Discover the Eldarlands World *//* Discover the Eldarlands World *//* Discover the Eldarlands World *//* Discover the Eldarlands World */
 div.row{
-  flex-direction:row;
-  display: flex;
   max-width: 100vw;
 }
 div.row div{
-  flex-direction:column;
-  display: flex;
   max-width: 50%;
 }
 .twoRem{
-  flex-direction:column;
-  display: flex;
-  font-size: 1.953125vw;
+font-size: 1.953125vw;
 }
 div.row ul{
-    
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  flex: 1 1 50%;
-  justify-content: space-evenly;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+flex: 1 1 50%;
+justify-content: space-evenly;
 
 }
 div.row ul li{
-  flex-direction:column;
-  display: flex;
 
 }
 div.row li a{
-  flex-direction:column;
-  display: flex;
   font: 1.171875vw Uncial Antiqua,Laila,Arial;
   scale: 1.5;
   color:wheat;
   align-self: center;
   
 }
-<<<<<<< Updated upstream
 /* Up Coming Events */
 
 
-=======
-.icon{
-  flex-direction:column;
-  display: flex;
-  z-index: 5;
-}
-/* Up Coming Events *//* Up Coming Events *//* Up Coming Events *//* Up Coming Events *//* Up Coming Events *//* Up Coming Events */
-/* Up Coming Events *//* Up Coming Events *//* Up Coming Events *//* Up Coming Events *//* Up Coming Events *//* Up Coming Events */
-/* Up Coming Events *//* Up Coming Events *//* Up Coming Events *//* Up Coming Events *//* Up Coming Events *//* Up Coming Events */
-.upcomingEvents{
-  background-image: url("../images/woodPlanks.jpg");
-  background-size: cover;
-  margin: 0;
-}
-.upcomingEvents div {
-  display: flex;
-  /* put the upcoming Events and hr's in a row */
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
-  text-align: center;
-
-}span[class*=scrollTitle]{
-  flex-direction:column;
-  display: flex;
-  position: absolute;
-  color: wheat;
-  height: 7vw;
-  justify-content: center;
-  font-size: 2vw;
-  font-weight: 600;
-  z-index:3;
-  color: rgb(33, 35, 68);
-  cursor: pointer;
-}
-.scrollTitle1{
-  left: 35vw;
-  top:2vw;
-}
-div[id*=scroll] {
-  flex-direction: column;
-  display: flex;
-  align-self: end;
-  justify-content: center;
-  align-items: center;
-  background-size: 90.36vw 104.3vw;
-  background-position: 45% 100%;
-  background-blend-mode: overlay;
-  background-repeat: no-repeat;
-  z-index: 2;
-  height: 22vw;
-  width: 72vw;
-  margin: 0 5vw 5vw 5vw;
-}
-
-
-.upcomingEvents div div hr,.upcomingEvents div h1{
-  flex-direction:column;
-  display: flex;
-  width: 34vw;
-}
-
-div[class*=scroll] p{
-  /* display: block; */
-  margin-top: -1.9vw;
-  width: 60vw;
-}
-
-#practice{
-  border-collapse:collapse;
-  /* display:table; */
-
-}
-tr{
-  display: table-row;
-
-}
-td{
-
-  /* display: table-cell; */
-  border:1px solid rgb(33, 35, 68);
-  width:16vw ;
-  height: 11vw;
-  margin: 0;
-  padding: 0;
-}
-
-span[class*=scrollTitle]{
-  flex-direction:column;
-  display: flex;
-  position: absolute;
-  color: wheat;
-  height: 7vw;
-  justify-content: center;
-  left: 35vw;
-  top:2vw;
-  z-index:3;
-  color: rgb(33, 35, 68);
-  cursor: pointer;
-}
-section[class*=event]{
-  display: flex;
-  position: relative;
-  font-size: 2vw;
-  flex-direction: row;
-  align-self: center;
-  justify-content: center;
-}
-
-#scroll1{
-  background-image:url("../images/rolledScroll1.png") ;
-}
-#scroll2{
-  background-image:url("../images/rolledScroll2.png") ;
-}
-#scroll3{
-  background-image:url("../images/rolledScroll3.png") ;
-}
-
-
-/* Footer *//* Footer *//* Footer *//* Footer *//* Footer *//* Footer *//* Footer *//* Footer *//* Footer *//* Footer */
-/* Footer *//* Footer *//* Footer *//* Footer *//* Footer *//* Footer *//* Footer *//* Footer *//* Footer *//* Footer */
-/* Footer *//* Footer *//* Footer *//* Footer *//* Footer *//* Footer *//* Footer *//* Footer *//* Footer *//* Footer */
-
-footer{
-  display: flex;
-  height:3.3203125vw ;
-  background-color: #000000b9;
-  flex-direction: row;
-  justify-content: center;
-  position: sticky;
-  bottom: 0%;
-  z-index: 6;
-  display: flex;
-}
-footer *{
-  flex-direction:column;
-  display: flex;
-}
-footer img{
-  flex-direction:column;
-  display: flex;
-  height: 3.3203125vw;
-  width: auto;
-  flex: 0 0 3.3203125vw;
-  margin: 0 10vw;
-}
-footer small{
-  flex-direction:column;
-  display: flex;
-  font-size:1.171875vw;
-  text-align: center;
-  justify-content: center;
-  margin: 0 10vw;
-  color: wheat;
-}
-.icon{
-  flex-direction:column;
-  display: flex;
-  width: 3.3203125vw;
-  height: 3.3203125vw;
-  background-image:url("../images/socialMediaEmailIcons.jpg");
-  background-size: 710%;
-  margin:0 1vw ;
-}
-.faceBook{
-  flex-direction:column;
-  display: flex;
-  background-position:-4.6vw -0.86vw ;
-}
-.email{
-  flex-direction:column;
-  display: flex;
-  background-position:4.25vw 4.2vw ;
-}
-.slack{
-  flex-direction:column;
-  display: flex;
-  background-position:-4.65vw 4.3vw ;
-}
->>>>>>> Stashed changes
 /******************************************
 /* ADDITIONAL STYLES
 *****************************************
