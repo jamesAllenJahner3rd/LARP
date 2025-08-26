@@ -1,0 +1,16 @@
+# Development web preview
+npm run dev
+
+# Production web build
+npm run build
+
+# Add Android/iOS platforms
+npx cap add android
+npx cap add ios
+
+# Copy web build into native wrapper
+npx cap copy
+
+# Open Android Studio / Xcode
+npx cap open android
+npx cap open ios

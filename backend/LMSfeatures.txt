@@ -1,0 +1,90 @@
+Here’s a clear, organized breakdown of **Koha’s** major features, drawn from your description and official sources:
+
+---
+
+## 📚 Core Library Management
+- **Cataloging**
+  - MARC 21 and UNIMARC support for bibliographic records
+  - Easy-to-use, customizable cataloging interface
+  - Import/export in MARC, CSV, and other formats
+- **OPAC (Online Public Access Catalog)**
+  - Web-based search interface for patrons
+  - Faceted and full-text search (Zebra or Elasticsearch)
+  - Customizable design and layout
+- **Circulation**
+  - Flexible loan rules, due dates, and fine management
+  - Self‑checkout and barcode scanner integration
+  - Patron self‑registration via OPAC
+
+---
+
+## 💼 Operational Modules
+- **Acquisitions**
+  - Budget, vendor, and order management
+  - Financial system integration for payments
+- **Reports & Statistics**
+  - Customizable reports for circulation, acquisitions, etc.
+  - Export statistical data for analysis
+- **Patron Management**
+  - User account control, fines tracking, and hold requests
+  - Automated overdue/hold notifications
+  - Self‑service renewals and profile updates
+
+---
+
+## 🌐 Connectivity & Resource Sharing
+- Interlibrary Loan (ILL) between multiple libraries
+- Union catalog integration for shared resources
+- Protocol support: Z39.50, SRU/SRW, SIP2, NCIP
+- Metadata sharing via OAI‑PMH
+- REST API for 3rd‑party integrations
+- LDAP/SSO for secure authentication
+
+---
+
+## 📱 Access & Usability
+- Mobile‑friendly OPAC
+- Mobile apps for barcode scanning and circulation
+- Multilanguage support for both patrons and staff
+- Role‑based permissions for staff/admin users
+- SSL/TLS encryption for secure access
+
+---
+
+## 🌟 Extra & Customization
+- Web 2.0 features: tagging, comments, RSS feeds
+- Barcode and patron card printing
+- Highly customizable interface and workflows
+- Open‑source (no licensing fees) with strong global community
+- Integrations with open‑source tools:
+  - **DSpace** (digital repository)
+  - **Moodle** (e‑learning)
+  - **VuFind** (discovery)
+  - **Coral** (electronic resource management)
+  - **SubjectsPlus** (subject guides)
+  - **Zotero** (citation management)
+
+---
+
+If you’d like, I can also prepare a **side‑by‑side comparison** table showing how Koha stacks up against other popular Integrated Library Systems, so you can see exactly where it shines. Would you like me to create that next?
+
+
+
+
+are you on the hunt for the best integrated Library software for your institution look no further just search for best integrated Library software on any device browser or chatbot and guess what cohar proudly sits at the top of the list choose cohar the smart affordable and reliable Library solution you can trust koha ILS a fully featured open source sof soft ware is trusted by thousands of Institutions worldwide serving millions of users no wonder koha is recognized as one of the best open-source Library
+
+Management Solutions today let's explore some of koha's powerful features cataloging supports Mark 21 format for bibliographic records easy to use cataloging interface with customizable fields Import and Export data in multiple formats Mark CSV and more OPAC online Public Access catalog web-based search interface for patrons customizable design with facit search for better results full text search powered by zebra or elastic search circulation flexible loan rules due dates and fine management support for self checkout
+
+systems and barcode integration Patron self- registration via OPAC Acquisitions manage budgets vendors and order processing with ease seamlessly integrate with financial systems for smooth transactions reports and statistics customizable reporting tools for circulation Acquisitions and more generate automated reports and Export statistical data for analysis Patron management user account control finds tracking and hold requests automated notifications for overdue books and holds self-service features like
+
+renewals and profile updates inter Library loan IL support for IL transactions between multiple libraries integration with Union cataloges for seamless resource sharing mobile access a responsive and mobile friendly OPAC interface mobile apps for barcode scanning and circulation management multilanguage support available in multiple languages for Global access customizable language options for both patrons and staff security and access control role-based permissions for staff and admin users SSL a TLS encryption for secure
+
+communication and that's not all koha also offers Web 2.0 features like tagging comments and ISS feeds a union catalog facility allowing libraries to share collections Advanced customizable search options for quick and efficient results barcode Printing and Patron card creation for easy tracking a patron self- registration form through OPAC for seamless onboarding best of all koha is fully open source with no licensing fees highly customizable to fit your libraries needs supported by a strong Global
+
+community of users and developers kohar seamless integration with standard protocols kohar effortlessly connects with other system systems ensuring a smooth Library experience z39.50 search and retrieve records from external catalogs SRU srw perform structured web searches zp 2 integrate with self checkout IID and payment kiosks o AIP MH share metadata with repositories like dpace rest API connect with thirdparty apps for for automation ldap enables secure single sign on SSO ncip ensures smooth communication
+
+between Library systems with kohar your library stays connected efficient and Future Ready boost your library with kohar and open source power kohar seamlessly integrates with top open source tools making your library smarter and more connected popular integration dpace link digital repositories with kar's catalog Moodle connect Library resources to e-learning VU find enhanced Discovery with fait search Coral manage electronic resources easily subjects plus organize subject guides and research zertero simplify citation
+
+management why choose koha kohar isn't just software it's a movement a community-driven solution that empowers libraries worldwide whether you're a small institution or a large Library network kohar is your key to a modern efficient and userfriendly Library System join the kohar community today visit cohar community.org to learn more
+
+
