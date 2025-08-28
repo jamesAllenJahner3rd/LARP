@@ -1,5 +1,5 @@
 
-import { NextResponse, type NextRequest } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 
 export function GET(
     request: NextRequest,
@@ -16,6 +16,40 @@ export function GET(
     }
 
     return NextResponse.json({ id, name: "Mosh" });
-}} // Fetch data from a database or external API
-// If not found, return a 404 response
-//else return the data
+}
+export async function PUT(
+    request: NextRequest,
+    { params }: { params: { id: string } }) {
+    // return NextResponse.json({ message: "PUT request received" });
+    // Validate the request body
+    const body = await request.json();
+    console.log(body);
+    // If invalid return 400 error
+    if (!body.name) {
+        return NextResponse.json({ "Error": "Name is required" }, { status: 400 })
+    }
+    //else fetch user by id
+
+    // user doesn't exist return 404 error
+    if (+params.id > 10) {
+        return NextResponse.json({ error: "User not found" }, { status: 404 })
+
+    }
+    //Update the user
+    // return the updated user
+    return NextResponse.json({ id: 1, name: body.name }, { status: 201 });
+}
+export function DELETE(
+    request: NextRequest,
+    { params }: { params: { id: string } }) {
+    // Fetch user from the database 
+    if (params.id > '10') {
+        return NextResponse.json({ error: "User not found" }, { status: 404 })
+    }
+
+
+    // if not found return 404 
+    // delete the user 
+    // return 200
+    return NextResponse.json({ message: "DELETE request received" }, { status: 200 });
+}
