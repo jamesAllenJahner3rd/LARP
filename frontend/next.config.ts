@@ -5,14 +5,14 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: path.join(__dirname, ".."), // path needed for this line
   },
-  async rewrites() {
-    return [
-      {
-        source: "/api/:path*",
-        destination: "http://localhost:3001/api/:path*",
-      },
-    ];
-  },
+  // async rewrites() {
+  //   return [
+  //     {
+  //       source: "/api/:path*",
+  //       destination: "http://localhost:3001/api/:path*",
+  //     },
+  //   ];
+  // },
 };
 
 export default nextConfig; // On this version a named object was needed: nextConfig: NextConfig = {

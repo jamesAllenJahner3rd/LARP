@@ -5,11 +5,9 @@ interface User {
   name: string;
   email: string;
 }
-interface Props {
-  sortOrder: string;
-}
+
 const UserTable
-  = async ({ sortOrder }: Props) => {
+  = async () => {
     const res = await fetch('https://jsonplaceholder.typicode.com/users', { cache: 'no-store' })
     const users: User[] = await res.json();
     // const sortedUsers = sort(users).asc()

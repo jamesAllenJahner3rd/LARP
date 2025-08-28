@@ -14,7 +14,8 @@ const UserPage
         <h1>User</h1>
         <Link href="/users/new" className="btn">New User</Link>
         <Suspense fallback={<span className="loading loading-spinner loading-md"></span>}>
-          <UserTable sortOrder={sortOrder} />
+          <UserTable />
+          {/* sortOrder={sortOrder} /> */}
         </Suspense>
 
       </>
