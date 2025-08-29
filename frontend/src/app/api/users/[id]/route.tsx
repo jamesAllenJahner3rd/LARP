@@ -1,24 +1,22 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
 import { NextResponse, NextRequest } from "next/server";
 import schema from "../schema";
 import { prisma } from "../../../../prisma/client";
-
-export function GET(
+interface Props {
+    params: { id: string }
+}
+export async function GET(
     request: NextRequest,
-    { params }: { params: { id: string } }
-) {
-    const id = Number(params.id);
+    context: Props) {
+    const { params } = await context;
+    const user = await prisma.user.findUnique({
+        where: { id: +params.id },
+    });
 
-    if (isNaN(id)) {
-        return NextResponse.json({ error: "Invalid ID" }, { status: 400 });
-    }
-
-    if (id > 10) {
+    if (!user) {
         return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
-    return NextResponse.json({ id, name: "Mosh" });
+    return NextResponse.json(user);
 }
 export async function PUT(
     request: NextRequest,
