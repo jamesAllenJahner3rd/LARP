@@ -1,11 +1,13 @@
 import { NextResponse, NextRequest } from "next/server";
-import schema from "../users/schema";
+import schema from "../products/schema";
+import prisma from "../../../prisma/client"
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export async function GET(request: NextRequest) {
-    return NextResponse.json([
-        { id: 1, name: 'Product 1', price: 100 },
-        { id: 2, name: 'Product 2', price: 200 },
-    ]);
+    const products = await prisma.product.findMany()
+    if (!products) {
+        return NextResponse.json({ error: " I can't find products in the server where's the server help" }, { status: 400 })
+    }
+    return NextResponse.json(products);
 }
 export async function POST(request: NextRequest) {
     const body = await request.json();
@@ -13,11 +15,19 @@ export async function POST(request: NextRequest) {
     if (!validation.success) {
         return NextResponse.json(validation.error.issues, { status: 400 })
     }
+    const newProduct = await prisma.product.create(
+        {
+            data: {
+                name: body.name,
+                price: body.price
+            }
+        }
+    )
     if (!body.name) {
         return NextResponse.json({ error: "Name is required" }, { status: 400 });
     }
 
-    return NextResponse.json({ id: 10, name: body.name, price: body.price }, { status: 201 });// using a ... Could open the door for malicious users
+    return NextResponse.json(newProduct, { status: 201 });// using a ... Could open the door for malicious users
 }
 
 

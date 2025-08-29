@@ -1,15 +1,17 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { NextResponse, NextRequest } from "next/server";
 import schema from "../schema";
 import { prisma } from "../../../../prisma/client";
+import { error } from "console";
 interface Props {
     params: { id: string }
 }
 export async function GET(
     request: NextRequest,
     context: Props) {
-    const { params } = await context;
+    const params = await context.params;
     const user = await prisma.user.findUnique({
-        where: { id: +params.id },
+        where: { id: parseInt(params.id) },
     });
 
     if (!user) {
@@ -25,7 +27,7 @@ export async function PUT(
     // Validate the request body
     const body = await request.json();
     console.log(body);
-    // If invalid return 400 error
+    // If invalid Or malformed return 400 error 
     // if (!body.name) { instead we use zod schema
     const validation = schema.safeParse(body)// The parse method would throw an exception and I guess we don't want that
     if (!validation.success) {
@@ -48,17 +50,21 @@ export async function PUT(
     })
     return NextResponse.json(updatedUser, { status: 201 });
 }
-export function DELETE(
+export async function DELETE(
     request: NextRequest,
     { params }: { params: { id: string } }) {
-    // Fetch user from the database 
-    if (params.id > '10') {
-        return NextResponse.json({ error: "User not found" }, { status: 404 })
+    // Fetch user from the database
+    const user = await prisma.user.findUnique(
+        { where: { id: parseInt(params.id) } }
+    )
+    if (!user) {
+        return NextResponse.json({ error: "User Not found" }, { status: 404 })
     }
-
+    await prisma.user.delete({ where: { id: user.id } });
+    return NextResponse.json({ message: "DELETE request received" }, { status: 200 });
 
     // if not found return 404 
     // delete the user 
     // return 200
-    return NextResponse.json({ message: "DELETE request received" }, { status: 200 });
+
 }
