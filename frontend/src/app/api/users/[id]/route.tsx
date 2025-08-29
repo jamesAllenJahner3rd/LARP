@@ -1,5 +1,7 @@
 
 import { NextResponse, NextRequest } from "next/server";
+import schema from "../schema";
+import { prisma } from "../../../../prisma/client";
 
 export function GET(
     request: NextRequest,
@@ -25,8 +27,10 @@ export async function PUT(
     const body = await request.json();
     console.log(body);
     // If invalid return 400 error
-    if (!body.name) {
-        return NextResponse.json({ "Error": "Name is required" }, { status: 400 })
+    // if (!body.name) { instead we use zod schema
+    const validation = schema.safeParse(body)// The parse method would throw an exception and I guess we don't want that
+    if (!validation.success) {
+        return NextResponse.json(validation.error.issues, { status: 400 })
     }
     //else fetch user by id
 
