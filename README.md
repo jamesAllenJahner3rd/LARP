@@ -1,191 +1,93 @@
-# VENU - Live Music Venue Booking Platform
+# 🏰 Eldarlands LARP - Interactive Fantasy Storytelling
 
-A comprehensive platform for managing live music events, connecting artists, promoters, venues, and fans. Built with Next.js 14, TypeScript, Tailwind CSS, and shadcn/ui for modern web development.
+**Eldarlands LARP** is a Live-Action Role-Playing community based in **Cherokee Village, Arkansas**, focused on collaborative storytelling, immersive character development, and padded-weapon combat. This website serves as a central hub for players to explore the fantasy world of **Ur**, learn the rules, and stay informed about weekly gatherings and special events.
 
-## 🎵 What is VENU?
+---
 
-VENU is "The Transparent Booking Platform for Live Music" that streamlines the entire process of organizing and attending live music events. From initial booking to door management, VENU provides tools for every stakeholder in the live music ecosystem with a focus on transparency, efficiency, and user experience.
+## ⚔️ What is Eldarlands LARP?
+
+Eldarlands offers an interactive fantasy experience where participants physically act out the roles of their characters. It’s a game of **make-believe and storytelling**, distinct from any real-world rituals, and centered on **fun, safe, and structured combat**.
+
+Players wear costumes, create rich character backstories, and contribute to an evolving shared narrative set in a magical world of myth and heroic deeds.
+
+---
 
 ## ✨ Features
 
-### For Artists
+### For Players & Prospective Players
 
-- **Artist Profile Management**: Create and manage comprehensive artist profiles with bio, genres, social links, and pricing
-- **Artist Dashboard**: Comprehensive gig management and performance tracking
-- **Gig Discovery**: Browse available opportunities with detailed requirements
-- **Set Time Management**: Schedule performances with automatic time slot coordination
-- **Revenue Tracking**: Monitor earnings, guarantees, and percentage-based payouts
-- **Application System**: Apply to gigs with portfolio and requirements matching
-- **Performance Analytics**: Track attendance, ratings, and repeat booking rates
-- **Social Media Integration**: Connect Spotify, Apple Music, Instagram, and website links
-- **Location & Availability**: Set location preferences and availability status
-- **Genre & Style**: Define musical genres and artistic style for better matching
+- **World Lore and Storyline**  
+  Dive into the history of Ur, its chaotic magical realms, and the ongoing narrative shaped by player actions. Stay updated on major plot points like the destruction of the Outpost.
 
-### For Promoters
+- **Game Rules**  
+  Access comprehensive rules for combat, character creation, and role-playing to ensure a safe and enjoyable experience.
 
-- **Multi-Venue Management**: Handle multiple venues from a single dashboard
-- **Artist Discovery**: Search and filter artists by genre, location, rating, and availability
-- **Gig Posting System**: Create detailed events with band requirements and payout structures
-- **Artist Coordination**: Manage applications, confirmations, and communication
-- **Revenue Management**: Set guarantees, bonus tiers, and percentage distributions
-- **Cross-Venue Analytics**: Consolidated performance metrics across all venues
-- **Event Promotion**: Built-in tools for marketing and ticket sales tracking
-- **Artist Booking**: Browse and book artists with comprehensive profile information
+- **Character Building**  
+  Create unique characters with detailed backstories, skills, morals, and relationships. The game encourages deep immersion and personal growth through role-play.
 
-### For Venues (Locations)
+- **Event Information**  
+  Get details on upcoming special events, including dates, locations (e.g., Hardy, AR), and camping options.
 
-- **Location Dashboard**: Complete venue management with comprehensive calendar system
-- **Artist Discovery**: Search and book artists with detailed profiles and availability
-- **Calendar Views**: List view for event management and visual calendar view for scheduling
-- **Availability Management**: Click-to-toggle date availability with persistent storage
-- **Event Scheduling**: Visual calendar with availability tracking and conflict detection
-- **Smart Filtering**: Separate filters for List view (event-focused) and Calendar view (includes date availability)
-- **Band Management**: Track expected vs. confirmed bands with visual progress indicators
-- **Capacity Management**: Real-time ticket sales and occupancy monitoring
-- **Staff Coordination**: Door person assignment and communication tools
-- **Equipment Tracking**: Manage technical requirements and availability
-- **Performance Analytics**: Detailed insights into venue performance and profitability
-- **Promoter Management**: Maintain relationships with multiple promoters and their payout structures
+- **Regular Gathering Details**  
+  Learn about weekly meetups at **Cedar Valley Park** in Cherokee Village, AR.
 
-### For Fans
+- **Community Building**  
+  Discover a welcoming atmosphere for new players. The site addresses common misconceptions about LARP and encourages participation from all age groups.
 
-- **Comprehensive Search**: Unified search across artists, venues, and events with real-time filtering
-- **Artist Discovery**: Browse local artists with streaming links (Spotify, Apple Music) and social media
-- **Venue Exploration**: Discover venues with Instagram links, capacity info, and genre specialties
-- **Event Discovery**: Browse upcoming shows with genre-based filtering and visual event cards
-- **Smart Filtering**: Dynamic genre filters with purple-themed UI for active selections
-- **Ticket Purchasing**: Seamless booking experience with secure payment processing
-- **Event Information**: Detailed show information including lineup, times, and venue details
-- **Favorites System**: Save preferred artists and venues for personalized recommendations
-- **Ticket Management**: Digital ticket storage and easy access for events
-- **Responsive Design**: Optimized experience across desktop, tablet, and mobile devices
+- **Contact and Information**  
+  Reach out to the founder, **Levi Samuel**, via the provided email address for questions or more info.
 
-### For Door Staff
+---
 
-- **Door Scanner App**: Mobile application for ticket validation and entry management
-- **Real-Time Attendance**: Live tracking of ticket sales and venue capacity
-- **Guest List Management**: Handle VIP lists and special access requirements
-- **Event Coordination**: Access to event details, timing, and special instructions
+### For the Community
 
-## 🏗️ Project Architecture
+- **Founder's Message**  
+  A personal welcome from Levi Samuel, emphasizing the spirit of interactive storytelling and the inclusive nature of LARPing.
 
-VENU is built as a **full-stack application** with:
+- **Clarification of Misconceptions**  
+  Addresses stereotypes about LARPers, explaining that Eldarlands is a form of creative play governed by safety and structure.
 
-- **Frontend**: Next.js 14.2.32 with React 18.3.1, TypeScript 5, and Tailwind CSS 3.4.17
-- **Backend**: Node.js with Express 4.21.2 and TypeScript 5.9.2
-- **Database**: MongoDB Atlas (cloud database) with Mongoose 8.17.1 and optimized indexing
-- **Authentication**: JWT-based authentication system with bcryptjs 3.0.2 and secure configuration
-- **UI Components**: shadcn/ui component library built on Radix UI primitives (latest versions)
-- **Forms**: React Hook Form 7.60.0 with Zod 3.25.67 validation
-- **Icons**: Lucide React 0.454.0 for consistent iconography
-- **Charts**: Recharts 2.15.4 for data visualization
-- **Date Handling**: date-fns 4.1.0 for date manipulation
-- **Security**: Rate limiting, error handling, and input sanitization
-- **Performance**: Optimized database queries with parallel operations and lean queries
-- **Code Quality**: Comprehensive TypeScript interfaces and performance optimizations
+- **Event Site Information**  
+  Includes the physical address of the **Eldarlands LARP Event Site**, a key location for major events.
 
-## 🚀 Getting Started
+---
+
+## 📬 Get Involved
+
+Whether you're a seasoned adventurer or a curious newcomer, Eldarlands invites you to step into the world of Ur and help shape its story. Explore, create, and connect.
+
+---
+
+## 🧪 Tech Stack Overview
+
+This site is built as a **full-stack application** using:
+
+- **Frontend**: Next.js `15.5.0` with React `19.1.0`, TypeScript `5`, Tailwind CSS `4.1.12`, and DaisyUI `5.0.52`
+- **Backend**: Node.js `24.6.0` with Prisma `6.15.0` and Next.js API routes
+- **Authentication**: NextAuth `4.24.11`
+- **Media Handling**: next-cloudinary `6.16.0`
+- **Validation**: Zod `4.1.5`
+- **Mobile Deployment**: Capacitor `7.4.3` (iOS and Android support)
+- **Linting & Formatting**: ESLint `9`, TypeScript strict mode, and modular code organization
+
+---
+
+## 🛠️ Getting Started
 
 ### Prerequisites
 
-- **Node.js 18+** (Recommended: Node.js 20+)
-- **npm** or **yarn** package manager
-- **Git** for version control
-- **MongoDB** (local installation recommended for development)
-- **Homebrew** (for macOS MongoDB installation)
+- **Node.js 20+**
+- **npm** or **yarn**
+- **Git**
+- **MongoDB or Prisma-compatible database** (depending on deployment)
 
 ### Installation
 
-1. **Clone the repository:**
-
-```bash
-git clone <your-repo-url>
-cd VENU
-```
-
-2. **Install frontend dependencies:**
-
-```bash
-npm install
-```
-
-3. **Install backend dependencies:**
-
-```bash
-cd backend
-npm install
-cd ..
-```
-
-4. **Install and start MongoDB:**
-
-   **For macOS (using Homebrew):**
-
+1. **Clone the repository**
    ```bash
-   # Install MongoDB Community Edition
-   brew install mongodb-community
-
-   # Start MongoDB service
-   brew services start mongodb/brew/mongodb-community
-
-   # Verify MongoDB is running
-   brew services list | grep mongodb
-   mongosh --eval "db.runCommand('ping')" --quiet
+   git clone <your-repo-url>
+   cd frontend
    ```
-
-   **For other platforms:**
-
-   - [Windows MongoDB Installation](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/)
-   - [Linux MongoDB Installation](https://docs.mongodb.com/manual/administration/install-on-linux/)
-
-5. **Set up environment variables:**
-
-   Create a `.env` file in the `backend/` directory:
-
-   ```env
-   # Database Configuration (Local MongoDB)
-   MONGODB_URI=mongodb://localhost:27017/venu
-
-   # Server Configuration
-   PORT=3001
-   NODE_ENV=development
-
-   # JWT Configuration
-   JWT_SECRET=your-super-secret-jwt-key-here
-   JWT_EXPIRES_IN=7d
-   JWT_ISSUER=venu-api
-   JWT_AUDIENCE=venu-app
-
-   # Frontend URL (for CORS)
-   FRONTEND_URL=http://localhost:3000
-   ```
-
-### Running the Application
-
-#### Option 1: Quick Start (Recommended)
-
-Use the provided startup scripts to run both servers simultaneously:
-
-**For macOS/Linux:**
-
-```bash
-./start-dev.sh
-```
-
-**For Windows:**
-
-```bash
-start-dev.bat
-```
-
-#### Option 2: Manual Start
-
-1. **Start the backend server:**
-
-```bash
-cd backend
-npm run dev
-```
 
 The backend will run on `http://localhost:3001`
 
@@ -249,7 +151,7 @@ npm run dev:backend   # Backend only
 2. **Test MongoDB connection:**
 
    ```bash
-   mongosh venu --eval "db.runCommand('ping')" --quiet
+   mongosh larp --eval "db.runCommand('ping')" --quiet
    ```
 
 3. **Test backend API:**
@@ -309,31 +211,17 @@ The backend provides RESTful API endpoints with comprehensive security and valid
 - **Authentication**: `/api/auth/*` - User registration, login, profile management
 - **Users**: `/api/users/*` - User CRUD operations and role management with admin controls
 
-### Artist Management
-
-- **Artists**: `/api/artists/*` - Artist profile CRUD operations with search and filtering
-  - Public endpoints for artist discovery and search
-  - Protected endpoints for profile management
-  - Advanced filtering by genre, location, and rating
-  - Comprehensive search across name, bio, and genres
-  - Optimized pagination with parallel database queries
-
-### Events & Venues
-
-- **Gigs**: `/api/gigs/*` - Event creation, management, and booking with promoter controls
-- **Locations**: `/api/locations/*` - Venue management and availability with search capabilities
-
 ### Security Features
 
 - **Rate Limiting**: Protection against abuse with configurable limits
 - **Input Validation**: Comprehensive Zod schema validation for all endpoints
 - **Error Handling**: Typed error responses with proper logging
-- **Authentication**: JWT-based security with role-based access control
+- **Authentication**: Next-auth.js security with role-based access control
 - **Performance**: Optimized database queries with lean operations and parallel processing
 
 ## 📱 Mobile Development Strategy
 
-**Current Status**: VENU is built as a modern web application using Next.js 14 with responsive design for optimal cross-device compatibility.
+**Current Status**: LARP is built as a modern web application using Next.js 14 with responsive design for optimal cross-device compatibility.
 
 **Future Plans**: The responsive web design serves as a foundation for future mobile app development, ensuring consistent user experience across all platforms.
 
