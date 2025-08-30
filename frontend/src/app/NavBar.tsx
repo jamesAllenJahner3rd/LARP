@@ -17,7 +17,7 @@ const NavBar = () => {
             {status === 'authenticated' && <div className='ml-auto flex items-center space-x-3'>
                 <span>Welcome, {session?.user?.name || session?.user?.email}</span>
                 {session?.user?.image && <Image width={32} height={32} src={session.user.image} alt="User Image" className='w-8 h-8 rounded-full' />}
-                <Link href="/api/auth/signout" className='btn btn-primary btn-sm'>Sign Out</Link>
+                <Link href="/api/auth/signout" className='btn btn-primary btn-sm'>Sign Out</Link> {/* Sign out is an endpoint handled by Next JS */}
             </div>}
             {status === 'unauthenticated' && <Link href="/api/auth/signin" className='ml-auto' >Sign In</Link>}
         </nav >
