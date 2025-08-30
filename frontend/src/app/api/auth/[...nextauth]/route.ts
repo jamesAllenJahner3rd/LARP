@@ -1,14 +1,21 @@
-import NextAuth from "next-auth";
+import NextAuth, { type NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
+import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import { prisma } from "@/prisma/client"; // Adjust the import path as necessary
+import { adapter } from "next/dist/server/web/adapter";
 
 // This had to be removed from the handler and exported to the main page so that we can get session data to the server
-export const authOptions = {
+export const authOptions: NextAuthOptions = {
+  adapter: PrismaAdapter(prisma),
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
     }),
   ],
+  // session: {
+  //   strategy: "jwt",
+  // }, Doesn't seem to be necessary anymore...
 };
 
 const handler = NextAuth(authOptions);
