@@ -1,3 +1,0 @@
-User-agent: *
-Allow: /
-Sitemap: https://your-netlify-site.netlify.app/sitemap.xml
