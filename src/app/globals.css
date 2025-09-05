@@ -33,8 +33,17 @@ h3 {
   font-weight: bolder;
   font-size: x-large;
 }
-
+h4 {
+  font-family: Macondo, Helvetica, sans-serif;
+  font-weight: bolder;
+  font-size: x-large;
+}
 h2 {
+  font-family: Macondo, Helvetica, sans-serif;
+  font-weight: bolder;
+  font-size: large;
+}
+caption {
   font-family: Macondo, Helvetica, sans-serif;
   font-weight: bolder;
   font-size: large;
