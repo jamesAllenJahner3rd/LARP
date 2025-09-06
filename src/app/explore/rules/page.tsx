@@ -8,10 +8,10 @@ const Rules = () => {
 
         <>
 
-            <main className={`bg-[url('/images/hfa_scroll.png')] bg-center bg-cover bg-origin-border ${screenBG} bg-blend-overlay`} >
+            <main className={`bg-[url('/images/hfa_scroll.webp')] bg-center bg-cover bg-origin-border ${screenBG} bg-blend-overlay`} >
                 <section className="bg-amber-50 md:flex md:flex-row md:m-4">
                     {/* <Image
-                        src="/images/arms2.png"
+                        src="/images/arms2.webp"
                         alt="Group of players standing together"
                         width={1200}
                         height={800}
@@ -34,7 +34,7 @@ const Rules = () => {
                 </section>
                 <section className=" rounded-2xl box-border p-2 w-full relative top-0 my-5">
                     <Image
-                        src="/images/five_classes.png"
+                        src="/images/five_classes.webp"
                         alt="Group of players standing together"
                         width={1200}
                         height={800}
@@ -50,7 +50,7 @@ const Rules = () => {
                 </section>
                 <section className=" rounded-2xl box-border p-2 w-full relative flex-row-reverse my-5 top-0">
                     <Image
-                        src="/images/Safety.png"
+                        src="/images/Safety.webp"
                         alt="Group of players standing together with feathers for weapons and pillows for armor"
                         width={1200}
                         height={800}
@@ -64,7 +64,7 @@ const Rules = () => {
                 </section>
                 <section className=" rounded-2xl box-border p-2 w-full my-5 relative top-0">
                     <Image
-                        src="/images/fazingA.png"
+                        src="/images/fazingA.webp"
                         alt="Group of players standing together"
                         width={1200}
                         height={800}
@@ -77,7 +77,7 @@ const Rules = () => {
                 </section>
                 <section className=" rounded-2xl box-border p-2 w-full relative flex-row-reverse my-10 top-0">
                     <Image
-                        src="/images/cat-fazingA.png"
+                        src="/images/cat-fazingA.webp"
                         alt="Group of players standing together with feathers for weapons and pillows for armor"
                         width={1200}
                         height={800}

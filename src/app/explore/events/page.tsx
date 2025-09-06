@@ -6,7 +6,7 @@ const Events = () => {
 
             <section className="bg-amber-50 md:flex md:flex-row md:m-4">
                 <Image
-                    src="/images/party.png"
+                    src="/images/party.webp"
                     alt="Group of players standing together"
                     width={1200}
                     height={800}
@@ -41,7 +41,7 @@ const Events = () => {
 
                     </p></article>
                 <Image
-                    src="/images/characters_camping.png"
+                    src="/images/characters_camping.webp"
                     alt="Group of players camping together"
                     width={1200}
                     height={800}

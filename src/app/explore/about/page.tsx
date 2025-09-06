@@ -5,7 +5,7 @@ const About = () => {
 
 
             <Image
-                src="/images/ahf-intro6.png"
+                src="/images/ahf-intro6.webp"
                 alt="Group of characters ready to adventure"
                 width={1200}
                 height={800}
@@ -63,7 +63,7 @@ const About = () => {
                     </p>
                 </article>
                 <Image
-                    src="/images/ahf-outpost7.png"
+                    src="/images/ahf-outpost7.webp"
                     alt="Group of players standing together"
                     width={1200}
                     height={800}
@@ -97,7 +97,7 @@ const About = () => {
                     </p>
                 </article>
                 <Image
-                    src="/images/ahf-greetings3.png"
+                    src="/images/ahf-greetings3.webp"
                     alt="Group of players standing together"
                     width={1200}
                     height={800}

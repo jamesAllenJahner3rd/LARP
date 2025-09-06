@@ -6,7 +6,7 @@ const Pantheon = () => {
         <>
             <section className="bg-amber-50 md:flex md:flex-row-reverse md:m-2">
                 <Image
-                    src="/images/magic-prayer.png"
+                    src="/images/magic-prayer.webp"
                     alt=" A girl praying to a God of magic"
                     width={1200}
                     height={800}
@@ -25,7 +25,7 @@ const Pantheon = () => {
                     Players may choose a patron deity from our pantheon, invent their own, or opt out entirely. Religion is for roleplay only and holds no sway outside the game.
                     Want to add depth to your character&#39;s backstory? Explore divine politics? Lead a crusade or protect a sacred grove? Religion is your gateway to epic storytelling.
                 </p><Image
-                    src="/images/dark-prayer.png"
+                    src="/images/dark-prayer.webp"
                     alt=" A boy praying to a dark God"
                     width={1200}
                     height={800}

@@ -7,7 +7,7 @@ const resources = () => {
             <Image
                 width="1800"
                 height="670"
-                src="/images/Eldarlands-LARP-Cover.png"
+                src="/images/Eldarlands-LARP-Cover.webp"
                 alt="Eldarlands logo"
                 loading="lazy"
                 sizes="1/1"
@@ -32,7 +32,7 @@ const resources = () => {
                         Recruitment Posters
                     </a>
                 </article> <Image
-                    src="/images/Eldarlands-LARP-eBook-Cover.jpg"
+                    src="/images/Eldarlands-LARP-eBook-Cover.webp"
                     alt=" The cover of the Eldarlands LARP book"
                     width={1200}
                     height={800}
@@ -55,7 +55,7 @@ const resources = () => {
             <section className="bg-amber-50 md:flex md:flex-row md:w-8/9  md:justify-self-center gap-[3%] ">
 
                 <Image
-                    src="/images/ahf-character-creation.png"
+                    src="/images/ahf-character-creation.webp"
                     alt=" A character creation screen image"
                     width={1200}
                     height={800}
@@ -69,7 +69,7 @@ const resources = () => {
                         <figure>
                             <a href="../pdfs/Daedra-Ironfoot-Halfling-Cleric.pdf" className='flex justify-center' target="_blank" rel="noopener noreferrer">
                                 <Image
-                                    src="/images/DeanSpencer-spotcol-cleric-1.png"
+                                    src="/images/DeanSpencer-spotcol-cleric-1.webp"
                                     alt=" Redheaded lady in White Clerical robes holding a staff"
                                     width={150}
                                     height={150}
@@ -89,7 +89,7 @@ const resources = () => {
                                     width={150}
                                     height={150}
                                     className='flex justify-center'
-                                    src="/images/DeanSpencer-spotcol-drowknightFP.png"
+                                    src="/images/DeanSpencer-spotcol-drowknightFP.webp"
                                     alt=" Black armored figure with white hair red eyes and two swords"
                                     loading="lazy"
                                     sizes="1/1" />								</a>
@@ -97,27 +97,27 @@ const resources = () => {
                         </figure>
                         <figure>
                             <a href="../pdfs/Lucious-Amalar-High-Elf-Mage.pdf" className='flex justify-center' target="_blank" rel="noopener noreferrer">
-                                <Image width={150} height={150} className="flex justify-center" src="/images/DeanSpencer-Character-moonelf-e1680414816906.png" alt="" loading="lazy" sizes="1/1" />								</a>
+                                <Image width={150} height={150} className="flex justify-center" src="/images/DeanSpencer-Character-moonelf-e1680414816906.webp" alt="" loading="lazy" sizes="1/1" />								</a>
                             <h2><a href="../pdfs/Lucious-Amalar-High-Elf-Mage.pdf" className='flex justify-center' target="_blank" rel="noopener noreferrer">Lucious Amalar the High Elf Mage</a></h2>
                         </figure>
                         <figure>
                             <a href="../pdfs/Ishkar-Marbel-Felinos-Ranger.pdf" className='flex justify-center' target="_blank" rel="noopener noreferrer">
-                                <Image width={150} height={150} className="flex justify-center" src="/images/tabaxi_fighter-e1680414113839.png" alt="" loading="lazy" sizes="1/1" />								</a>
+                                <Image width={150} height={150} className="flex justify-center" src="/images/tabaxi_fighter-e1680414113839.webp" alt="" loading="lazy" sizes="1/1" />								</a>
                             <h2><a href="../pdfs/Ishkar-Marbel-Felinos-Ranger.pdf" className='flex justify-center' target="_blank" rel="noopener noreferrer">Ishkar Marbel the Felinos Ranger</a></h2>
                         </figure>
                         <figure>
                             <a href="../pdfs/Vahny-Dustborn-Vulpine-Rogue.pdf" className='flex justify-center' target="_blank" rel="noopener noreferrer">
-                                <Image width={150} height={150} className="flex justify-center" src="/images/DeanSpencer-character-kitsune-e1680414860765.png" alt="" loading="lazy" sizes="1/1" />								</a>
+                                <Image width={150} height={150} className="flex justify-center" src="/images/DeanSpencer-character-kitsune-e1680414860765.webp" alt="" loading="lazy" sizes="1/1" />								</a>
                             <h2><a href="../pdfs/Vahny-Dustborn-Vulpine-Rogue.pdf" className='flex justify-center' target="_blank" rel="noopener noreferrer">Vahny Dustborn the Vulpine Rogue</a></h2>
                         </figure>
                         <figure>
                             <a href="../pdfs/MaKeal-Buras-Human-Cleric.pdf" className='flex justify-center' target="_blank" rel="noopener noreferrer">
-                                <Image width={150} height={150} className="flex justify-center" src="/images/DeanSpencer-Paladin-e1680414915136.png" alt="" loading="lazy" sizes="1/1" />								</a>
+                                <Image width={150} height={150} className="flex justify-center" src="/images/DeanSpencer-Paladin-e1680414915136.webp" alt="" loading="lazy" sizes="1/1" />								</a>
                             <h2><a href="../pdfs/MaKeal-Buras-Human-Cleric.pdf" className='flex justify-center' target="_blank" rel="noopener noreferrer">Ma&#39;Keal Buras the Human Cleric</a></h2>
                         </figure>
                         <figure>
                             <a href="../pdfs/Thark-Plainsclan-Grunthar-Orc-Fighter.pdf" className='flex justify-center' target="_blank" rel="noopener noreferrer">
-                                <Image width={150} height={150} className="flex justify-center" src="/images/DeanSpencer-spotcol-ogretank.png" alt="" loading="lazy" sizes="1/1" />								</a>
+                                <Image width={150} height={150} className="flex justify-center" src="/images/DeanSpencer-spotcol-ogretank.webp" alt="" loading="lazy" sizes="1/1" />								</a>
                             <h2><a href="../pdfs/Thark-Plainsclan-Grunthar-Orc-Fighter.pdf" className='flex justify-center' target="_blank" rel="noopener noreferrer">Thark Plainsclan  the Grunthar Orc Fighter</a></h2>
                         </figure>
                         <figure>
@@ -130,7 +130,7 @@ const resources = () => {
                                     width={150}
                                     height={150}
                                     className="flex justify-center"
-                                    src="/images/DeanSpencer-spotcol-duergarmage.png"
+                                    src="/images/DeanSpencer-spotcol-duergarmage.webp"
                                     alt=" A dark dwarf shooting lightning" loading="lazy" sizes="1/1" />								</a>
                             <h2>
                                 <a
@@ -152,7 +152,7 @@ const resources = () => {
                                     width={150}
                                     height={150}
                                     className="flex jus alright sotify-center"
-                                    src="/images/DeanSpencer-hunter-e1680414761571.png"
+                                    src="/images/DeanSpencer-hunter-e1680414761571.webp"
                                     alt=" A female troll dressed in hide with a spear and shield"
                                     loading="lazy"
                                     sizes="1/1" />								</a>
@@ -160,7 +160,7 @@ const resources = () => {
                         </figure>
                         <figure>
                             <a href="../pdfs/Gromthorn-Uroken-Orc-Rogue.pdf" className='flex justify-center' target="_blank" rel="noopener noreferrer">
-                                <Image width={150} height={150} className="flex justify-center" src="/images/DeanSpencer-spotcol-ogrehunter.png" alt="" loading="lazy" sizes="1/1" />								</a>
+                                <Image width={150} height={150} className="flex justify-center" src="/images/DeanSpencer-spotcol-ogrehunter.webp" alt="" loading="lazy" sizes="1/1" />								</a>
                             <h2>
                                 <a
                                     href="../pdfs/Gromthorn-Uroken-Orc-Rogue.pdf"
@@ -181,7 +181,7 @@ const resources = () => {
                                     width={150}
                                     height={150}
                                     className="flex justify-center"
-                                    src="/images/DeanSpencer-spotcol-goatgirl.png"
+                                    src="/images/DeanSpencer-spotcol-goatgirl.webp"
                                     alt=""
                                     loading="lazy"
                                     sizes="1/1" />								</a>
@@ -189,22 +189,22 @@ const resources = () => {
                         </figure>
                         <figure>
                             <a href="../pdfs/Selvik-Minotaur-Fighter.pdf" className='flex justify-center' target="_blank" rel="noopener noreferrer">
-                                <Image width={150} height={150} className="flex justify-center" src="/images/DeanSpencer-minotaur-character-e1680414682902.png" alt="" loading="lazy" sizes="1/1" />								</a>
+                                <Image width={150} height={150} className="flex justify-center" src="/images/DeanSpencer-minotaur-character-e1680414682902.webp" alt="" loading="lazy" sizes="1/1" />								</a>
                             <h2><a href="../pdfs/Selvik-Minotaur-Fighter.pdf" className='flex justify-center' target="_blank" rel="noopener noreferrer">Selvik the Minotaur Fighter</a></h2>
                         </figure>
                         <figure>
                             <a href="../pdfs/Glaughlin-Fizzlebane-Gnome-Mage.pdf" className='flex justify-center' target="_blank" rel="noopener noreferrer">
-                                <Image width={150} height={150} className="flex justify-center" src="/images/DeanSpencer-spotcol-gnomebard.png" alt="" loading="lazy" sizes="1/1" />								</a>
+                                <Image width={150} height={150} className="flex justify-center" src="/images/DeanSpencer-spotcol-gnomebard.webp" alt="" loading="lazy" sizes="1/1" />								</a>
                             <h2><a href="../pdfs/Glaughlin-Fizzlebane-Gnome-Mage.pdf" className='flex justify-center' target="_blank" rel="noopener noreferrer">Glaughlin Fizzlebane the Gnome Mage</a></h2>
                         </figure>
                         <figure>
                             <a href="../pdfs/Baelgarn-Sathril-Wood-Elf-Ranger.pdf" className='flex justify-center' target="_blank" rel="noopener noreferrer">
-                                <Image width={150} height={150} className="flex justify-center" src="/images/DeanSpencer-spotcol-elfarcher.png" alt="" loading="lazy" sizes="1/1" />								</a>
+                                <Image width={150} height={150} className="flex justify-center" src="/images/DeanSpencer-spotcol-elfarcher.webp" alt="" loading="lazy" sizes="1/1" />								</a>
                             <h2><a href="../pdfs/Baelgarn-Sathril-Wood-Elf-Ranger.pdf" className='flex justify-center' target="_blank" rel="noopener noreferrer">Bael&#39;garn Sathril the Wood Elf Ranger</a></h2>
                         </figure>
                         <figure>
                             <a href="../pdfs/Patael-Featherstep-Buraling-Rogue.pdf" className='flex justify-center' target="_blank" rel="noopener noreferrer">
-                                <Image width={150} height={150} className="flex justify-center" src="/images/DeanSpencer-spotcol-halflingwithdagger.png" alt="" loading="lazy" sizes="1/1" />								</a>
+                                <Image width={150} height={150} className="flex justify-center" src="/images/DeanSpencer-spotcol-halflingwithdagger.webp" alt="" loading="lazy" sizes="1/1" />								</a>
                             <h2><a href="../pdfs/Patael-Featherstep-Buraling-Rogue.pdf" className='flex justify-center' target="_blank" rel="noopener noreferrer">Patael Featherstep the Buraling Rogue</a></h2>
                         </figure>
 
@@ -213,7 +213,7 @@ const resources = () => {
             </section >
 
             <section className="bg-amber-50 md:flex md:flex-row md:m-4">
-                <Image width="1024" height="768" src="/images/Ur-Map.jpg" alt="" loading="lazy" sizes="1/1" className="rounded-lg w-full md:w-3/5 size-1/1 md:flex shadow-md" />
+                <Image width="1024" height="768" src="/images/Ur-Map.webp" alt="" loading="lazy" sizes="1/1" className="rounded-lg w-full md:w-3/5 size-1/1 md:flex shadow-md" />
                 <article className="md:flex md:flex-col  md:w-2/5 md:justify-center">
                     <h4 className='flex align-top'>The World of Ur</h4>
                     <h2 className='flex justify-center'>Experience the Story for Yourself</h2>
