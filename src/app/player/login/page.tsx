@@ -1,31 +1,36 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { account, ID } from "./appwrite";
 import type { Models } from "appwrite";
 
+export const dynamic = "force-dynamic";
+export const fetchCache = "force-no-store";
+
 const LoginPage = () => {
     const [loggedInUser, setLoggedInUser] = useState<Models.User<Models.Preferences> | null>(null);
-
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [name, setName] = useState("");
 
+    useEffect(() => {
+        const checkSession = async () => {
+            try {
+                const user = await account.get();
+                setLoggedInUser(user);
+            } catch {
+                setLoggedInUser(null);
+            }
+        };
+        checkSession();
+    }, []);
+
     const login = async (email: string, password: string) => {
-        const session = await account.createEmailPasswordSession(
-            email,
-            password
-        );
+        await account.createEmailPasswordSession(email, password);
         setLoggedInUser(await account.get());
     };
 
     const register = async () => {
-
-        await account.create(
-            ID.unique(),
-            email,
-            password,
-            name
-        );
+        await account.create(ID.unique(), email, password, name);
         login(email, password);
     };
 
@@ -33,6 +38,8 @@ const LoginPage = () => {
         await account.deleteSession("current");
         setLoggedInUser(null);
     };
+
+    const inputCSS = "bg-green-200 border-1 rounded";
 
     if (loggedInUser) {
         return (
@@ -44,12 +51,12 @@ const LoginPage = () => {
             </div>
         );
     }
-    const inputCSS = "bg-green-200 border-1 rounded"
+
     return (
         <div className="border-black border-2 justify-center flex flex-col flex-1">
             <p>Not logged in</p>
             <form className="flex flex-col">
-                <label htmlFor="email" className="text-">Email:</label>
+                <label htmlFor="email">Email:</label>
                 <input
                     type="email"
                     placeholder="Email"
@@ -67,9 +74,10 @@ const LoginPage = () => {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     id="password"
-                    className="bg-green-200 border-1"
+                    className={inputCSS}
                     autoComplete="password"
                 />
+
                 <label htmlFor="name">Name:</label>
                 <input
                     type="text"
@@ -80,6 +88,7 @@ const LoginPage = () => {
                     className={inputCSS}
                     autoComplete="name"
                 />
+
                 <button type="button" onClick={() => login(email, password)} className="btn btn-primary">
                     Login
                 </button>
@@ -87,18 +96,8 @@ const LoginPage = () => {
                     Register
                 </button>
             </form>
-
         </div>
     );
 };
-async function checkSession() {
-    try {
-        const user = await account.get();
-        // Logged in
-    } catch (err) {
-        // Not logged in
-    }
-}
 
-checkSession();
 export default LoginPage;
