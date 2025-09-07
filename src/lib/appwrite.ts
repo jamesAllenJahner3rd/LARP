@@ -4,11 +4,11 @@ const client = new Client();
 
 if (typeof window !== "undefined") {
   client
-    .setEndpoint("https://nyc.cloud.appwrite.io/v1")
+    .setEndpoint(process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT!)
     .setProject(process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID!);
 }
 
-const account = new Account(client);
-const databases = new Databases(client);
-
-export { client, account, databases };
+export const account =
+  typeof window !== "undefined" ? new Account(client) : null;
+export const databases =
+  typeof window !== "undefined" ? new Databases(client) : null;
