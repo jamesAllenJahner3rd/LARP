@@ -1,0 +1,97 @@
+@import url("https://fonts.googleapis.com/css2?family=Macondo&display=swap");
+@import "tailwindcss";
+
+:root {
+  --background: #fffbeb;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #fffbeb;
+  }
+}
+.macondo-regular {
+  font-family: "Macondo", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+h3 {
+  font-weight: bolder;
+  font-size: x-large;
+}
+h4 {
+  font-family: Macondo, Helvetica, sans-serif;
+  font-weight: bolder;
+  font-size: x-large;
+}
+h2 {
+  font-family: Macondo, Helvetica, sans-serif;
+  font-weight: bolder;
+  font-size: large;
+}
+caption {
+  font-family: Macondo, Helvetica, sans-serif;
+  font-weight: bolder;
+  font-size: large;
+}
+.btn {
+  border: 1px solid black;
+  border-radius: 3.40282e38px;
+  border-style: var(--tw-border-style);
+  border-width: 1px;
+  padding-inline: calc(var(--spacing) * 3);
+  align-items: center;
+  justify-items: center;
+  max-width: fit-content;
+  min-width: fit-content;
+  box-sizing: border-box;
+  margin: 1%;
+}
+
+.btn-primary {
+  background-color: var(--color-neutral-200);
+}
+.input {
+  box-shadow: 0 0 0px 1000px #fff inset !important;
+  -webkit-text-fill-color: #000 !important;
+  border: 1px solid black;
+  border-radius: 3.40282e38px;
+  border-style: var(--tw-border-style);
+  border-width: 1px;
+  padding-inline: calc(var(--spacing) * 3);
+  align-items: center;
+  justify-items: center;
+  max-width: fit-content;
+  min-width: fit-content;
+  box-sizing: border-box;
+  margin: 1%;
+}
+input:-webkit-autofill {
+  box-shadow: 0 0 0px 1000px #fff inset !important;
+  -webkit-text-fill-color: #000 !important;
+  border: 1px solid black;
+  border-radius: 3.40282e38px;
+  border-style: var(--tw-border-style);
+  border-width: 1px;
+  padding-inline: calc(var(--spacing) * 3);
+  align-items: center;
+  justify-items: center;
+  max-width: fit-content;
+  min-width: fit-content;
+  box-sizing: border-box;
+  margin: 1%;
+}
