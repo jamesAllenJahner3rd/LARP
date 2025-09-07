@@ -91,11 +91,14 @@ const LoginPage = () => {
         </div>
     );
 };
-try {
-    const user = await account.get();
-    // Logged in
-} catch (err) {
-    // Not logged in
+async function checkSession() {
+    try {
+        const user = await account.get();
+        // Logged in
+    } catch (err) {
+        // Not logged in
+    }
 }
 
+checkSession();
 export default LoginPage;
