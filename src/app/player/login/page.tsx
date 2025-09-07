@@ -12,17 +12,17 @@ const LoginPage = () => {
     const [password, setPassword] = useState("");
     const [name, setName] = useState("");
 
-    useEffect(() => {
-        const checkSession = async () => {
-            try {
-                const user = await account.get();
-                setLoggedInUser(user);
-            } catch {
-                setLoggedInUser(null);
-            }
-        };
-        checkSession();
-    }, []);
+    // useEffect(() => {
+    //     const checkSession = async () => {
+    //         try {
+    //             const user = await account.get();
+    //             setLoggedInUser(user);
+    //         } catch {
+    //             setLoggedInUser(null);
+    //         }
+    //     };
+    //     checkSession();
+    // }, []);
 
     const login = async (email: string, password: string) => {
         await account.createEmailPasswordSession(email, password);
