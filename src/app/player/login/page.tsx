@@ -1,10 +1,11 @@
 "use client";
 import { useEffect, useState } from "react";
-import { account, ID } from "./appwrite";
+import { account, ID } from "@/lib/appwrite";
 import type { Models } from "appwrite";
 
 export const dynamic = "force-dynamic";
 export const fetchCache = "force-no-store";
+// export const revalidate = 0;
 
 const LoginPage = () => {
     const [loggedInUser, setLoggedInUser] = useState<Models.User<Models.Preferences> | null>(null);
@@ -25,20 +26,22 @@ const LoginPage = () => {
     // }, []);
 
     const login = async (email: string, password: string) => {
+        if (!account) return;
         await account.createEmailPasswordSession(email, password);
         setLoggedInUser(await account.get());
     };
 
     const register = async () => {
+        if (!account) return;
         await account.create(ID.unique(), email, password, name);
-        login(email, password);
+        await login(email, password);
     };
 
     const logout = async () => {
+        if (!account) return;
         await account.deleteSession("current");
         setLoggedInUser(null);
     };
-
     const inputCSS = "bg-green-200 border-1 rounded";
 
     if (loggedInUser) {
