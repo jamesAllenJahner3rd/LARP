@@ -1,8 +1,10 @@
 import React from 'react'
-
+import Marketplace from './components/MarketplaceVideo'
 const page = () => {
   return (
-    <div className='bg-blue-500'>page</div>
+    <div className=''>
+      <Marketplace />
+    </div>
   )
 }
 
