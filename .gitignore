@@ -23,10 +23,10 @@
 
 # misc
 /resourses
-public
+
 /pdfs/
 /public/pdfs/
-/public/videos/
+
 /videos/
 .DS_Store
 *.pem

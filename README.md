@@ -53,3 +53,54 @@ client.setEndpoint("https://nyc.cloud.appwrite.io/v1");
 .git/
 in the appwrite setting:
 Build runtime: Node-18.0
+
+This project is built with Next.js 15.5.2 and styled using Tailwind CSS, targeting deployment on Appwrite Sites. Below are key setup and troubleshooting notes to ensure smooth deployment and onboarding.
+
+✅ Build & Prerendering
+
+- All static routes are successfully prerendered (○), including /explore, /player, and /user.
+- The /player/login route is client-only and must avoid SDK instantiation during build. See Client-Side SDK Handling.
+
+⚠️ Known Build Issue: Appwrite SDK in Server Context
+During next build, the Appwrite SDK throws an error:
+AppwriteException: Invalid endpoint URL: "https://nyc.cloud.appwrite.io/v1"
+
+This occurs because the SDK is being bundled into the server build. To fix:
+
+- Do not instantiate Appwrite SDK at module scope.
+- Move SDK logic into a client-only wrapper or useEffect.
+
+🧩 Client-Side SDK Handling
+To safely use Appwrite in client components:
+"use client";
+import { useEffect } from "react";
+
+useEffect(() => {
+const { Client, Account } = require("appwrite");
+const client = new Client();
+client.setEndpoint(process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT || "")
+.setProject(process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID || "");
+const account = new Account(client);
+// Use account methods here
+}, []);
+
+Alternatively, isolate SDK logic in src/lib/appwrite-client.ts and import only inside event handlers or effects.
+
+🧪 Local Testing Before Upload
+Before deploying to Appwrite:
+
+- Run npm run build and confirm no prerender errors.
+- Validate .env.local includes:
+- NEXT_PUBLIC_APPWRITE_ENDPOINT
+- NEXT_PUBLIC_APPWRITE_PROJECT_ID
+- Simulate file uploads locally using Appwrite SDK.
+- Confirm dynamic routes use force-dynamic and fetchCache = "force-no-store" if needed.
+
+🧹 Debugging Tips
+
+- If you see repeated false logs during build, check for stray console.log(false) or conditionals in generateStaticParams.
+- Use console.log(typeof window !== "undefined") to verify client-only execution.
+
+import { account, ID } from "./appwrite";
+to
+import { account, ID } from "@/lib/appwrite";
