@@ -6,7 +6,7 @@ import React from 'react'
 
 const SwordVideo = () => {
     return <video src="/videos/sword-clash.mp4"
-        className='border-4 border-amber-200 border-solid m-2'
+        className='flex justify-self-center border-4 border-amber-200 border-solid m-2 '
         autoPlay
         loop
         muted

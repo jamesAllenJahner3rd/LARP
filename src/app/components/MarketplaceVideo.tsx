@@ -6,9 +6,9 @@ import React from 'react'
 
 const Marketplace = () => {
     return <video src="/videos/marketside.mp4"
-        className='border-4 border-amber-200 border-solid m-2'
+        className='border-4 border-amber-200 border-solid m-2 flex justify-self-center'
         autoPlay
-        loop
+
         muted
         controls
         playsInline

@@ -15,9 +15,11 @@ const NavBar = () => {
     }, []);
 
     const [openMenu, setOpenMenu] = useState(false);
-    const navCss = `bg-neutral-200 grid grid-rows-5 min-h-5 min-w-fit grid py-8 px-3 items-center justify-items-center w-content border-1 rounded-full fixed inset-y-0 max-h-fit m-auto max-w-fit transition-all duration-1000 ease-in-out ${openMenu ? "inset-x-0 opacity-100" : "inset-x-100 opacity-0"}`
-    const navMedium = "md:h-fit md:overflow-hidden md:m-auto md:min-w-fit md:grid-cols-5 md:max-w-fit md:grid md:py-2 md:px-3 md:items-center md:justify-items-center md:w-content md:border-1 md:rounded-full md:fixed md:inset-x-0 md:mx-auto md:bottom-6 md:grid-rows-1 md:opacity-100 md:inset-y-5/6 transition-transform "
-    const h3Css = `md:h-full md:relative -ease-out md:transition-all md:overflow-hidden duration-1000 ${loaded ? "md:translate-y-0" : "md:translate-y-20"} md:hover:animate-bounce`
+
+    const navCss = `transition-all duration-1000 ease-in-out ${openMenu ? "inset-x-0 opacity-100" : "inset-x-100 opacity-0"} bg-neutral-200 grid grid-rows-5 min-h-5 min-w-fit max-w-[1rem] py-8 px-3 items-center justify-items-center border-1 rounded-full fixed inset-y-0 justify-self-center`
+
+    const navMedium = ` md:overflow-hidden md:grid-cols-5  md:inset-x-0 md:mx-auto md:bottom-6 md:grid-rows-1 md:opacity-100 md:inset-y-5/6 md:duration-2000 md:min-w-0 md:min-h-fit md:py-0 md:px-0 md:max-w-[768px] ${loaded ? "md:w-[768px]" : "md:w-0"}`
+    const h3Css = `md:h-full md:relative -ease-out md:transition-all md:overflow-hidden duration-1000 ${loaded ? "md:opacity-100 md:translate-y-0" : "md:opacity-0 md:translate-y-20"} md:hover:animate-bounce`
     return (
         <>
             <HamburgerMenu openMenu={openMenu} setOpenMenu={setOpenMenu} />

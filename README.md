@@ -104,3 +104,36 @@ Before deploying to Appwrite:
 import { account, ID } from "./appwrite";
 to
 import { account, ID } from "@/lib/appwrite";
+
+## 🚀 Appwrite Setup
+
+This project uses [Appwrite Cloud](https://appwrite.io/cloud) for authentication and database services.
+
+### Environment Variables
+
+Create a `.env.local` file in the project root with the following:
+
+```env
+NEXT_PUBLIC_APPWRITE_ENDPOINT=https://cloud.appwrite.io/v1
+NEXT_PUBLIC_APPWRITE_PROJECT_ID=your-project-id
+NEXT_PUBLIC_APPWRITE_PROJECT_NAME=your-project-name
+```
+
+⚠️ **Important notes:**
+
+- Always use `https://cloud.appwrite.io/v1` as the endpoint for Appwrite Cloud.
+  Regional subdomains (like `https://nyc.cloud.appwrite.io/v1`) are **only for the dashboard UI** and will break your client.
+- Variable names are **case-sensitive**. Make sure `NEXT_PUBLIC_APPWRITE_ENDPOINT` ends with `ENDPOINT` (all caps).
+
+### Next.js Build Considerations
+
+- Pages that rely on the Appwrite client (like `/player/login`) must run only on the client, not during server-side rendering (SSR).
+- To prevent build-time crashes, we mark those pages as **dynamic only**:
+
+```ts
+export const dynamic = "force-dynamic";
+export const fetchCache = "force-no-store";
+export const revalidate = 0;
+```
+
+This ensures Next.js doesn’t attempt to prerender Appwrite-dependent pages.
