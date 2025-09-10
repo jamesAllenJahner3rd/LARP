@@ -7,7 +7,7 @@ const resources = () => {
             <Image
                 width="1800"
                 height="670"
-                src="/images/Eldarlands-LARP-Cover.webp"
+                src="/images/Eldarlands-LARP-Logo-full-size.webp"
                 alt="Eldarlands logo"
                 loading="lazy"
                 sizes="1/1"
@@ -19,16 +19,16 @@ const resources = () => {
                         Game Resources</h2>
 
                     <p>Download the player&#39;s handbook, character sheets, release waivers, or aid in recruitment with the following resources. These files are PDFs, for use in association with the Eldarlands Live Action Role Playing game. All other use is prohibited.</p>
-                    <a href="../pdfs/Eldarlands-LARP-Players-Handbook-PDF-eBook.pdf" className='flex justify-center' target="_blank" rel="noopener noreferrer">
+                    <a href="../pdfs/Eldarlands-LARP-Players-Handbook-PDF-eBook.pdf" className='flex justify-center underline' target="_blank" rel="noopener noreferrer">
                         Player&#39;s Handbook V.1
                     </a>
-                    <a href="../pdfs/Eldarlands-LARP-Character-Sheet.pdf" className='flex justify-center' target="_blank" rel="noopener noreferrer">
+                    <a href="../pdfs/Eldarlands-LARP-Character-Sheet.pdf" className='flex justify-center underline' target="_blank" rel="noopener noreferrer">
                         Character Sheets
                     </a>
-                    <a href="../pdfs/Release-Waiver.pdf" className='flex justify-center' target="_blank" rel="noopener noreferrer">
+                    <a href="../pdfs/Release-Waiver.pdf" className='flex justify-center underline' target="_blank" rel="noopener noreferrer">
                         Liability Release Waivers
                     </a>
-                    <a href="../pdfs/Recruitment-Poster.pdf" className='flex justify-center' target="_blank" rel="noopener noreferrer">
+                    <a href="../pdfs/Recruitment-Poster.pdf" className='flex justify-center underline' target="_blank" rel="noopener noreferrer">
                         Recruitment Posters
                     </a>
                 </article> <Image
