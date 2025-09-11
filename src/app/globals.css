@@ -1,14 +1,30 @@
 @import url("https://fonts.googleapis.com/css2?family=Macondo&display=swap");
 @import "tailwindcss";
 :root {
-  --background: #fffbeb;
+  --background: rgb(255, 251, 235);
+  --background-alpha: rgba(232, 219, 219, 0.5);
   --foreground: #171717;
 }
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
-    --foreground: #fffbeb;
+    --background-alpha: rgba(166, 157, 157, 0.8);
+    --foreground: rgb(255, 251, 235);
   }
+}
+.scrollbar-thick::-webkit-scrollbar {
+  height: 186px; /* wider horizontal scrollbar */
+}
+
+.scrollbar-thick::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar-thick::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.3); /* semi-transparent thumb */
+  border-radius: 8px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
 }
 
 body {
