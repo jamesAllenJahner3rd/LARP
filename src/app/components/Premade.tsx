@@ -105,7 +105,7 @@ const Premade = async () => {
     return (
         <article className="md:flex md:flex-col  md:w-2/5 md:justify-center">
             <h4 className='flex justify-center'>Premade Character Concepts</h4>
-            <div className='snap-y scroll-pl-6 font-extrabold font block underline-offset-1 justify-center md:w-1/1 h-96 overflow-y-auto p-4 bg-amber-50 rounded-lg shadow-md'>
+            <div className='snap-y scroll-pl-6 font-extrabold font block underline-offset-1 justify-center md:w-1/1 h-96 overflow-y-auto p-4 var(--background) rounded-lg shadow-md'>
                 {files.map((file) => (
                     <figure key={file.id}>
                         <a

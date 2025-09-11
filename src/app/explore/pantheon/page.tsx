@@ -4,7 +4,7 @@ import Image from 'next/image'
 const Pantheon = () => {
     return (
         <>
-            <section className="bg-amber-50 md:flex md:flex-row-reverse md:m-2">
+            <section className="var(--background) md:flex md:flex-row-reverse md:m-2">
                 <Image
                     src="/images/magic-prayer.webp"
                     alt=" A girl praying to a God of magic"
@@ -19,7 +19,7 @@ const Pantheon = () => {
                         Clerics channel divine energy to perform miracles. Mages may strike dark bargains for forbidden magic. Rangers draw strength from nature itself. Whether your character is a devout follower, a reluctant prophet, or a skeptic surrounded by zealots, religion can shape your journey.</p>
                 </article>
             </section>
-            <section className="bg-amber-50 md:flex md:flex-row-reverse md:m-2">
+            <section className="var(--background) md:flex md:flex-row-reverse md:m-2">
 
                 <p className="md:flex md:flex-col md:w-2/5 md:justify-center">The world of Ur—and other Eldarlands realms—is steeped in divine history. Wars have been fought over gods. Crusades have unearthed ancient relics. Entire regions have been reshaped by divine influence.
                     Players may choose a patron deity from our pantheon, invent their own, or opt out entirely. Religion is for roleplay only and holds no sway outside the game.

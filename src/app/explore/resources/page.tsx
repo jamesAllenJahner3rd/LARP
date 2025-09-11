@@ -15,7 +15,7 @@ const resources = () => {
                 sizes="1/1"
 
             />
-            <section className="bg-amber-50 md:flex md:flex-row md:m-4 md:justify-around m-1">
+            <section className="var(--background) md:flex md:flex-row md:m-4 md:justify-around m-1">
                 <article className="md:flex md:flex-col  md:w-2/5 md:justify-center">
                     <h2 className="md:flex Eldarlands md:justify-center"> L.A.R.P.
                         Game Resources</h2>
@@ -54,7 +54,7 @@ const resources = () => {
 
 
             <p className="text-center m-1">Please note, Eldarlands LARP has <b>no affiliation</b> with the above video. It&#39;s simply a good resource for new and old players alike. When entering into a role play setting, it&#39;s important to become immersed, but one must also know where to draw the line between fantasy and reality.</p>
-            <section className="bg-amber-50 md:flex md:flex-row md:w-8/9  md:justify-self-center gap-[3%] ">
+            <section className="var(--background) md:flex md:flex-row md:w-8/9  md:justify-self-center gap-[3%] ">
 
                 <Image
                     src="/images/ahf-character-creation.webp"
@@ -68,7 +68,7 @@ const resources = () => {
                 <Premade />
             </section >
 
-            <section className="bg-amber-50 md:flex md:flex-row md:m-4">
+            <section className="var(--background) md:flex md:flex-row md:m-4">
                 <Image width="1024" height="768" src="/images/Ur-Map.webp" alt="" loading="lazy" sizes="1/1" className="rounded-lg w-full md:w-3/5 size-1/1 md:flex shadow-md" />
                 <article className="md:flex md:flex-col  md:w-2/5 md:justify-center">
                     <h4 className='flex align-top'>The World of Ur</h4>

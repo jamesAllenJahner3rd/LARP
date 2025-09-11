@@ -4,7 +4,7 @@ const Events = () => {
     return (
         <section>
 
-            <section className="bg-amber-50 md:flex md:flex-row md:m-4">
+            <section className="var(--background) md:flex md:flex-row md:m-4">
                 <Image
                     src="/images/party.webp"
                     alt="Group of players standing together"
@@ -32,7 +32,7 @@ const Events = () => {
                 But fear not! The games will happen! Any who remain are welcome to test their mettle and see who will be the champion of the 3rd Annual Harvest Tournament and Feast. We may not have guards or a city wall to keep the dangers of the wilds at bey, but those willing to step forward and participate will be rewarded!</p>
 
 
-            <section className="bg-amber-50 md:flex md:flex-row md:m-4">
+            <section className="var(--background) md:flex md:flex-row md:m-4">
                 <article className="md:flex md:flex-col  md:w-2/5 md:justify-center"><h2>***ATTENTION***</h2>
 
                     <span>Camping is NOT mandatory but it is encouraged.</span>

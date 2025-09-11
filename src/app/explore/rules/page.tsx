@@ -9,7 +9,7 @@ const Rules = () => {
         <>
 
             <main className={`bg-[url('/images/hfa_scroll.webp')] bg-center bg-cover bg-origin-border ${screenBG} bg-blend-overlay`} >
-                <section className="bg-amber-50 md:flex md:flex-row md:m-4">
+                <section className="var(--background) md:flex md:flex-row md:m-4">
                     {/* <Image
                         src="/images/arms2.webp"
                         alt="Group of players standing together"

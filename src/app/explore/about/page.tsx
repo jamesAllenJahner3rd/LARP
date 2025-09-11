@@ -14,7 +14,7 @@ const About = () => {
                 className="rounded-lg w-full size-1/1  shadow-md"
             />
 
-            <section className="bg-amber-50 md:flex md:flex-row md:m-4">
+            <section className="var(--background) md:flex md:flex-row md:m-4">
 
 
                 <ul className="md:flex md:flex-col  md:w-2/5 md:justify-center">
@@ -43,7 +43,7 @@ const About = () => {
 
 
             </section>
-            <section className="bg-amber-50 md:flex md:flex-row-reverse md:m-2">
+            <section className="var(--background) md:flex md:flex-row-reverse md:m-2">
 
                 <article className="md:flex md:flex-col  md:w-2/5 md:justify-center">
                     <h2>Where and When</h2>
@@ -71,7 +71,7 @@ const About = () => {
                     className="rounded-lg w-full md:w-3/5 size-1/1 md:flex   shadow-md"
                 />
             </section>
-            <section className="bg-amber-50 md:flex md:flex-row md:m-4">
+            <section className="var(--background) md:flex md:flex-row md:m-4">
                 <article className="md:flex md:flex-col  md:w-2/5 md:justify-center">
                     <h2>Why Join?</h2>
                     <p>
