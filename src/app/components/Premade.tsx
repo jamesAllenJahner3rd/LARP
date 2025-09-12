@@ -108,6 +108,7 @@ const Premade = async () => {
             <div className='snap-y scroll-pl-6 font-extrabold font block underline-offset-1 justify-center md:w-1/1 h-96 overflow-y-auto p-4 var(--background) rounded-lg shadow-md'>
                 {files.map((file) => (
                     <figure key={file.id}>
+
                         <a
                             href={`https://nyc.cloud.appwrite.io/v1/storage/buckets/${bucket}/files/${file.id}/view?project=${process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID}`}
                             target="_blank"

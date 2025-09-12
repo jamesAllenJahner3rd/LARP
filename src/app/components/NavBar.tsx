@@ -21,7 +21,7 @@ const NavBar = () => {
 
     const [openMenu, setOpenMenu] = useState(false);
 
-    const navCss = `transition-all duration-1000 ease-in-out ${openMenu ? "inset-x-0 opacity-100" : "inset-x-100 opacity-0"} bg-neutral-200 grid grid-rows-5 min-h-5 min-w-fit max-w-[1rem] py-8 px-3 items-center justify-items-center border-1 rounded-full fixed inset-y-0 justify-self-center`
+    const navCss = `transition-all duration-1000 ease-in-out ${openMenu ? "inset-x-0 opacity-100" : "inset-x-100 opacity-0"} bg-[var(--navbar-background)] grid grid-rows-5 min-h-5 min-w-fit max-w-[1rem] py-8 px-3 items-center justify-items-center border-1 rounded-full fixed inset-y-0 justify-self-center`
 
     const navMedium = ` md:overflow-hidden md:grid-cols-5  md:inset-x-0 md:mx-auto md:bottom-6 md:grid-rows-1 md:opacity-100 md:inset-y-5/6 md:duration-2000 md:min-w-0 md:min-h-fit md:py-0 md:px-0 md:max-w-[768px] ${loaded ? "md:w-[768px]" : "md:w-0"}`
     const h3Css = `md:h-full md:relative -ease-out md:transition-all md:overflow-hidden duration-1000 ${loaded ? "md:opacity-100 md:translate-y-0" : "md:opacity-0 md:translate-y-20"} md:hover:animate-bounce`

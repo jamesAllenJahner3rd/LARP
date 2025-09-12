@@ -1,3 +1,4 @@
+import { EXPORT_DETAIL } from "next/dist/shared/lib/constants";
 import { storage } from "./appwrite"; // uses your existing client
 
 export async function getFileURL(bucketId: string, fileId: string) {
@@ -10,3 +11,21 @@ export async function getFileURL(bucketId: string, fileId: string) {
     throw error;
   }
 }
+// export async function uploader(bucketId: string, fileId: string) {
+//   const result = await storage.createFile({
+//     bucketId: '<BUCKET_ID>',
+//     fileId: '<FILE_ID>',
+//     file: document.getElementById('uploader').files[0],
+//     permissions: ["read("any")"] // optional
+
+// })}
+// export  function postData (dbId:string, cId:string, docId:string, postData:any){
+
+//   return const result = await databases.createDocument({
+//     databaseId: dbId,
+//     collectionId:cId,
+//     documentId:docId,
+//     data:postData,
+//     permissions: ["read("any")"] // optional
+// });
+// }
