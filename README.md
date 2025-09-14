@@ -137,3 +137,149 @@ export const revalidate = 0;
 ```
 
 This ensures Next.js doesn’t attempt to prerender Appwrite-dependent pages.
+
+---
+
+Absolutely—here’s a clean, professional version of the explanation tailored for your `README.md`, with onboarding clarity and maintainability in mind:
+
+---
+
+## ⚠️ Appwrite SDK: `deleteDocument` Usage Note
+
+### SDK Version Discrepancy
+
+Appwrite’s official documentation shows `deleteDocument` being called with an object-style payload:
+
+```ts
+databases.deleteDocument({
+  databaseId: "...",
+  collectionId: "...",
+  documentId: "...",
+});
+```
+
+However, depending on the version of the Appwrite SDK installed, this may result in a TypeScript error:
+
+```
+Expected 3 arguments, but got 1.
+```
+
+This error occurs because earlier versions of the SDK expect **three positional arguments**, not a single object.
+
+---
+
+### ✅ Resolution
+
+If you encounter this error, use the positional format instead:
+
+```ts
+databases.deleteDocument(databaseId, collectionId, documentId);
+```
+
+To use the object-style format shown in the docs, update your Appwrite SDK to the latest version:
+
+```bash
+npm install appwrite@latest
+```
+
+---
+
+### 🧠 Best Practices
+
+- Lock your Appwrite SDK version in `package.json` to avoid unexpected API changes.
+- Wrap Appwrite calls in utility functions to standardize usage and simplify onboarding.
+- Document SDK expectations clearly for contributors working across different environments.
+
+---
+
+### 🧠 React State & JSX Patterns (Session Summary)
+
+This session covered foundational and advanced patterns for managing state and rendering dynamic JSX in React with TypeScript:
+
+#### ✅ `useState` Fundamentals
+
+- Scalar: `const [flag, setFlag] = useState(false)` — infers `boolean`
+- Array: `useState<boolean[]>(Array(length).fill(false))` — explicit typing for dynamic lists
+- Tuple typing: `const [state, setState]: [boolean, Dispatch<SetStateAction<boolean>>] = useState(false)` — verbose but precise
+
+#### ✅ JSX + Dynamic State
+
+- Each rendered element can be tied to a unique state via index or ID
+- Example: `setActiveStates(prev => prev.map((t, i) => i === id ? !t : t))` — toggles state at a specific index
+
+#### ✅ JSX Nesting & `<br />` Usage
+
+- `<br />` is valid inside `<p>`, but avoid placing it as a sibling to block elements inside fragments
+- Prefer semantic spacing via Tailwind (`mb-2`) or multiple `<p>` tags for clarity
+
+#### ✅ TypeScript Syntax Clarifications
+
+- Use `:` for variable or parameter types (`const x: boolean`)
+- Use `<T>` for generic functions (`useState<boolean>(false)`)
+
+#### ✅ Import Hygiene
+
+- Prefer combined imports: `import React, { useState } from 'react';`
+
+---
+
+Storyline Rendering & Content Formatting
+
+We’ve standardized how lore entries (e.g. Eldarlands logs) are stored, fetched, and rendered in our Next.js + Appwrite project.
+
+✅ Data Storage
+
+Entries are uploaded as plain text strings.
+
+Line breaks are preserved with \n from <textarea> input.
+
+Database schema:
+
+{
+"heading": "Chapter 1",
+"body": "Welcome to Eldarlands\nPrepare for battle"
+}
+
+✅ Rendering Strategy
+
+We avoid dangerouslySetInnerHTML to prevent XSS risks.
+
+Instead, we split text on newlines and render safely in React.
+
+Example via LoreText helper:
+
+const LoreText = ({ text }: { text: string }) => (
+<>
+{text.split(/\r?\n/).map((line, i) => (
+<p key={i} className="indent-1">
+{line}
+</p>
+))}
+</>
+);
+
+✅ Server vs Client Components
+
+Server Components (e.g. page.tsx) handle async data fetching with getTable(...).
+
+Client Components (e.g. StorylineClient.tsx) handle interactivity (onClick, expand/collapse).
+
+Data is passed as props from the Server Component into the Client Component.
+
+✅ Expand / Collapse UX
+
+Each log entry starts truncated to the first 30 characters.
+
+Clicking toggles expansion, showing the full body with preserved line breaks.
+
+Expansion state is managed per-entry with useState<boolean[]>.
+
+This section documents our content flow best practices:
+
+Store plain text
+
+Preserve formatting safely
+
+Keep fetch logic server-side
+
+Keep interactivity client-side

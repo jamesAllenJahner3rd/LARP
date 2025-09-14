@@ -19,13 +19,3 @@ export async function getFileURL(bucketId: string, fileId: string) {
 //     permissions: ["read("any")"] // optional
 
 // })}
-// export  function postData (dbId:string, cId:string, docId:string, postData:any){
-
-//   return const result = await databases.createDocument({
-//     databaseId: dbId,
-//     collectionId:cId,
-//     documentId:docId,
-//     data:postData,
-//     permissions: ["read("any")"] // optional
-// });
-// }

@@ -1,6 +1,6 @@
 import React from 'react'
 import Image from 'next/image'
-import Premade from '@/app/components/Premade'
+import Premade from './Premade'
 
 // import Link from 'next/link'
 const resources = () => {
