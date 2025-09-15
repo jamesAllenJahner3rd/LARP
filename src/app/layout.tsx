@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Macondo } from "next/font/google";
+import { Geist, Geist_Mono, Lato, MedievalSharp } from "next/font/google";
 import "./globals.css";
 import NavBar from "./components/NavBar";
 
@@ -14,10 +14,17 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const macondo = Macondo({
+const medievalSharp = MedievalSharp({
+  variable: "--font-MedievalSharp",
   subsets: ["latin"],
-  weight: "400",
-  variable: "--font-macondo"
+  weight: "400"
+
+});
+const lato = Lato({
+  variable: "--font-Lato",
+  subsets: ["latin"],
+  weight: "400"
+
 });
 
 
@@ -35,7 +42,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${macondo.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${medievalSharp.variable} antialiased`}
       >
         {children}
         <NavBar />

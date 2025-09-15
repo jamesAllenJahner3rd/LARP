@@ -34,7 +34,7 @@ const page = (Prop) => {
           </h1></section>
       </header>
       <section className=" rounded-2xl box-border p-2 w-full relative top-0 my-5 flex md:flex-row flex-col justify-evenly">
-        {/* <h1 className=`text-foreground ${macondo.className}`>Welcome To EldarLands</h1> */}
+        {/* <h1 className=`text-foreground ${MedievalSharp.className}`>Welcome To EldarLands</h1> */}
 
         <Image
           src="/images/battle1.webp"

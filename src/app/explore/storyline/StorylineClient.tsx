@@ -1,7 +1,9 @@
 "use client";
 import React, { useState } from 'react';
 import type { Models } from 'appwrite';
-
+import { Timeline } from 'antd';
+import { CaretRightOutlined } from '@ant-design/icons';
+import Form from 'next/form'
 
 
 const StorylineClient = ({ entries }: { entries: Models.Document[] }) => {
@@ -15,31 +17,42 @@ const StorylineClient = ({ entries }: { entries: Models.Document[] }) => {
     }
 
     return (
-        <div className='mb-48'>
-            <h2>Storyline</h2>
-            {entries.map((log, id) => (
-                <article key={log.$id}>
-                    <h3 className=' cursor-default'>{log.heading}</h3>
-                    <time>{new Date(log.$createdAt).toLocaleDateString()}</time>
-                    <div className='indent-1 w-4/5 justify-self-center-safe cursor-pointer' onClick={() => { setLogExpanded(prev => prev.map((t, i) => i === id ? !t : t)) }}>
-                        {expandToggle(id, log.body).split("\\n").map((line, i) => (
-                            <React.Fragment key={i}>
-                                <p className='indent-5 leading-10'>{line}</p>
 
-                            </React.Fragment>
-                        ))}
-                    </div>
-                </article>
-            ))
-            }
-            <fieldset>
-                <form>
+        < div className='mb-48 mx-8' >
+            <h2>Storyline</h2>
+            <Timeline className='text-[var(--foreground)]'
+                items={
+                    entries.map((log, id) => (
+                        {
+                            dot: <CaretRightOutlined style={{ color: 'var(--foreground)' }} />,
+
+
+                            children: <article key={log.$id}>
+                                <h4 className=' cursor-default text-[var(--foreground)]'>{log.heading}</h4>
+                                <time className='text-[var(--foreground)]'>{new Date(log.$createdAt).toLocaleDateString()}</time>
+                                <div className='indent-1 w-4/5 justify-self-center-safe cursor-pointer text-[var(--foreground)]' onClick={() => { setLogExpanded(prev => prev.map((t, i) => i === id ? !t : t)) }}>
+                                    {expandToggle(id, log.body).split("\\n").map((line, i) => (
+                                        <React.Fragment key={i}>
+                                            <p className='indent-5 leading-10'>{line}</p>
+
+                                        </React.Fragment>
+                                    ))}
+                                </div>
+                            </article>
+                        }
+                    ))
+                }
+            />
+
+            < fieldset className='flex justify-center' >
+                <Form className='border-2 border-black rounded-2xl w-full
+                 md:w-2/3 flex flex-col mb-48'>
                     <label htmlFor="heading">Title:</label>
-                    <input id="heading" type='text' />
+                    <input id="heading" type='text' className='border-2 border-black rounded-2xl px-2 bg-[var(--background-alpha)] m-2' placeholder='Enter Title here.' />
                     <label htmlFor="body">Article:</label>
-                    <input id="body" type="textbox" />
-                    <button>Up Load</button>
-                </form>
+                    <textarea id="body" name="newLog" rows="10" className='m-2 border-2 border-black rounded-2xl px-2 bg-[var(--background-alpha)]' placeholder='Enter Article here.' />
+                    <button className='border-2 type="submit" id="addLog" border-black rounded-2xl bg-[var(--button)] w-fit p-3 justify-self-center self-center-safe m-2 flex '>Upload Article</button>
+                </Form>
 
             </fieldset>
 
