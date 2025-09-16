@@ -57,7 +57,7 @@ const StorylineClient = ({ entries }: { entries: Models.RowList }) => {
                     <input name="heading" type='text' className='border-2 border-black rounded-2xl px-2 bg-[var(--background-alpha)] m-2' placeholder='Enter Title here.' />
 
                     <label htmlFor="body">Article:</label>
-                    <textarea id="body" name="newLog" rows="10" className='m-2 border-2 border-black rounded-2xl px-2 bg-[var(--background-alpha)]' placeholder='Enter Article here.' />
+                    <textarea id="body" name="newLog" rows={10} className='m-2 border-2 border-black rounded-2xl px-2 bg-[var(--background-alpha)]' placeholder='Enter Article here.' />
 
                     <button className='border-2 type="submit" id="addLog" border-black rounded-2xl bg-[var(--button)] w-fit p-3 justify-self-center self-center-safe m-2 flex '>
                         Upload Article

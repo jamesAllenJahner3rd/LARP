@@ -251,6 +251,7 @@ Example via LoreText helper:
 const LoreText = ({ text }: { text: string }) => (
 <>
 {text.split(/\r?\n/).map((line, i) => (
+
 <p key={i} className="indent-1">
 {line}
 </p>
@@ -283,3 +284,6 @@ Preserve formatting safely
 Keep fetch logic server-side
 
 Keep interactivity client-side
+
+- Appwrite version 20 changes to the table database.
+  Instead of using a row[] you wanna use a rowList
