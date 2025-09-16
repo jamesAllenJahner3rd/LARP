@@ -1,6 +1,6 @@
 
 import { Timeline } from "antd";
-import { storage, databases } from '@/lib/appwrite'
+import { storage } from '@/lib/appwrite'
 import { postData, getData, patchData, deleteData, getList } from '@/lib/database';
 import StorylineClient from './StorylineClient';
 import Image from "next/image";
