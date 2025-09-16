@@ -7,7 +7,7 @@ import Image from "next/image";
 const Storyline = async () => {
     const table = await getList("68c1160a001638ade3a0", "storyentries")
     const entries = table
-    console.log(table.rows)
+    // console.log(table.rows)
     return (
         <>
             <Image
