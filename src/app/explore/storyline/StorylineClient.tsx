@@ -52,12 +52,12 @@ const StorylineClient = ({ entries }: { entries: Models.RowList }) => {
                 {/* <form action="/api/admin/storylineForm" method="POST" id="newlogForm" className='border-2 border-black rounded-2xl w-full
                  md:w-2/3 flex flex-col mb-48'> */}
                 <Form action={createStoryEntry} id="newlogForm" className='border-2 border-black rounded-2xl w-full
-                 md:w-2/3 flex flex-col mb-48'>
-                    <label htmlFor="heading">Title:</label>
-                    <input name="heading" type='text' className='border-2 border-black rounded-2xl px-2 bg-[var(--background-alpha)] m-2' placeholder='Enter Title here.' />
+                 md:w-2/3 flex flex-col mb-48 bg-neutral-500'>
+                    <label htmlFor="heading" className='ml-2'>Title:</label>
+                    <input name="heading" type='text' className='text-black border-2 border-black rounded-2xl px-2 bg-[var(--background-alpha)] m-2' placeholder='Enter Title here.' />
 
-                    <label htmlFor="body">Article:</label>
-                    <textarea id="body" name="newLog" rows={10} className='m-2 border-2 border-black rounded-2xl px-2 bg-[var(--background-alpha)]' placeholder='Enter Article here.' />
+                    <label htmlFor="body" className='ml-2'>Article:</label>
+                    <textarea id="body" name="newLog" rows={10} className='text-black m-2 border-2 border-black rounded-2xl px-2 bg-[var(--background-alpha)]' placeholder='Enter Article here.' />
 
                     <button className='border-2 type="submit" id="addLog" border-black rounded-2xl bg-[var(--button)] w-fit p-3 justify-self-center self-center-safe m-2 flex '>
                         Upload Article
