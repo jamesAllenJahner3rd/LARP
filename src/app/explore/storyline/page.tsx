@@ -1,13 +1,13 @@
 
 import { Timeline } from "antd";
 import { storage, databases } from '@/lib/appwrite'
-import { postData, getData, patchData, deleteData, getTable } from '@/lib/database';
+import { postData, getData, patchData, deleteData, getList } from '@/lib/database';
 import StorylineClient from './StorylineClient';
 import Image from "next/image";
 const Storyline = async () => {
-    const table = await getTable("68c1160a001638ade3a0", "storyentries")
-    const entries = table.documents
-    console.log(table.documents)
+    const table = await getList("68c1160a001638ade3a0", "storyentries")
+    const entries = table
+    console.log(table.rows)
     return (
         <>
             <Image
@@ -19,7 +19,7 @@ const Storyline = async () => {
 
                 className="rounded-lg w-full size-1/1  p-4"
             />
-            <StorylineClient entries={table.documents} />
+            <StorylineClient entries={table} />
         </>
     );
 }

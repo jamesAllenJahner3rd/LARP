@@ -4,11 +4,15 @@ import type { Models } from 'appwrite';
 import { Timeline } from 'antd';
 import { CaretRightOutlined } from '@ant-design/icons';
 import Form from 'next/form'
+import { createStoryEntry } from '@/app/actions/createStoryEntry';
 
-
-const StorylineClient = ({ entries }: { entries: Models.Document[] }) => {
-    console.log(entries)
-    const [logExpanded, setLogExpanded] = useState<boolean[]>(Array(entries.length).fill(false))
+// export type StoryEntry = Models.Row & {
+//     heading: string;
+//     body: string;
+// }
+const StorylineClient = ({ entries }: { entries: Models.RowList }) => {
+    // console.log(entries)
+    const [logExpanded, setLogExpanded] = useState<boolean[]>(Array(entries.rows.length).fill(false))
 
     function expandToggle(id: number, text: string) {
         let print: string[] = [""]
@@ -22,7 +26,7 @@ const StorylineClient = ({ entries }: { entries: Models.Document[] }) => {
             <h2>Storyline</h2>
             <Timeline className='text-[var(--foreground)]'
                 items={
-                    entries.map((log, id) => (
+                    entries.rows.map((log, id) => (
                         {
                             dot: <CaretRightOutlined style={{ color: 'var(--foreground)' }} />,
 
@@ -45,13 +49,19 @@ const StorylineClient = ({ entries }: { entries: Models.Document[] }) => {
             />
 
             < fieldset className='flex justify-center' >
-                <Form className='border-2 border-black rounded-2xl w-full
+                {/* <form action="/api/admin/storylineForm" method="POST" id="newlogForm" className='border-2 border-black rounded-2xl w-full
+                 md:w-2/3 flex flex-col mb-48'> */}
+                <Form action={createStoryEntry} id="newlogForm" className='border-2 border-black rounded-2xl w-full
                  md:w-2/3 flex flex-col mb-48'>
                     <label htmlFor="heading">Title:</label>
-                    <input id="heading" type='text' className='border-2 border-black rounded-2xl px-2 bg-[var(--background-alpha)] m-2' placeholder='Enter Title here.' />
+                    <input name="heading" type='text' className='border-2 border-black rounded-2xl px-2 bg-[var(--background-alpha)] m-2' placeholder='Enter Title here.' />
+
                     <label htmlFor="body">Article:</label>
                     <textarea id="body" name="newLog" rows="10" className='m-2 border-2 border-black rounded-2xl px-2 bg-[var(--background-alpha)]' placeholder='Enter Article here.' />
-                    <button className='border-2 type="submit" id="addLog" border-black rounded-2xl bg-[var(--button)] w-fit p-3 justify-self-center self-center-safe m-2 flex '>Upload Article</button>
+
+                    <button className='border-2 type="submit" id="addLog" border-black rounded-2xl bg-[var(--button)] w-fit p-3 justify-self-center self-center-safe m-2 flex '>
+                        Upload Article
+                    </button>
                 </Form>
 
             </fieldset>

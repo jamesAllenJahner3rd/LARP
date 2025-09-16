@@ -1,13 +1,13 @@
-import { databases } from "./appwrite";
+import { tablesDB } from "./appwrite";
 
 export async function getData(
   dbId: string,
-  cId: string,
-  docId: string,
+  tableId: string,
+  rowId: string,
   queries: any,
 ) {
   try {
-    const result = await databases.getDocument(dbId, cId, docId, queries);
+    const result = await tablesDB.getRow(dbId, tableId, rowId, queries);
     console.log("Document retrieved:", dbId);
     return result;
   } catch (error) {
@@ -15,9 +15,9 @@ export async function getData(
     throw error;
   }
 }
-export async function getTable(dbId: string, tableId: string) {
+export async function getList(dbId: string, tableId: string) {
   try {
-    const result = await databases.listDocuments(dbId, tableId);
+    const result = await tablesDB.listRows(dbId, tableId);
     console.log("Table was found:", dbId);
 
     return result;
@@ -29,16 +29,16 @@ export async function getTable(dbId: string, tableId: string) {
 
 export async function postData(
   dbId: string,
-  cId: string,
-  docId: string,
+  tableId: string,
+  rowId: string,
   postData: any,
   permissions?: any,
 ) {
   try {
-    const result = await databases.createDocument(
+    const result = await tablesDB.createRow(
       dbId,
-      cId,
-      docId,
+      tableId,
+      rowId,
       postData,
       permissions,
     );
@@ -51,16 +51,16 @@ export async function postData(
 }
 export async function patchData(
   dbId: string,
-  cId: string,
-  docId: string,
+  tableId: string,
+  rowId: string,
   putData: any,
   permissions: any,
 ) {
   try {
-    const result = await databases.updateDocument(
+    const result = await tablesDB.updateRow(
       dbId,
-      cId,
-      docId,
+      tableId,
+      rowId,
       putData, // optional
       permissions, // optional
     );
@@ -73,11 +73,11 @@ export async function patchData(
 }
 export async function deleteData(
   dbId: string,
-  cId: string,
-  docId: string,
+  tableId: string,
+  rowId: string,
 ): Promise<void> {
   try {
-    const result = await databases.deleteDocument(dbId, cId, docId);
+    const result = await tablesDB.deleteRow(dbId, tableId, rowId);
 
     console.log("Document deleted:", dbId);
   } catch (error) {
