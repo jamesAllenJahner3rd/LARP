@@ -287,3 +287,9 @@ Keep interactivity client-side
 
 - Appwrite version 20 changes to the table database.
   Instead of using a row[] you wanna use a rowList
+
+-Updated the server action create story entry to revalidate the path on being called
+import { revalidatePath } from 'next/cache';
+
+revalidatePath('/explore/storyline');
+needed to be added.

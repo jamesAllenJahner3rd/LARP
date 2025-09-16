@@ -3,7 +3,7 @@
 
 import { postData } from "@/lib/database";
 import { ID, Permission, Role } from "appwrite";
-
+import { revalidatePath } from "next/cache";
 export async function createStoryEntry(formData: FormData): Promise<void> {
   const heading = formData.get("heading");
   const body = formData.get("newLog");
@@ -25,4 +25,5 @@ export async function createStoryEntry(formData: FormData): Promise<void> {
       //   Permission.delete(Role.team("admin")),
     ],
   );
+  revalidatePath("/explore/storyline");
 }
