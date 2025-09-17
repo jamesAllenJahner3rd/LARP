@@ -12,7 +12,16 @@ export const navConfig: Record<string, NavGroup> = {
     hyperRef: [
       "/",
       "/explore/about",
-      "/player",
+      "/login",
+      "https://armstreet.com/collections/fireside-family-larp-costume-basics-and-more",
+    ],
+  },
+  login: {
+    heading: ["Welcome", "Explore", "Members", "Shop"],
+    hyperRef: [
+      "/",
+      "/explore/about",
+      "/register",
       "https://armstreet.com/collections/fireside-family-larp-costume-basics-and-more",
     ],
   },
@@ -70,6 +79,15 @@ export const navConfig: Record<string, NavGroup> = {
       "/explore/about",
     ],
   },
+  members: {
+    heading: ["Events", "Pantheon", "Resources", "Log Out"],
+    hyperRef: [
+      "/explore/events",
+      "/explore/pantheon",
+      "/explore/resources",
+      "/explore/about",
+    ],
+  },
 };
 export function getNavForPath(pathname: string): NavGroup {
   if (pathname.startsWith("/explore/about")) return navConfig.about;
@@ -77,68 +95,7 @@ export function getNavForPath(pathname: string): NavGroup {
   if (pathname.startsWith("/explore/pantheon")) return navConfig.pantheon;
   if (pathname.startsWith("/explore/events")) return navConfig.events;
   if (pathname.startsWith("/explore/rules")) return navConfig.rules;
+  if (pathname.startsWith("/login")) return navConfig.login;
   if (pathname === "/") return navConfig.home;
   return navConfig.home;
 }
-
-//   home: [
-//     { heading: "Welcome", hyperRef: "/" },
-//     { heading: "Explore", hyperRef: "/explore/about" },
-//     { heading: "Members", hyperRef: "/player" },
-//     {
-//       heading: "Shop",
-//       hyperRef: "https://armstreet.com/collections/fireside-family-larp-costume-basics-and-more",
-//     },
-//   ],
-//   about: [
-//     { heading: "Events", hyperRef: "/explore/events" },
-//     { heading: "Pantheon", hyperRef: "/explore/pantheon" },
-//     { heading: "Resources", hyperRef: "/explore/resources" },
-//     {
-//       heading: "Storyline",
-//       hyperRef: "/explore/storyline",
-//     },
-//   ],
-//   events: [
-//     { heading: "About", hyperRef: "/explore/about" },
-//     { heading: "Pantheon", hyperRef: "/explore/pantheon" },
-//     { heading: "Resources", hyperRef: "/explore/resources" },
-//     {
-//       heading: "Storyline",
-//       hyperRef: "/explore/storyline",
-//     },
-//   ],
-//   pantheon: [
-//     { heading: "Events", hyperRef: "/explore/events" },
-//     { heading: "About", hyperRef: "/explore/about" },
-//     { heading: "Resources", hyperRef: "/explore/resources" },
-//     {
-//       heading: "Storyline",
-//       hyperRef: "/explore/storyline",
-//     },
-//   ],
-//   resources: [
-//     { heading: "Events", hyperRef: "/explore/events" },
-//     { heading: "Pantheon", hyperRef: "/explore/pantheon" },
-//     { heading: "Rules", hyperRef: "/explore/rules" },
-//     {
-//       heading: "Storyline",
-//       hyperRef: "/explore/storyline",
-//     },
-//   ],
-//   rules: [
-//     { heading: "Events", hyperRef: "/explore/events" },
-//     { heading: "Pantheon", hyperRef: "/explore/pantheon" },
-//     { heading: "Resources", hyperRef: "/explore/resources" },
-//     {
-//       heading: "Storyline",
-//       hyperRef: "/explore/storyline",
-//     },
-//   ],
-//   storyline: [
-//     { heading: "Events", hyperRef: "/explore/events" },
-//     { heading: "Pantheon", hyperRef: "/explore/pantheon" },
-//     { heading: "Resources", hyperRef: "/explore/resources" },
-//     { heading: "About", hyperRef: "/explore/about" },
-//   ],
-// };
