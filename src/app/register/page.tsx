@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { account, ID } from "@/lib/appwrite";
 import type { Models } from "appwrite";
 import Form from 'next/form'
-import { login, logoutServerAction, register } from "@/app/actions/authActions"
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/app/providers/AuthProvider";
 
