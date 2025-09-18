@@ -69,7 +69,7 @@ const RegistrationPage = () => {
         }
     }, [user, router]);
 
-    if (!isVerified) {
+    if (user && !isVerified) {
         const navCss = `transition-all duration-1000 ease-in-out bg-[var(--navbar-background)] flex min-h-fit min-w-fit max-w-[1rem] py-8 px-3 items-center justify-items-center border-1 rounded-full absolute m-auto inset-y-0 justify-self-center`
 
         const navMedium = `md:overflow-hidden  md:items-center-safe flex-col  md:m-auto   md:opacity-100 md:inset-y-1/2 md:duration-2000 md:min-w-fit md:min-h-fit md:py-0 md:px-10 md:max-w-[768px] `
