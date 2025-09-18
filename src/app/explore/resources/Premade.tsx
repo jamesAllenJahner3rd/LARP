@@ -98,8 +98,7 @@ const Premade = async () => {
             alt: " halfLing with a dagger hiding behind a wall"
         }
     ];
-    //https://nyc.cloud.appwrite.io/v1/storage/buckets/68c11c240013701075bb/files/68c2365c00259e03b4b9/view?project=68bb084a0032b02608c4&mode=admin
-    ///_next/image?url=https%3A%2F%2Fnyc.cloud.appwrite.io%2Fv1%2Fstorage%2Fbuckets%2F68c11c240013701075bb%2Ffiles%2F68c2365c00259e03b4b9%2Fview%3Fproject%3D%2268bb084a0032b02608c4%22&w=3840&q=75
+
     const daedra = await getFileURL("68c11c240013701075bb",
         "")
     return (

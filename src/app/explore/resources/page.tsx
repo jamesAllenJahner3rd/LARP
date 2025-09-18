@@ -54,7 +54,7 @@ const resources = () => {
 
 
             <p className="text-center m-1">Please note, Eldarlands LARP has <b>no affiliation</b> with the above video. It&#39;s simply a good resource for new and old players alike. When entering into a role play setting, it&#39;s important to become immersed, but one must also know where to draw the line between fantasy and reality.</p>
-            <section className="var(--background) md:flex md:flex-row md:w-8/9  md:justify-self-center gap-[3%] ">
+            <section className="var(--background) md:flex md:flex-row md:w-8/9  md:justify-self-center gap-[3%]">
 
                 <Image
                     src="/images/ahf-character-creation.webp"

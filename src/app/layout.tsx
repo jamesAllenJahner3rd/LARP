@@ -3,7 +3,8 @@ import { Geist, Geist_Mono, Lato, MedievalSharp } from "next/font/google";
 import "./globals.css";
 import NavBar from "./components/NavBar";
 import { AuthProvider } from "./providers/AuthProvider";
-
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -49,7 +50,7 @@ export default function RootLayout({
           children}
           <NavBar />
         </AuthProvider>
-
+        <ToastContainer position="bottom-left" autoClose={3000} />
       </body>
     </html>
   );

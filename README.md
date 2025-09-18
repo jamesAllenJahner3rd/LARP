@@ -450,4 +450,70 @@ const LoginPage = () => {
 
 ---
 
-Let me know if you want to add deployment notes, Appwrite project setup, or lore-specific onboarding flows. This README is now as maintainable and explicit as your architecture.
+Absolutely—this is the perfect moment to lock in everything you've debugged and clarified. Here's a scaffold for your updated `README.md`, focused on onboarding clarity, Appwrite session handling, and Next.js App Router best practices:
+
+---
+
+## 🛠 Eldarlands Onboarding & Auth Flow
+
+### ✅ Registration Flow
+
+- Uses client-side `<form onSubmit={handleRegistration}>` to avoid server-side session issues.
+- Creates user via `account.create()`, then immediately logs in with `account.createEmailPasswordSession()`.
+- Fetches full user object with `account.get()` to access `emailVerification`.
+- Sends verification email via `account.createVerification({ url })`.
+
+### ✅ Login Flow
+
+- Authenticates with `account.createEmailPasswordSession(email, password)`.
+- Immediately fetches full user via `account.get()` and stores in context.
+- Redirects based on `emailVerification` status:
+  - Verified → `/members`
+  - Unverified → `/register`
+
+### ✅ Email Verification
+
+- Appwrite sends user to `/register/verify/?userId=...&secret=...`.
+- Client-side component parses query params and calls `account.updateVerification({ userId, secret })`.
+- Redirects to `/members` on success, `/register` on failure.
+
+### ⚠️ Common Pitfalls
+
+| Issue                                 | Fix                                                |
+| ------------------------------------- | -------------------------------------------------- |
+| `window is not defined` in API routes | Never use browser APIs in server-only files        |
+| `user.emailVerification` throws       | Always guard with `if (!user) return null`         |
+| `await setUser(...)` doesn’t work     | Use local `currentUser` object for logic           |
+| `dotenv` fails in client              | Use `NEXT_PUBLIC_` prefix for client-safe env vars |
+| `redirect()` in client component      | Use `router.push()` instead                        |
+
+---
+
+---
+
+### ✅ What You've Already Solved
+
+- **Client-side session creation**: Avoided server-side cookie issues by using `<form onSubmit={...}>` and calling `account.createEmailPasswordSession()` in the browser.
+- **Fetching full user object**: Used `account.get()` after login to access `emailVerification`.
+- **Guarding against null state**: Prevented runtime errors by checking `if (!user)` before accessing `user.emailVerification`.
+- **Redirecting based on verification**: Used `router.push()` in client components and `redirect()` in server contexts.
+- **Verification link handling**: Parsed `userId` and `secret` from query params and called `account.updateVerification()` correctly.
+- **Environment variable exposure**: Switched to `NEXT_PUBLIC_ROOT_URL` for client-safe access.
+- **Avoided `await setUser()` trap**: Used local `currentUser` for logic instead of relying on async state propagation.
+- **Fixed `useRouter()` placement**: Moved it to the top level of `AuthProvider` to avoid hook violations.
+
+---
+
+### 🧩 Final Touches You Might Still Want
+
+- **Expired verification link fallback**: Appwrite links include an `expire` timestamp. You could parse it and show a custom message if it's past due.
+- **Global redirect guard**: In your layout or `AuthProvider`, redirect unverified users away from protected routes like `/members`.
+- **Verification status polling**: If you want to auto-refresh after the user clicks the link, you could poll `account.get()` until `emailVerification === true`.
+- **Custom error messaging**: Instead of generic redirects, show onboarding-friendly messages for failed verification, expired links, or missing params.
+
+---
+
+Was having trouble selecting horizontal scroll bar of Pantheon Gods So I added these to make it easier
+
+- touch-pan-x: Tells mobile browsers to treat horizontal dragging as scroll, not selection.
+- select-none: Prevents accidental text selection while dragging.

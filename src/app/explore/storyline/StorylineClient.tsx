@@ -6,12 +6,8 @@ import { CaretRightOutlined } from '@ant-design/icons';
 import Form from 'next/form'
 import { createStoryEntry } from '@/app/actions/createStoryEntry';
 
-// export type StoryEntry = Models.Row & {
-//     heading: string;
-//     body: string;
-// }
 const StorylineClient = ({ entries }: { entries: Models.RowList }) => {
-    // console.log(entries)
+
     const [logExpanded, setLogExpanded] = useState<boolean[]>(Array(entries.rows.length).fill(false))
 
     function expandToggle(id: number, text: string) {

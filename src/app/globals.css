@@ -18,16 +18,21 @@
 }
 .scrollbar-thick::-webkit-scrollbar {
   height: 186px; /* wider horizontal scrollbar */
+  writing-mode: horizontal-tb;
+  overflow-x: auto;
+  overflow-y: hidden;
 }
 
 .scrollbar-thick::-webkit-scrollbar-track {
-  background: transparent;
+  background: beige;
+  /* transparent; */
 }
 
 .scrollbar-thick::-webkit-scrollbar-thumb {
-  background-color: rgba(255, 255, 255, 0.3); /* semi-transparent thumb */
+  background-color: var(--background-alpha); /* semi-transparent thumb */
   border-radius: 8px;
-  border: 2px solid transparent;
+  border: 2px solid; /* transparent; */
+  border-color: var(--background-alpha);
   background-clip: padding-box;
 }
 

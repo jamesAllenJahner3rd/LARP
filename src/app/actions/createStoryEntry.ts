@@ -7,9 +7,6 @@ import { revalidatePath } from "next/cache";
 export async function createStoryEntry(formData: FormData): Promise<void> {
   const heading = formData.get("heading");
   const body = formData.get("newLog");
-  console.dir(formData);
-  console.dir(heading);
-  console.dir(body);
 
   if (!heading || !body) throw new Error("Missing fields");
 

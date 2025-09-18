@@ -9,6 +9,7 @@ import { get } from 'http'
 import { useAuth } from "@/app/providers/AuthProvider";
 import { account } from '@/lib/appwrite'
 import { revalidatePath } from 'next/cache'
+import { toast } from 'react-toastify'
 
 
 
@@ -36,7 +37,8 @@ const NavBar = () => {
     const logoutHandler = async () => {
         if (!account) return;
         await account.deleteSession("current");
-        router.push("/")
+        toast.success("Logged Out")
+        setTimeout(() => router.push("/"), 700);
         setUser(null)
 
 
@@ -45,7 +47,7 @@ const NavBar = () => {
 
         <>
             <HamburgerMenu openMenu={openMenu} setOpenMenu={setOpenMenu} />
-            <nav className={`${navCss}  ${navMedium}`}>
+            <nav className={`${navCss}  ${navMedium} z-2`}>
                 <Link href={hyperRef[0]} className=""><h3 className={`${h3Css} delay-0 `} onClick={() => setOpenMenu(!openMenu)}>{heading[0]} </h3></Link>
                 <Link href={hyperRef[1]} className=""><h3 className={`${h3Css} delay-2000`} onClick={() => setOpenMenu(!openMenu)}>{heading[1]}</h3></Link>
                 <Link href="/" className="rounded-lg w-full size-1/1 " onClick={() => setOpenMenu(!openMenu)}><Image
@@ -54,7 +56,7 @@ const NavBar = () => {
                     width={1200}
                     height={800}
                     sizes="100vw"
-
+                    priority
                     className="rounded-lg w-full size-1/1 "
                 /></Link>
                 <Link href={hyperRef[2]} className=""><h3 className={`${h3Css} delay-1000`} onClick={() => setOpenMenu(!openMenu)}>{heading[2]}</h3></Link>

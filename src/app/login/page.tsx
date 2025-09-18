@@ -1,12 +1,11 @@
 "use client";
 import { useEffect, useState } from "react";
-import { account, ID } from "@/lib/appwrite";
-import type { Models } from "appwrite";
-import Form from 'next/form'
+import { account } from "@/lib/appwrite";
+
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/app/providers/AuthProvider";
 import Link from "next/link";
-
+import { toast } from 'react-toastify'
 
 export const dynamic = "force-dynamic";
 export const fetchCache = "force-no-store";
@@ -16,31 +15,40 @@ const LoginPage = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const { user, setUser, logout } = useAuth();
-    const [name, setName] = useState("");
     const router = useRouter();
     const inputCSS = "bg-green-200 border-1 rounded";
-    const handleLogin = async () => {
+    const handleLogin = async (e) => {
+        e.preventDefault()
         try {
             const loggedInUser = await account.createEmailPasswordSession(email, password);
-            const userDetails = await account.get(); // fetch full user object
-            setUser(userDetails);
-            router.push("/members");
+            const currentUser = await account.get()
+            setUser(currentUser);
+            if (currentUser.emailVerification === true) {
+                toast.success("Logged In");
+                setTimeout(() => router.push("/members"), 700);
+            } else if (currentUser.emailVerification === false) {
+                toast.info("You haven't verified your email yet.");
+                router.push("/register");
+            }
         } catch (err) {
+            toast.error("Login failed");
             console.error("Login failed:", err);
         }
     };
 
 
     useEffect(() => {
-        if (user) {
+        if (user && user.emailVerification) {
             router.push("/members");
         }
+    }, [user, router]);
+    useEffect(() => {
+        if (user && user.emailVerification) toast("Loading...");
     }, [user]);
-
     if (user) {
         return (
-            <p>Loading ...
-            </p>
+            <section>Loading ...
+            </section>
         );
     }
     const navCss = `transition-all duration-1000 ease-in-out bg-[var(--navbar-background)] flex min-h-fit min-w-fit max-w-[1rem] py-8 px-3 items-center justify-items-center border-1 rounded-full absolute m-auto inset-y-0 justify-self-center`
@@ -55,7 +63,7 @@ const LoginPage = () => {
 
                 <p>Not logged in</p>
                 <fieldset>
-                    <Form action={handleLogin} className="flex flex-col ">
+                    <form onSubmit={handleLogin} className="flex flex-col ">
                         <label htmlFor="email">Email:</label>
                         <input
                             name="email"
@@ -78,7 +86,7 @@ const LoginPage = () => {
                             autoComplete="password"
                         />
                         <input type="submit" value="LOGIN" className="border-1 rounded shadow-2xl m-3 bg-[var(--background-alpha)]" />
-                    </Form>
+                    </form>
                     <Link href="/register" className="border-1 flex  justify-center rounded shadow-2xl m-3 bg-[var(--background-alpha)]">Register</Link>
 
                 </fieldset>
