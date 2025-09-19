@@ -26,12 +26,12 @@ export const navConfig: Record<string, NavGroup> = {
     ],
   },
   about: {
-    heading: ["Events", "Pantheon", "Resources", "Storyline"],
+    heading: ["Events", "Pantheon", "Storyline", "Resources"],
     hyperRef: [
       "/explore/events",
       "/explore/pantheon",
-      "/explore/resources",
       "/explore/storyline",
+      "/explore/resources",
     ],
   },
   events: {

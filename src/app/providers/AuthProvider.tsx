@@ -8,22 +8,26 @@ type AuthContextType = {
     user: Models.User<Models.Preferences> | null;
     setUser: (user: Models.User<Models.Preferences> | null) => void;
     logout: () => Promise<void>;
+    isAdmin: boolean;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const [user, setUser] = useState<Models.User<Models.Preferences> | null>(null);
+    const [isAdmin, setIsAdmin] = useState<boolean>(false);
     const router = useRouter();
 
     useEffect(() => {
         const checkSession = async () => {
             try {
                 const currentUser = await account.get();
+                setIsAdmin(currentUser.labels.includes("admin"))
                 setUser(currentUser);
                 if (currentUser && !currentUser.emailVerification) {
                     router.push("/register/");
                 } else if (!currentUser) router.push("/login/");
+
             } catch {
                 setUser(null);
             }
@@ -37,7 +41,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     };
 
     return (
-        <AuthContext.Provider value={{ user, setUser, logout }}>
+        <AuthContext.Provider value={{ user, setUser, logout, isAdmin }}>
             {children}
         </AuthContext.Provider>
     );
