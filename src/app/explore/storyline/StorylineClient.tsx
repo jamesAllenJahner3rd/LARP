@@ -5,9 +5,13 @@ import { Timeline } from 'antd';
 import { CaretRightOutlined } from '@ant-design/icons';
 import Form from 'next/form'
 import { createStoryEntry } from '@/app/actions/createStoryEntry';
+import { useAuth } from "@/app/providers/AuthProvider";
+import { useEffect } from "react";
 
 const StorylineClient = ({ entries }: { entries: Models.RowList }) => {
+    const { user } = useAuth();
 
+    const [adminBoolean, setAdminBoolean] = useState<boolean>(false);
     const [logExpanded, setLogExpanded] = useState<boolean[]>(Array(entries.rows.length).fill(false))
 
     function expandToggle(id: number, text: string) {
@@ -15,7 +19,13 @@ const StorylineClient = ({ entries }: { entries: Models.RowList }) => {
         return logExpanded[id] === true ? text : `${text.substring(0, 30)}... (click to expand)`;
 
     }
-
+    useEffect(() => {
+        console.log("user", user, user?.labels.includes("admin"));
+        if (user && user.labels.includes("admin")) {
+            setAdminBoolean(true);
+            console.log(adminBoolean);
+        }
+    }, [user])
     return (
 
         < div className='mb-48 mx-8' >
@@ -44,7 +54,7 @@ const StorylineClient = ({ entries }: { entries: Models.RowList }) => {
                 }
             />
 
-            < fieldset className='flex justify-center' >
+            < fieldset className='flex justify-center' hidden={!adminBoolean}>
                 {/* <form action="/api/admin/storylineForm" method="POST" id="newlogForm" className='border-2 border-black rounded-2xl w-full
                  md:w-2/3 flex flex-col mb-48'> */}
                 <Form action={createStoryEntry} id="newlogForm" className='border-2 border-black rounded-2xl w-full
