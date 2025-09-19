@@ -22,8 +22,7 @@ const VerificationPage = () => {
                     router.push("/register")
 
                 }
-            }
-            else router.push("/register")
+            } else router.push("/register")
         }
         verify();
     }, [])

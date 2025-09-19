@@ -40,10 +40,11 @@ const LoginPage = () => {
     useEffect(() => {
         if (user && user.emailVerification) {
             router.push("/members");
+            toast("Loading...")
         }
     }, [user, router]);
     useEffect(() => {
-        if (user && user.emailVerification) toast("Loading...");
+        if (user && !user.emailVerification) router.push("/register");;
     }, [user]);
     if (user) {
         return (
