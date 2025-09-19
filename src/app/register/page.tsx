@@ -27,6 +27,7 @@ const RegistrationPage = () => {
     const notRegistered = () => toast("Unable to register!");
     const emailRejected = () => toast("Unable to Resend Email!");
     const verifyEmail = () => toast(" You haven't verified your email yet.")
+
     const handleRegistation = async (e: React.FormEvent) => {
         e.preventDefault()
         if (!account) return;
@@ -39,6 +40,7 @@ const RegistrationPage = () => {
             }
             const promise = await account.createVerification(params)
             setEmailPending(true)
+            toast("Email was sent.")
 
         } catch (error) {
             notRegistered()
@@ -46,12 +48,18 @@ const RegistrationPage = () => {
             throw Error;
         }
     };
-    const handleResend = async () => {
+    const handleResend = async (e) => {
+
+        e.target.classList.toggle("shadow-lg");
+
+
         try {
             const params = {
-                url: `http://localhost:3000/register/verify`//${rootUrl}
+                url: `${rootUrl}/register/verify`
             }
             const promise = await account.createVerification(params)
+            setEmailPending(true)
+            toast("Email was sent.")
         } catch (error) {
             emailRejected()
             console.error(`Unable to Resend Email, Error: ${error}`);
