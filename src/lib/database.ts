@@ -1,3 +1,4 @@
+import type { Models } from "appwrite";
 import { tablesDB } from "./appwrite";
 
 export async function getData(
@@ -27,13 +28,16 @@ export async function getList(dbId: string, tableId: string) {
   }
 }
 
-export async function postData(
+export async function postData<Row extends Models.Row = Models.DefaultRow>(
   dbId: string,
   tableId: string,
   rowId: string,
-  postData: any,
-  permissions?: any,
-) {
+  postData: Row extends Models.DefaultRow
+    ? Partial<Models.Row> & Record<string, any>
+    : Partial<Models.Row> & Omit<Row, keyof Models.Row>,
+  //any,
+  permissions?: string[],
+): Promise<Row> {
   try {
     const result = await tablesDB.createRow(
       dbId,

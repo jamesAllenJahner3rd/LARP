@@ -54,3 +54,5 @@ videos/*
 !videos/*.ts
 public/_next-video
 .git/
+src/app/explore/pantheon/page copy.tsx
+notes.md
