@@ -5,7 +5,8 @@ import { account, ID } from "@/lib/appwrite";
 import { useAuth } from "@/app/providers/AuthProvider";
 
 
-const CharacterPage = () => {
+
+const CharacterCreationPage = () => {
     const { user, logout } = useAuth();
     return (
         <><main>
@@ -15,4 +16,4 @@ const CharacterPage = () => {
     )
 }
 
-export default CharacterPage
+export default CharacterCreationPage

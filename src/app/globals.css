@@ -66,21 +66,33 @@ caption {
   font-size: large;
 }
 .btn {
-  border: 1px solid black;
-  border-radius: 3.40282e38px;
-  border-style: var(--tw-border-style);
-  border-width: 1px;
-  padding-inline: calc(var(--spacing) * 3);
-  align-items: center;
-  justify-items: center;
-  max-width: fit-content;
-  min-width: fit-content;
-  box-sizing: border-box;
-  margin: 1%;
-}
+  border: 2px solid black;
+  border-radius: 1rem;
+  background-color: var(--button);
 
+  justify-self: center;
+  align-self: center;
+
+  display: flex;
+  cursor: pointer;
+}
 .btn-primary {
-  background-color: var(--color-neutral-200);
+  padding: 0.5rem;
+  width: 75%;
+  text-align: center;
+  justify-content: center;
+  margin: 0.2rem;
+}
+.btn-secondary {
+  border: 2px solid black;
+  border-radius: 1rem;
+  background-color: var(--button);
+  width: fit-content;
+  padding: 0.75rem;
+  justify-self: center;
+  align-self: center;
+  margin: 0.5rem;
+  display: flex;
 }
 .input {
   box-shadow: 0 0 0px 1000px #fff inset !important;

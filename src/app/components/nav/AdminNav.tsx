@@ -1,7 +1,7 @@
 "use client"
 import Link from 'next/link'
 import React, { useState, useEffect } from 'react'
-import HamburgerMenu from './HamburgerMenu'
+import HamburgerMenu from '../HamburgerMenu'
 import Image from 'next/image'
 import { usePathname, useRouter } from "next/navigation"
 import { getNavForPath } from '@/lib/navConfig'

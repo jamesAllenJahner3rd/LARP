@@ -4,8 +4,7 @@ import { useState } from "react";
 import { account, ID } from "@/lib/appwrite";
 import { useAuth } from "@/app/providers/AuthProvider";
 
-
-const CharacterPage = () => {
+const SlackPage = () => {
     const { user, logout } = useAuth();
     return (
         <><main>
@@ -13,6 +12,7 @@ const CharacterPage = () => {
         </main>
         </>
     )
+
 }
 
-export default CharacterPage
+export default SlackPage

@@ -1,8 +1,8 @@
 "use client"
 import React, { useEffect, useState } from 'react'
-import Marketplace from './components/MarketplaceVideo'
+import Marketplace from '../components/MarketplaceVideo'
 import Image from 'next/image'
-import SwordVideo from './components/Swords'
+import SwordVideo from '../components/Swords'
 
 const Prop = {
   heading: ["Welcome", "Explore", "Members,Shop"],

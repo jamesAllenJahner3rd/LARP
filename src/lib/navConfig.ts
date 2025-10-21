@@ -11,7 +11,7 @@ export const navConfig: Record<string, NavGroup> = {
     heading: ["Welcome", "Explore", "Members", "Shop"],
     hyperRef: [
       "/",
-      "/explore/about",
+      "/about",
       "/login",
       "https://armstreet.com/collections/fireside-family-larp-costume-basics-and-more",
     ],
@@ -20,81 +20,46 @@ export const navConfig: Record<string, NavGroup> = {
     heading: ["Welcome", "Explore", "Members", "Shop"],
     hyperRef: [
       "/",
-      "/explore/about",
+      "/about",
       "/register",
       "https://armstreet.com/collections/fireside-family-larp-costume-basics-and-more",
     ],
   },
   about: {
     heading: ["Events", "Pantheon", "Storyline", "Resources"],
-    hyperRef: [
-      "/explore/events",
-      "/explore/pantheon",
-      "/explore/storyline",
-      "/explore/resources",
-    ],
+    hyperRef: ["/events", "/pantheon", "/storyline", "/resources"],
   },
   events: {
     heading: ["About", "Pantheon", "Resources", "Storyline"],
-    hyperRef: [
-      "/explore/about",
-      "/explore/pantheon",
-      "/explore/resources",
-      "/explore/storyline",
-    ],
+    hyperRef: ["/about", "/pantheon", "/resources", "/storyline"],
   },
   pantheon: {
     heading: ["Events", "About", "Resources", "Storyline"],
-    hyperRef: [
-      "/explore/events",
-      "/explore/about",
-      "/explore/resources",
-      "/explore/storyline",
-    ],
+    hyperRef: ["/events", "/about", "/resources", "/storyline"],
   },
   resources: {
     heading: ["Events", "Pantheon", "Rules", "Storyline"],
-    hyperRef: [
-      "/explore/events",
-      "/explore/pantheon",
-      "/explore/rules",
-      "/explore/storyline",
-    ],
+    hyperRef: ["/events", "/pantheon", "/rules", "/storyline"],
   },
   rules: {
     heading: ["Events", "Pantheon", "Resources", "Storyline"],
-    hyperRef: [
-      "/explore/events",
-      "/explore/pantheon",
-      "/explore/resources",
-      "/explore/storyline",
-    ],
+    hyperRef: ["/events", "/pantheon", "/resources", "/storyline"],
   },
   storyline: {
     heading: ["Events", "Pantheon", "Resources", "About"],
-    hyperRef: [
-      "/explore/events",
-      "/explore/pantheon",
-      "/explore/resources",
-      "/explore/about",
-    ],
+    hyperRef: ["/events", "/pantheon", "/resources", "/about"],
   },
   members: {
     heading: ["Events", "Pantheon", "Resources", "Log Out"],
-    hyperRef: [
-      "/explore/events",
-      "/explore/pantheon",
-      "/explore/resources",
-      "/explore/about",
-    ],
+    hyperRef: ["/events", "/pantheon", "/resources", "/about"],
   },
 };
 export function getNavForPath(pathname: string): NavGroup {
-  if (pathname.startsWith("/explore/about")) return navConfig.about;
-  if (pathname.startsWith("/explore/resources")) return navConfig.resources;
-  if (pathname.startsWith("/explore/pantheon")) return navConfig.pantheon;
-  if (pathname.startsWith("/explore/events")) return navConfig.events;
-  if (pathname.startsWith("/explore/rules")) return navConfig.rules;
+  if (pathname.startsWith("/about")) return navConfig.about;
+  if (pathname.startsWith("/resources")) return navConfig.resources;
+  if (pathname.startsWith("/pantheon")) return navConfig.pantheon;
+  if (pathname.startsWith("/events")) return navConfig.events;
+  if (pathname.startsWith("/rules")) return navConfig.rules;
   if (pathname.startsWith("/login")) return navConfig.login;
   if (pathname === "/") return navConfig.home;
   return navConfig.home;
