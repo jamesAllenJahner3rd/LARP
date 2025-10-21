@@ -62,14 +62,17 @@ const NavBar = () => {
                     priority
                     className="rounded-lg w-full size-1/1 "
                 /></Link>
-                <Link className={`${LinksCss}`} onClick={() => setOpenMenu(!openMenu)} href="/members/userSettings" href="/members/userSettings" >Account settings</Link>
+                <Link className={`${LinksCss}`} onClick={() => setOpenMenu(!openMenu)} href="/members/userSettings"  >Account settings</Link>
                 <Link className={`${LinksCss}`} onClick={() => setOpenMenu(!openMenu)} href="/members/create-character" >Create Character</Link>
                 <Link className={`${LinksCss}`} onClick={() => setOpenMenu(!openMenu)} href="/members/character" >Characters</Link>
                 <Link className={`${LinksCss}`} onClick={() => setOpenMenu(!openMenu)} href="/members/userSettings" >Factions</Link>
                 <Link className={`${LinksCss}`} onClick={() => setOpenMenu(!openMenu)} href="/members/slack" >Slack</Link>
                 <Link className={`${LinksCss}`} onClick={() => setOpenMenu(!openMenu)} href="/events" >Events</Link>
                 <Link className={`${LinksCss}`} onClick={() => setOpenMenu(!openMenu)} href="/admin" >Admin Tools</Link>
-                <Link className={`${LinksCss}`} onClick={() => setOpenMenu(!openMenu)} href="/" onClick={logoutHandler}>Log Out</Link>
+                <button className={`${LinksCss}`} onClick={() => {
+                    setOpenMenu(!openMenu);
+                    logoutHandler
+                }}>Log Out</button>
             </nav>
             {/* <Link href={hyperRef[0]} className=""><h3 className={`${h3Css} delay-0 `} onClick={() => setOpenMenu(!openMenu)}>{heading[0]} </h3></Link>
                 <Link href={hyperRef[1]} className=""><h3 className={`${h3Css} delay-2000`} onClick={() => setOpenMenu(!openMenu)}>{heading[1]}</h3></Link>
