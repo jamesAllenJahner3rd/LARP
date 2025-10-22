@@ -6,12 +6,17 @@ import { updateUserEmail } from '@/app/actions/settings/updateEmail'
 import { useState, useEffect } from 'react';
 import { toast } from "react-toastify"
 import { AppError } from "@/lib/errors/AppError";
+import { account } from '@/lib/appwrite'
+console.log(account)
 
 const handleEmailForm = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const formData = new FormData(event.currentTarget)
 
     try {
+        console.log(account)
+        // const session = await account.getSession(sessionId 'current')
+        //     console.log(session)
         await updateUserEmail(formData)
         toast.success("Email updated successfully!");
     } catch (error) {
@@ -28,19 +33,21 @@ const settings = () => {
     const [duplicatePassword, setDuplicatePassword] = useState("");
     const [showPasswordForm, setShowPasswordForm] = useState(false);
     const [showEmailForm, setShowEmailForm] = useState(false);
+    const [passwordFocus, setPasswordFocus] = useState(false);
     useEffect(() => {
-        console.log("used")
-        if (newPassword === currentPassword) toast.error("New password must be different from current password.");
-        if (newPassword.trim() !== newPassword) toast.error("No leading or trailing spaces allowed.");
-        if (newPassword.includes(" ")) toast.error("Passwords cannot contain spaces.");
-        if (newPassword.length < 12) toast.error("Password must be at least 12 characters.");
-        if (!/[A-Z]/.test(newPassword)) toast.error("Include at least one uppercase letter.");
-        if (!/[a-z]/.test(newPassword)) toast.error("Include at least one lowercase letter.");
-        if (!/\d/.test(newPassword)) toast.error("Include at least one number.");
-        if (!/[\W_]/.test(newPassword)) toast.error("Include at least one symbol.");
-    }
-        , [currentPassword, newPassword, duplicatePassword]);
-
+        if (passwordFocus) {
+            console.log("used")
+            if (newPassword === currentPassword) toast.error("New password must be different from current password.");
+            if (newPassword.trim() !== newPassword) toast.error("No leading or trailing spaces allowed.");
+            if (newPassword.includes(" ")) toast.error("Passwords cannot contain spaces.");
+            if (newPassword.length < 12) toast.error("Password must be at least 12 characters.");
+            if (!/[A-Z]/.test(newPassword)) toast.error("Include at least one uppercase letter.");
+            if (!/[a-z]/.test(newPassword)) toast.error("Include at least one lowercase letter.");
+            if (!/\d/.test(newPassword)) toast.error("Include at least one number.");
+            if (!/[\W_]/.test(newPassword)) toast.error("Include at least one symbol.");
+        }
+    }, [currentPassword, newPassword, duplicatePassword]);
+    const handlePasswordUpdate = async () => { }
 
     return (
         <ol className='flex justify-center flex-col'>
@@ -60,7 +67,8 @@ const settings = () => {
                         required
                         autoComplete='off'
                         className='text-black border-2 border-black rounded-2xl px-2 bg-white m-2'
-                        onChange={(e) => setNewEmail(e.target.value)} />
+                    // onChange={(e) => setNewEmail(e.target.value)} 
+                    />
                 </div>
                 <div className='flex justify-between'>
                     <label htmlFor='duplicateEmail' >Confirm Email:</label>
@@ -76,9 +84,12 @@ const settings = () => {
                 </button>
             </Form>}
             <li onClick={() => setShowPasswordForm(!showPasswordForm)} className='btn btn-secondary'>Password change</li>
-            {showPasswordForm && <Form action={updateUserPassword} id='newPasswordForm'
-                className='border-2 border-black rounded-2xl w-full  content-center self-center
-                 md:w-fit flex flex-col  bg-neutral-500'>
+            {showPasswordForm && <Form
+                action={updateUserPassword}
+                onFocus={() => setPasswordFocus(true)}
+                id='newPasswordForm'
+                className='border-2 border-black rounded-2xl w-full  content-center self-center                md:w-fit flex flex-col  bg-neutral-500'
+            >
                 <div className='flex justify-between'><label htmlFor="currentPassword" className='ml-2'>Current Password:</label>
                     <input type="password"
                         name="currentPassword"
@@ -87,16 +98,17 @@ const settings = () => {
                         autoComplete='password'
                         required
                         onChange={(e) => setCurrentPassword(e.target.value)}
+
                     />
                 </div>
                 <div className='flex justify-between'><label htmlFor="newPassword" className='ml-2'>New Password:</label>
-                    <input type="password" name="newPassword" className='text-black m-2 border-2 border-black rounded-2xl px-2 bg-white' placeholder='Enter new password.' required />
+                    <input type="new-password" name="newPassword" className='text-black m-2 border-2 border-black rounded-2xl px-2 bg-white' placeholder='Enter new password.' required />
                 </div>
                 <div className='flex justify-between'>
                     <label htmlFor="duplicatePassword" className='ml-2'>New Password:</label>
-                    <input type="password" name="duplicatePassword" className='text-black m-2 border-2 border-black rounded-2xl px-2 bg-white' placeholder='Enter new password.' required />
+                    <input type="new-password" name="duplicatePassword" className='text-black m-2 border-2 border-black rounded-2xl px-2 bg-white' placeholder='Enter new password.' required />
                 </div>
-                <button className='btn btn-secondary'>
+                <button className='btn btn-secondary' onSubmit={handlePasswordUpdate}>
                     Update Password
                 </button>
             </Form>}
