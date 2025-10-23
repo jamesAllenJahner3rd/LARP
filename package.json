@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test": "next dev --https --cert ./localhost.pem --key ./localhost-key.pem"
   },
   "dependencies": {
     "@appwrite.io/pink-icons": "^1.0.0",
