@@ -7,7 +7,7 @@ client
     process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT ||
       "https://nyc.cloud.appwrite.io/v1",
   )
-  .setProject(process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID || "");
+  .setProject(process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID);
 export const account = new Account(client);
 export { ID } from "appwrite";
 export const storage = new Storage(client);
