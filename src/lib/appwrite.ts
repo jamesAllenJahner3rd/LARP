@@ -38,8 +38,6 @@ export async function UserLogin(email: string, password: string) {
     throw error;
   }
 }
-
-// export  { ID } from "appwrite";
 export function storage() {
   const client = getClient();
   new Storage(client);
