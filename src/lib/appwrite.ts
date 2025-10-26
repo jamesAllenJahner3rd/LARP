@@ -1,14 +1,50 @@
+"use client";
 import { Client, Account, Storage, TablesDB } from "appwrite";
+export function getAuthenticatedAccount(): Account {
+  const client = new Client()
+    .setEndpoint(
+      process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT ||
+        "https://nyc.cloud.appwrite.io/v1",
+    )
+    .setProject(
+      process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID || "68bb084a0032b02608c4",
+    );
 
-const client = new Client();
+  return new Account(client);
+}
+export function getClient() {
+  const client = new Client()
+    .setEndpoint(
+      process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT ||
+        "https://nyc.cloud.appwrite.io/v1",
+    )
+    .setProject(
+      process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID || "68bb084a0032b02608c4",
+    );
+  return client;
+}
+export async function UserLogin(email: string, password: string) {
+  try {
+    const account = getAuthenticatedAccount();
 
-client
-  .setEndpoint(
-    process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT ||
-      "https://nyc.cloud.appwrite.io/v1",
-  )
-  .setProject(process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID);
-export const account = new Account(client);
-export { ID } from "appwrite";
-export const storage = new Storage(client);
-export const tablesDB = new TablesDB(client);
+    // account.deleteSessions();
+    // const session = account.createEmailPasswordSession(email, password);
+    await account.createEmailPasswordSession(email, password);
+    const currentUser = await account.get(); //added
+    return currentUser;
+    // return session;
+  } catch (error) {
+    console.error("An Error occured", error);
+    throw error;
+  }
+}
+
+// export  { ID } from "appwrite";
+export async function storage() {
+  const client = await getClient();
+  new Storage(client);
+}
+export async function tablesDB() {
+  const client = await getClient();
+  new TablesDB(client);
+}

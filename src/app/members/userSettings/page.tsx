@@ -6,27 +6,10 @@ import { updateUserEmail } from '@/app/actions/settings/updateEmail'
 import { useState, useEffect } from 'react';
 import { toast } from "react-toastify"
 import { AppError } from "@/lib/errors/AppError";
-import { account } from '@/lib/appwrite'
-console.log(account)
+import { getAuthenticatedAccount, getClient } from '@/lib/appwrite'
+// console.log(account)
 
-const handleEmailForm = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    const formData = new FormData(event.currentTarget)
 
-    try {
-        console.log(account)
-        // const session = await account.getSession(sessionId 'current')
-        //     console.log(session)
-        await updateUserEmail(formData)
-        toast.success("Email updated successfully!");
-    } catch (error) {
-        if (error instanceof AppError) {
-            toast.error(error.message);
-        } else {
-            toast.error("Unexpected error. Please try again")
-        }
-    }
-}
 const settings = () => {
     const [currentPassword, setCurrentPassword] = useState("");
     const [newPassword, setNewPassword] = useState("");
@@ -34,27 +17,63 @@ const settings = () => {
     const [showPasswordForm, setShowPasswordForm] = useState(false);
     const [showEmailForm, setShowEmailForm] = useState(false);
     const [passwordFocus, setPasswordFocus] = useState(false);
-    useEffect(() => {
-        if (passwordFocus) {
-            console.log("used")
-            if (newPassword === currentPassword) toast.error("New password must be different from current password.");
-            if (newPassword.trim() !== newPassword) toast.error("No leading or trailing spaces allowed.");
-            if (newPassword.includes(" ")) toast.error("Passwords cannot contain spaces.");
-            if (newPassword.length < 12) toast.error("Password must be at least 12 characters.");
-            if (!/[A-Z]/.test(newPassword)) toast.error("Include at least one uppercase letter.");
-            if (!/[a-z]/.test(newPassword)) toast.error("Include at least one lowercase letter.");
-            if (!/\d/.test(newPassword)) toast.error("Include at least one number.");
-            if (!/[\W_]/.test(newPassword)) toast.error("Include at least one symbol.");
+    const [showDeletionForm, setShowDeletionForm] = useState(false);
+
+    const handleDeletionForm = async (event) => {
+        event.preventDefault();
+        const client = getClient();
+        const account = getAuthenticatedAccount();
+        const user = await account.get()
+        console.log(user)
+        await account.updateStatus();
+    }
+    const handleEmailUpdate = async (event) => {
+        event.preventDefault();
+        const formData = new FormData(event.currentTarget);
+        const newEmail = (formData.get("newEmail") as string).trim();
+        const duplicateEmail = (formData.get("duplicateEmail") as string).trim()
+        if (newEmail.trim() !== duplicateEmail.trim()) return toast.error("New email must match the Confirmation email.");
+        const password = formData.get("password") as string;
+        try {
+            const account = getAuthenticatedAccount()
+            await account.updateEmail(newEmail, password);
+        } catch (error) {
+            if (error?.message) toast.error(error.message);
+            console.error("Update Failed:", error);
         }
-    }, [currentPassword, newPassword, duplicatePassword]);
-    const handlePasswordUpdate = async () => { }
+
+    };
+    const handlePasswordUpdate = async (event) => {
+        event.preventDefault();
+        const formData = new FormData(event.currentTarget);
+        const password = formData.get("newPassword") as string;
+        const duplicatePassword = formData.get("duplicatePassword") as string;
+        const oldPassword = formData.get("currentPassword") as string;
+        if (password === oldPassword) return toast.error("New password must be different from current password.");
+        if (password !== duplicatePassword) return toast.error("New password must be the same as the Confirmation password.");
+        if (password.trim() !== password) return toast.error("No leading or trailing spaces allowed.");
+        if (password.includes(" ")) return toast.error("Passwords cannot contain spaces.");
+        if (password.length < 12) return toast.error("Password must be at least 12 characters.");
+        if (!/[A-Z]/.test(password)) return toast.error("Include at least one uppercase letter.");
+        if (!/[a-z]/.test(password)) return toast.error("Include at least one lowercase letter.");
+        if (!/\d/.test(password)) return toast.error("Include at least one number.");
+        if (!/[\W_]/.test(password)) return toast.error("Include at least one symbol.");
+        try {
+            const account = getAuthenticatedAccount()
+            await account.updatePassword(password, oldPassword);
+        } catch (error) {
+            if (error?.message) toast.error(error.message);
+            console.error("Update Failed:", error);
+        }
+
+    }
 
     return (
-        <ol className='flex justify-center flex-col'>
-            <li><h1 className='h1 flex justify-center m-5'>User Settings Page</h1></li>
+        <ol className='flex justify-center center-self flex-col'>
+            <li><h1 className='h1 flex justify-center m-5 text-black'>User Settings Page</h1></li>
             <li onClick={() => setShowEmailForm(!showEmailForm)} className=' btn btn-secondary cursor-pointer' >Email address</li>
-            {showEmailForm && <Form
-                action={updateUserEmail}
+            {showEmailForm && <form
+                onSubmit={handleEmailUpdate}
                 autoComplete='off'
                 id='newEmailForm'
                 className='border-2 border-black rounded-2xl w-full  content-center self-center md:w-[20rem] flex flex-col  bg-neutral-500'
@@ -82,37 +101,39 @@ const settings = () => {
                 <button type='submit' className='btn btn-secondary'>
                     Update Email
                 </button>
-            </Form>}
+            </form>}
             <li onClick={() => setShowPasswordForm(!showPasswordForm)} className='btn btn-secondary'>Password change</li>
-            {showPasswordForm && <Form
-                action={updateUserPassword}
-                onFocus={() => setPasswordFocus(true)}
-                id='newPasswordForm'
-                className='border-2 border-black rounded-2xl w-full  content-center self-center                md:w-fit flex flex-col  bg-neutral-500'
-            >
-                <div className='flex justify-between'><label htmlFor="currentPassword" className='ml-2'>Current Password:</label>
-                    <input type="password"
-                        name="currentPassword"
-                        className='text-black border-2 border-black rounded-2xl px-2 bg-white m-2'
-                        placeholder='Enter current password.'
-                        autoComplete='password'
-                        required
-                        onChange={(e) => setCurrentPassword(e.target.value)}
+            {
+                showPasswordForm && <form
+                    onSubmit={handlePasswordUpdate}
+                    onFocus={() => setPasswordFocus(true)}
+                    id='newPasswordForm'
+                    className='border-2 border-black rounded-2xl w-full  content-center self-center                md:w-fit flex flex-col  bg-neutral-500'
+                >
+                    <div className='flex justify-between'><label htmlFor="currentPassword" className='ml-2'>Current Password:</label>
+                        <input type="password"
+                            name="currentPassword"
+                            className='text-black border-2 border-black rounded-2xl px-2 bg-white m-2'
+                            placeholder='Enter current password.'
+                            autoComplete='password'
+                            required
+                            onChange={(e) => setCurrentPassword(e.target.value)}
 
-                    />
-                </div>
-                <div className='flex justify-between'><label htmlFor="newPassword" className='ml-2'>New Password:</label>
-                    <input type="new-password" name="newPassword" className='text-black m-2 border-2 border-black rounded-2xl px-2 bg-white' placeholder='Enter new password.' required />
-                </div>
-                <div className='flex justify-between'>
-                    <label htmlFor="duplicatePassword" className='ml-2'>New Password:</label>
-                    <input type="new-password" name="duplicatePassword" className='text-black m-2 border-2 border-black rounded-2xl px-2 bg-white' placeholder='Enter new password.' required />
-                </div>
-                <button className='btn btn-secondary' onSubmit={handlePasswordUpdate}>
-                    Update Password
-                </button>
-            </Form>}
-            <li className='btn btn-secondary'> Account deletion</li>
+                        />
+                    </div>
+                    <div className='flex justify-between'><label htmlFor="newPassword" className='ml-2'>New Password:</label>
+                        <input type="password" name="newPassword" className='text-black m-2 border-2 border-black rounded-2xl px-2 bg-white' placeholder='Enter new password.' required />
+                    </div>
+                    <div className='flex justify-between'>
+                        <label htmlFor="duplicatePassword" className='ml-2'>New Password:</label>
+                        <input type="password" name="duplicatePassword" className='text-black m-2 border-2 border-black rounded-2xl px-2 bg-white' placeholder='Enter new password.' required />
+                    </div>
+                    <button className='btn btn-secondary'>
+                        Update Password
+                    </button>
+                </form>
+            }
+            <li><button className='btn btn-secondary' onClick={() => setShowDeletionForm(!showDeletionForm)}> Account deletion</button></li>{showDeletionForm && <form onSubmit={handleDeletionForm}><button type="submit" className='btn btn-secondary'>???Are you sure????</button></form>}
         </ol >
     )
 }
