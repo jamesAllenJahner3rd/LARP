@@ -127,6 +127,8 @@ README.md                       # Project overview and onboarding
 
 ## Authentication flow
 
+-ALL Upright API calls need to be in the client side.!!!!!!
+
 - Client login/registration: create sessions from the browser using the Appwrite SDK (e.g. `account.createEmailPasswordSession`) so Appwrite returns a Set-Cookie that the browser stores.
 - After session creation, call `account.get()` from the client to hydrate full user data and update `AuthProvider`.
 - Avoid creating sessions in server actions unless you proxy Appwrite's Set-Cookie header to the browser via a custom API route.
@@ -135,7 +137,7 @@ Recommended pattern for login (client-side):
 
 1. `await account.createEmailPasswordSession(email, password)`
 2. `const me = await account.get()`
-3. `setUser(me)` in `AuthProvider` and redirect
+3. `setLoggedInUser(me)` in `AuthProvider` and redirect
 
 Verification: send verification via `account.createVerification({ url: "${NEXT_PUBLIC_ROOT_URL}/register/verify" })`.
 

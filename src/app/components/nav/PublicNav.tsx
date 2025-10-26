@@ -7,7 +7,7 @@ import { usePathname, useRouter } from "next/navigation"
 import { getNavForPath } from '@/lib/navConfig'
 import { get } from 'http'
 import { useAuth } from "@/app/providers/AuthProvider";
-import { account } from '@/lib/appwrite'
+import { getAuthenticatedAccount } from '@/lib/appwrite'
 import { revalidatePath } from 'next/cache'
 import { toast } from 'react-toastify'
 
@@ -17,12 +17,12 @@ import { toast } from 'react-toastify'
 
 
 const NavBar = () => {
-    const { user, logout } = useAuth();
+    const { loggedInUser, logout } = useAuth();
     const pathname = usePathname();
     const { heading, hyperRef } = getNavForPath(pathname);
     const [loaded, setLoaded] = useState(false);
     const router = useRouter();
-    const { setUser } = useAuth();
+    const { setLoggedInUser } = useAuth();
     useEffect(() => {
         const timeout = setTimeout(() => setLoaded(true), 1000); // slight delay to trigger transition
         return () => clearTimeout(timeout);
@@ -34,12 +34,13 @@ const NavBar = () => {
 
     const navMedium = ` md:overflow-hidden md:grid-cols-5  md:inset-x-0 md:mx-auto md:bottom-6 md:grid-rows-1 md:opacity-100 md:inset-y-5/6 md:duration-2000 md:min-w-0 md:min-h-fit md:py-0 md:px-0 md:max-w-[768px] ${loaded ? "md:w-[768px]" : "md:w-0"}`
     const h3Css = `md:h-full md:relative -ease-out md:transition-all md:overflow-hidden duration-1000 ${loaded ? "md:opacity-100 md:translate-y-0" : "md:opacity-0 md:translate-y-20"} md:hover:animate-bounce`
-    const logoutHandler = async () => {
+    const logoutHandler = () => {
+        const account = getAuthenticatedAccount()
         if (!account) return;
-        await account.deleteSession("current");
+        account.deleteSession("current");
         toast.success("Logged Out")
         setTimeout(() => router.push("/"), 700);
-        setUser(null)
+        setLoggedInUser(null)
 
 
     }
@@ -60,8 +61,8 @@ const NavBar = () => {
                     className="rounded-lg w-full size-1/1 "
                 /></Link>
                 <Link href={hyperRef[2]} className=""><h3 className={`${h3Css} delay-1000`} onClick={() => setOpenMenu(!openMenu)}>{heading[2]}</h3></Link>
-                {!user && (<Link href={hyperRef[3]} className=""><h3 className={`${h3Css} delay-3000`} onClick={() => setOpenMenu(!openMenu)}>{heading[3]}</h3></Link>)}
-                {user && (<h3 className={`${h3Css} flex  items-center delay-3000`} onClick={logoutHandler}>Log Out</h3>)}
+                {!loggedInUser && (<Link href={hyperRef[3]} className=""><h3 className={`${h3Css} delay-3000`} onClick={() => setOpenMenu(!openMenu)}>{heading[3]}</h3></Link>)}
+                {loggedInUser && (<h3 className={`${h3Css} flex  items-center delay-3000`} onClick={logoutHandler}>Log Out</h3>)}
 
             </nav >
         </>

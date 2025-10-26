@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
-import { account, ID } from "@/lib/appwrite";
+import { getAuthenticatedAccount } from "@/lib/appwrite";
+import { ID } from "appwrite"
 import type { Models } from "appwrite";
 import Form from 'next/form'
 import { useRouter } from "next/navigation";
@@ -20,7 +21,7 @@ const RegistrationPage = () => {
     const [confirmPassword, setConfirmPassword] = useState(false);
     const [duplicatePassword, setDuplicatePassword] = useState("");
     const [emailPending, setEmailPending] = useState(false)
-    const { user, setUser, logout } = useAuth();
+    const { loggedInUser, setLoggedInUser, logout } = useAuth();
     const [isVerified, setIsVerified] = useState(false)
     const rootUrl = process.env.NEXT_PUBLIC_ROOT_URL;
     const inputCSS = "bg-green-200 border-1 rounded";
@@ -29,11 +30,13 @@ const RegistrationPage = () => {
     const verifyEmail = () => toast(" You haven't verified your email yet.")
     const handleRegistation = async (e: React.FormEvent) => {
         e.preventDefault()
+        const account = getAuthenticatedAccount();
         if (!account) return;
         try {
+            const account = getAuthenticatedAccount()
             const newMember = await account.create(ID.unique(), email, password, name);
             await account.createEmailPasswordSession(email, password);
-            setUser(newMember);
+            setLoggedInUser(newMember);
             const params = {
                 url: `${rootUrl}/register/verify`
             }
@@ -50,7 +53,7 @@ const RegistrationPage = () => {
     const handleResend = async (e) => {
 
         e.target.classList.toggle("shadow-lg");
-
+        const account = getAuthenticatedAccount()
 
         try {
             const params = {
@@ -67,16 +70,16 @@ const RegistrationPage = () => {
     };
 
     useEffect(() => {
-        if (user && !user.emailVerification) {
+        if (loggedInUser && !loggedInUser.emailVerification) {
             setIsVerified(false)
             verifyEmail()
-        } else if (user && user.emailVerification) {
+        } else if (loggedInUser && loggedInUser.emailVerification) {
             setIsVerified(true)
             router.push("/members")
         }
-    }, [user, router]);
+    }, [loggedInUser, router]);
 
-    if (user && !isVerified) {
+    if (loggedInUser && !isVerified) {
         const navCss = `transition-all duration-1000 ease-in-out bg-[var(--navbar-background)] flex min-h-fit min-w-fit max-w-[1rem] py-8 px-3 items-center justify-items-center border-1 rounded-full absolute m-auto inset-y-0 justify-self-center`
 
         const navMedium = `md:overflow-hidden  md:items-center-safe flex-col  md:m-auto   md:opacity-100 md:inset-y-1/2 md:duration-2000 md:min-w-fit md:min-h-fit md:py-0 md:px-10 md:max-w-[768px] `
@@ -84,12 +87,12 @@ const RegistrationPage = () => {
 
         return (
             <div className={`${navCss} ${navMedium}`}>
-                <span>{user?.name ?? "Member"}, Check your Email for a verification letter</span>
-                <button onClick={handleResend} className="border-1 rounded shadow-2xl m-3 bg-[var(--background-alpha)]"> Resend the Email</button >
+                <span>{loggedInUser?.name ?? "Member"}, Check your Email for a verification letter</span>
+                <button onClick={handleResend} className="border rounded shadow-2xl m-3 bg-(--background-alpha)"> Resend the Email</button >
             </div>
         )
     }
-    if (user && user.emailVerification) {
+    if (loggedInUser && loggedInUser.emailVerification) {
         return (
             <p>Loading...</p>
         )
@@ -103,7 +106,7 @@ const RegistrationPage = () => {
     return (
 
 
-        <main className="bg-[url('/images/fazingA.webp')] w-full h-[100vh] bg-cover">
+        <main className="bg-[url('/images/fazingA.webp')] w-full h-screen bg-cover">
 
             <div className={`${navCss} ${navMedium} shadow-2xl shadow-black`}>
                 <h1>Register</h1>
@@ -160,7 +163,7 @@ const RegistrationPage = () => {
                         />
                         {!confirmPassword && <span className="text-red-600 bg-white"> Passwords Don't Match</span>}
                         <input type="submit" value="Create Member" disabled={!confirmPassword}
-                            className="border-1 rounded shadow-2xl m-3 bg-[var(--background-alpha)]" />
+                            className="border rounded shadow-2xl m-3 bg-r(--background-alpha)" />
                     </form>
 
                 </fieldset>
