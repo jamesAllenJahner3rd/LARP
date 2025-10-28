@@ -39,7 +39,7 @@ const Pantheon = () => {
             </section >
             <h2>The Gods and Goddesses of the Eldarlands Saga</h2>
 
-            <aside className="w-[100vw] flex-col-reverse overflow-x-scroll scroll-p-36  scroll-smooth snap-x snap-mandatory flex scrollbar-thick touch-pan-x ">
+            <aside className="w-screen flex-col-reverse overflow-x-scroll scroll-p-36  scroll-smooth snap-x snap-mandatory flex scrollbar-thick touch-pan-x ">
 
                 <section className=" w-max inline-flex">
                     {GODS.map(({ name, alt, image, description }) => (
@@ -51,7 +51,7 @@ const Pantheon = () => {
                                 sizes="100vw"
                                 alt={alt}
                             />
-                            <figcaption className='w-[100%] select-none'>
+                            <figcaption className='w-full select-none'>
                                 {description}
                             </figcaption>
                         </figure>

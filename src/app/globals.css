@@ -35,6 +35,25 @@
   border-color: var(--background-alpha);
   background-clip: padding-box;
 }
+.scrollbar-thin::-webkit-scrollbar {
+  height: 36px; /* wider horizontal scrollbar */
+  writing-mode: horizontal-tb;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: beige;
+  /* transparent; */
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background-color: var(--background-alpha); /* semi-transparent thumb */
+  border-radius: 8px;
+  border: 2px solid; /* transparent; */
+  border-color: var(--background-alpha);
+  background-clip: padding-box;
+}
 
 body {
   background: var(--background);

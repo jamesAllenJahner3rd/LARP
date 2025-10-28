@@ -49,7 +49,7 @@ export default function RootLayout({
           children}
 
         </AuthProvider>
-        <ToastContainer position="bottom-left" autoClose={3000} />
+        <ToastContainer position="bottom-left" autoClose={3000} limit={3} />
       </body>
     </html>
   );
