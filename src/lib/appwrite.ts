@@ -40,11 +40,7 @@ export async function UserLogin(email: string, password: string) {
 }
 
 // export  { ID } from "appwrite";
-export async function storage() {
-  const client = await getClient();
+export function storage() {
+  const client = getClient();
   new Storage(client);
-}
-export async function tablesDB() {
-  const client = await getClient();
-  new TablesDB(client);
 }
