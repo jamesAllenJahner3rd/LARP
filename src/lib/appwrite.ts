@@ -38,6 +38,7 @@ export async function UserLogin(email: string, password: string) {
     throw error;
   }
 }
+
 export function storage() {
   const client = getClient();
   new Storage(client);
