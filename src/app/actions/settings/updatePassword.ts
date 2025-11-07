@@ -9,7 +9,7 @@ export async function updateUserPassword(formData: FormData): Promise<void> {
   //Validation password
   validatePassword(password);
   validatePassword(oldPassword);
-
+  const account = getAuthenticatedAccount();
   const result = await account.updatePassword({
     password,
     oldPassword, // optional

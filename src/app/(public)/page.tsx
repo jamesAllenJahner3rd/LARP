@@ -8,6 +8,11 @@ const Prop = {
   heading: ["Welcome", "Explore", "Members,Shop"],
   hyperRef: ["/", "/explore/about", "/player", "https://armstreet.com/collections/fireside-family-larp-costume-basics-and-more"]
 }
+const IMAGES = {
+  "WINNING": "https://nyc.cloud.appwrite.io/v1/storage/buckets/68c11c240013701075bb/files/690e46930038d63a2878/view?project=68bb084a0032b02608c4",
+  "CAMPING": "https://nyc.cloud.appwrite.io/v1/storage/buckets/68c11c240013701075bb/files/690e4841003330f3be86/view?project=68bb084a0032b02608c4",
+  "GATE": "https://nyc.cloud.appwrite.io/v1/storage/buckets/68c11c240013701075bb/files/690e49290036b9401721/view?project=68bb084a0032b02608c4",
+};
 
 const page = (Prop) => {
   const [loaded, setLoaded] = useState(false);
@@ -66,7 +71,7 @@ const page = (Prop) => {
           Sweat beads upon your forehead as the enemy closes around you. You feel your grip tighten on the sword’s handle as defiance sets in your glare. You know this is your last stand. There are too many to defeat on your own. Finally, they’re close enough to strike. You bring the blade around to block an incoming attack. A side step clears you of the opponent, bring you into position to return the blow. It lands across his unarmored side. Hearing another behind you, you spin, getting the sword up just in time to parry what would have been a killing blow.
         </p>
         <Image
-          src="/images/winning2.webp"
+          src={IMAGES.WINNING}
           alt="Group of players standing together"
           width={1200}
           height={800}
@@ -83,7 +88,7 @@ const page = (Prop) => {
       </section >
       <section className=" rounded-2xl box-border p-2 w-full relative top-0 my-5 flex flex-col md:flex-row justify-evenly">
         <Image
-          src="/images/camping.webp"
+          src={IMAGES.CAMPING}
           alt="Group of players standing together"
           width={1200}
           height={800}
