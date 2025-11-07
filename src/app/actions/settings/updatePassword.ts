@@ -1,7 +1,7 @@
 "use server";
 import { ID, Permission, Role } from "appwrite";
 // import { revalidatePath } from "next/cache";
-import { account } from "@/lib/appwrite";
+import { getAuthenticatedAccount } from "@/lib/appwrite";
 export async function updateUserPassword(formData: FormData): Promise<void> {
   const password: string = formData.get("newPassword") as string;
   const duplicatePassword: string = formData.get("duplicatePassword") as string;

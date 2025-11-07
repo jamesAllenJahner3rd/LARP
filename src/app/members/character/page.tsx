@@ -99,7 +99,6 @@ const CharacterPage = () => {
                                                 <td className="text-center">{characterList.rows[characterSeleted].lightShield ? "\u2705" : "\u26D4"}</td>
                                                 <td className="text-center">{characterList.rows[characterSeleted].mediumShield ? "\u2705" : "\u26D4"}</td>
                                                 <td className="text-center">{characterList.rows[characterSeleted].heavyShield ? "\u2705" : "\u26D4"}</td>
-
                                             </tr>
                                         </tbody>
                                     </table>
@@ -129,9 +128,6 @@ const CharacterPage = () => {
                         <p>{characterList.rows[characterSeleted].history}</p>
                     </section>
                 </section>
-
-
-
                 <section className='bg-pink-500 h-fit w-full flex flex-col  overflow-x-scroll scrollbar-thin touch-pan-x' >
                     <ul className="  flex h-[100px] w-fit self-center">
                         {characterList && characterList.rows.map((character, i) => (
