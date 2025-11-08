@@ -9,7 +9,7 @@ import { useAuth } from "@/app/providers/AuthProvider";
 import { useEffect } from "react";
 
 const StorylineClient = ({ entries }: { entries: Models.RowList }) => {
-    const { user, isAdmin } = useAuth();
+    const { loggedInUser, isAdmin } = useAuth();
 
     const [logExpanded, setLogExpanded] = useState<boolean[]>(Array(entries.rows.length).fill(false))
 
@@ -23,7 +23,7 @@ const StorylineClient = ({ entries }: { entries: Models.RowList }) => {
 
         < div className='mb-48 mx-8' >
             <h2>Storyline</h2>
-            <Timeline className='text-[var(--foreground)]'
+            <Timeline className='text-(--foreground)'
                 items={
                     entries.rows.map((log, id) => (
                         {
@@ -31,9 +31,9 @@ const StorylineClient = ({ entries }: { entries: Models.RowList }) => {
 
 
                             children: <article key={log.$id}>
-                                <h4 className=' cursor-default text-[var(--foreground)]'>{log.heading}</h4>
-                                <time className='text-[var(--foreground)]'>{new Date(log.$createdAt).toLocaleDateString()}</time>
-                                <div className='indent-1 w-4/5 justify-self-center-safe cursor-pointer text-[var(--foreground)]' onClick={() => { setLogExpanded(prev => prev.map((t, i) => i === id ? !t : t)) }}>
+                                <h4 className=' cursor-default text-(--foreground)'>{log.heading}</h4>
+                                <time className='text-(--foreground)'>{new Date(log.$createdAt).toLocaleDateString()}</time>
+                                <div className='indent-1 w-4/5 justify-self-center-safe cursor-pointer text-(--foreground)' onClick={() => { setLogExpanded(prev => prev.map((t, i) => i === id ? !t : t)) }}>
                                     {expandToggle(id, log.body).split("\\n").map((line, i) => (
                                         <React.Fragment key={i}>
                                             <p className='indent-5 leading-10'>{line}</p>
@@ -53,12 +53,12 @@ const StorylineClient = ({ entries }: { entries: Models.RowList }) => {
                 <Form action={createStoryEntry} id="newlogForm" className='border-2 border-black rounded-2xl w-full
                  md:w-2/3 flex flex-col mb-48 bg-neutral-500'>
                     <label htmlFor="heading" className='ml-2'>Title:</label>
-                    <input name="heading" type='text' className='text-black border-2 border-black rounded-2xl px-2 bg-[var(--background-alpha)] m-2' placeholder='Enter Title here.' />
+                    <input name="heading" type='text' className='text-black border-2 border-black rounded-2xl px-2 bg-(--background-alpha) m-2' placeholder='Enter Title here.' />
 
                     <label htmlFor="body" className='ml-2'>Article:</label>
-                    <textarea id="body" name="newLog" rows={10} className='text-black m-2 border-2 border-black rounded-2xl px-2 bg-[var(--background-alpha)]' placeholder='Enter Article here.' />
+                    <textarea id="body" name="newLog" rows={10} className='text-black m-2 border-2 border-black rounded-2xl px-2 bg-(--background-alpha)' placeholder='Enter Article here.' />
 
-                    <button className='border-2 type="submit" id="addLog" border-black rounded-2xl bg-[var(--button)] w-fit p-3 justify-self-center self-center-safe m-2 flex '>
+                    <button className='border-2 type="submit" id="addLog" border-black rounded-2xl bg-(--button) w-fit p-3 justify-self-center self-center-safe m-2 flex '>
                         Upload Article
                     </button>
                 </Form>

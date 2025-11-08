@@ -39,7 +39,7 @@ const Pantheon = () => {
             </section >
             <h2>The Gods and Goddesses of the Eldarlands Saga</h2>
 
-            <aside className="w-[100vw] overflow-x-scroll scroll-p-36  scroll-smooth snap-x snap-mandatory flex scrollbar-thick touch-pan-x select-none">
+            <aside className="w-screen overflow-x-scroll scroll-p-36  scroll-smooth snap-x snap-mandatory flex scrollbar-thick touch-pan-x select-none">
                 <section className=" w-max inline-flex">
                     <figure className={figureCss}>
                         <Image
@@ -51,7 +51,7 @@ const Pantheon = () => {
 
 
                         />
-                        <figcaption className='w-[100%]'>
+                        <figcaption className='w-full'>
                             Celnuntos - The god of nature and elves, Celnuntos is caring and just. Though he does not forgive those who destroy the wild places of the world. He is commonly worshipped by Wood Elves, Rangers, Halflings, Satyrs, Uroken Orc, and Jungle Trolls.
                         </figcaption>
                     </figure>
