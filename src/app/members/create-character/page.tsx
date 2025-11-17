@@ -1,104 +1,66 @@
 "use client";
-import React, { useEffect, useEffectEvent } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { useState } from "react";
 import { getAuthenticatedAccount, getClient } from "@/lib/appwrite";
+import { getList } from '@/lib/database';
 import { ID, Query, TablesDB, Models } from "appwrite";
 // import { RowList } from "@/types";
 import { useAuth } from "@/app/providers/AuthProvider";
 import TextArea from 'antd/es/input/TextArea';
 import Image from "next/image";
 import { match } from 'assert';
-type Class = {
-    name: string;
-    description: string;
-    light_weapons: boolean;
-    medium_weapons: boolean;
-    heavy_weapons: boolean;
-    heavy_armor: boolean;
-    medium_armor: boolean;
-    light_armor: boolean;
-    light_shield: boolean;
-    medium_shield: boolean;
-    heavy_shield: boolean;
-    two_weapon: boolean;
-    ranged_weapons: boolean;
-    white_cloth: number;
-    green_cloth: number;
-    spells_packets: number;
-}
-type Deity = {
-    image: string;
-    name: string;
-    description: string;
+import * as CharacterTypes from "@/lib/types/characterTypes"
 
-}
-type ClassAbilites = {
-    class: string;
-    level: number;
-    title: string;
-    scaling: number;
-    description: string;
-}
-type Race = {
-    name: string;
-    description: string;
-    ability: string;
-    ability_description: string;
 
-}
 const CharacterCreationPage = () => {
     const QUERIES = [Query.equal("memberId", "68ccbf0f0026eb9a8d4f")]
     const { loggedInUser, logout } = useAuth();
-    const [racesModel, setRacesModel] = useState("");
-    const [nameModel, setNameModel] = useState("");
 
-    const [subRacesModel, setSubRacesModel] = useState<Race>({
-        name: "",
-        description: "",
-        ability: "",
-        ability_description: "",
-
-    });
-    const [classesModel, setClassesModel] = useState<Class>({
-        name: "",
-        description: "",
-        light_weapons: false,
-        medium_weapons: false,
-        heavy_weapons: false,
-        heavy_armor: false,
-        medium_armor: false,
-        light_armor: false,
-        light_shield: false,
-        medium_shield: false,
-        heavy_shield: false,
-        two_weapon: false,
-        ranged_weapons: false,
-        white_cloth: 0,
-        green_cloth: 0,
-        spells_packets: 0,
-    })
-    const [levelModel, setLevelModel] = useState(1);
-    const [classAbilitiesModel, setClassAbilitiesesModel] = useState<ClassAbilites>({
+    const [character, setCharacter] = useState<CharacterTypes.Character>(
+        {
+            memberId: loggedInUser?.$id,
+            name: "",
+            race: "",
+            subRace: "",
+            raceDescription: "",
+            raceAbilities: [],
+            raceAbilityDescription: [],
+            classDescription: "",
+            deity: "",
+            deityImage: "",
+            deityDescription: "",
+            lightWeapons: false,
+            mediumWeapons: false,
+            heavyWeapons: false,
+            heavyArmor: false,
+            mediumArmor: false,
+            lightArmor: false,
+            lightShield: false,
+            mediumShield: false,
+            heavyShield: false,
+            twoWeapon: false,
+            rangedWeapons: false,
+            whiteCloth: 0,
+            greenCloth: 0,
+            history: "",
+            spellsPackets: 0,
+            imageUrl: "",
+        }
+    );
+    const [characterClasses, setCharacterClasses] = useState<Map<string, number>>(new Map());
+    const [characterClassAbilities, setCharacterClassAbilities] = useState([])
+    const [formInputs, setFormInputs] = useState<CharacterTypes.FormInputs>({
         class: "",
-        level: 1,
-        title: "",
-        scaling: 1,
-        description: "",
-    });
-    const [deitiesModel, setDeitiesModel] = useState<Deity>({
-        image: "",
-        name: "",
-        description: ""
-    });
-    const [backStoryModel, setBackStoryModel] = useState("");
+        level: 0,
 
+    })
 
 
     const [raceList, setRaceList] = useState<Models.RowList<Models.DefaultRow> | null>(null);
     const [subRaceList, setSubRaceList] = useState<Models.RowList<Models.DefaultRow> | null>(null);
-    const [classes, setClasses] = useState<Models.RowList<Models.DefaultRow> | null>(null);
-    const [deities, setDeities] = useState<Models.RowList<Models.DefaultRow> | null>(null);
-    const [classAbilites, setClassAbilites] = useState<Models.RowList<Models.DefaultRow> | null>(null);
+    const [classList, setClassList] = useState<Models.RowList<Models.DefaultRow> | null>(null);
+    const [deitiesList, setDeitiesList] = useState<Models.RowList<Models.DefaultRow> | null>(null);
+    const [classAbilitiesList, setClassAbilitiesList] = useState<Models.RowList<Models.DefaultRow> | null>(null);
     const [error, setError] = useState(null)
 
 
@@ -107,118 +69,245 @@ const CharacterCreationPage = () => {
     const DEITIES_TABLE_ID = "deities";
     const RACES_TABLE_ID = "races";
     const CLASSES_TABLE_ID = "classes";
-
+    const CLASSNAMES = ["Fighter", "Cleric", "Ranger", "Mage", "Rogue"];
+    const DEITIES = ["Celnuntos", "Corin", "Deidre", "Dolus", "Fleatea", "Gromtusk", "Kahlee", "Izaryle", "Melaka", "Osirus", "Ozmodius", "Ragnarous", "Rahul", "Sulis", "Theratis"];
+    const RACES = ["Elf", "Dwarf", "Orc", "Chimera", "Troll", "WeeFolk", "HalfBreed"]
     const client = getClient()
     const tableDB = new TablesDB(client);
+    //GET DATA FROM DATABASE
     useEffect(() => {
         console.log("useEffect ran")
-        let active = true
-        const fetchData = async () => {
+        let active = true;
+        (async () => {
             try {
-                const CLASS_ABILITES = await tableDB.listRows({
-                    databaseId: DATABASE_ID,
-                    tableId: CLASS_ABILITES_TABLE_ID,
-                });
-                const DEITIES = await tableDB.listRows({
-                    databaseId: DATABASE_ID,
-                    tableId: DEITIES_TABLE_ID,
-                });
-                const RACES = await tableDB.listRows({
-                    databaseId: DATABASE_ID,
-                    tableId: RACES_TABLE_ID,
-                });
-                const CLASSES = await tableDB.listRows({
-                    databaseId: DATABASE_ID,
-                    tableId: CLASSES_TABLE_ID,
-                });
-                console.dir(classAbilites)
+                const [DEITIES, RACES, CLASSES, CLASS_ABILITES] = await Promise.all([
+                    getList(DATABASE_ID, DEITIES_TABLE_ID),
+                    getList(DATABASE_ID, RACES_TABLE_ID),
+                    getList(DATABASE_ID, CLASSES_TABLE_ID),
+                    getList(DATABASE_ID, CLASS_ABILITES_TABLE_ID)
+                ])
                 if (active) {
-                    setClassAbilites(CLASS_ABILITES)
+                    setClassAbilitiesList(CLASS_ABILITES)
                     setRaceList(RACES)
-                    setClasses(CLASSES)
-                    setDeities(DEITIES)
+                    setClassList(CLASSES)
+                    setDeitiesList(DEITIES)
 
                 }
             } catch (error) {
                 if (active) setError(error)
             }
-        }
-        fetchData();
+        })()
+
 
         return () => { active = false };
     }, []
     )
 
-
+    //RACES
     useEffect(() => {
-        console.log("subRaceList", subRacesModel.name)
-        console.dir(subRacesModel)
+        console.log("subRaceList", character.race)
+        console.dir(character)
         console.dir(raceList)
-        const match = raceList?.rows.find((row) => row.races === subRacesModel.name)
+        const match = raceList?.rows.find((row) => row.races === character.subRace)
         console.dir("subRaceList", match);
         if (match) {
-            setSubRacesModel({
-                ...subRacesModel,
-                description: `${match.description}`,
-                ability: `${match.ability}`,
-                ability_description: `${match.ability_description}`,
+            setCharacter({
+                ...character,
+                raceDescription: `${match.description}`,
+                raceAbilities: [...character.raceAbilities, `${match.ability}`],
+                raceAbilityDescription: [...character.raceAbilityDescription, `${match.ability_description}`],
             })
         }
-    }, [subRacesModel.name])
+    }, [character?.subRace])
 
 
-    //************************************************* */
+    //CLASS ABLITIES************************************************* */
+    // useEffect(() => {
+    //     // // console.log(" Has a class been chosen?", !classAbilitiesList || !character.subRace)
+
+    //     // // if (!classAbilitiesList || !classesRef) return;
+    //     // // console.dir(classAbilitiesList)
+    //     // // console.log("character.class", character)
+    //     // // let ?
+    //     //     // setCharacter((character) => ({
+    //     //     //     ...character,
+    //     //     //     classAbilities: [...character.classAbilities, JSON.stringify({
+    //     //     //         "class": `${match.class}`,
+    //     //     //         "level": `${match.level}`,
+    //     //     //         "title": `${match.title}`,
+    //     //     //         "scaling": `${match.scaling}`,
+    //     //     //         "description": `${match.description}`
+    //     //     //     })]
+    //     //     // }))
+    // }
+    // }, []
+    // );
+    // CLASS
+
     useEffect(() => {
-        console.log("classAbilites=>")
-        console.dir(classAbilites)
-        if (!classAbilites || !subRacesModel.name) return;
-        const match = classAbilites?.rows.find((row) => row.class === subRacesModel.name && row.level === levelModel)
-        console.log("classAbilites", match)
-    }, [classAbilitiesModel.class, levelModel, subRacesModel.name]
-    );
 
+        if (!classList || characterClasses.size) return;
+        console.log(typeof characterClasses, "characterClasses", characterClasses)
 
-
-
-    // console.dir(classes)
-    useEffect(() => {
-
-        if (!classes || !classesModel.name) return;
-        const match = classes?.rows?.find((row) => row.classes === classesModel.name
-        )
-        if (match) {
-            setClassesModel({
-                ...classesModel!,
-                description: match.description,
-                light_weapons: match.light_weapons,
-                medium_weapons: match.medium_weapons,
-                heavy_weapons: match.heavy_weapons,
-                heavy_armor: match.heavy_armor,
-                medium_armor: match.medium_armor,
-                light_armor: match.light_armor,
-                light_shield: match.light_shield,
-                medium_shield: match.medium_shield,
-                heavy_shield: match.heavy_shield,
-                two_weapon: match.two_weapon,
-                ranged_weapons: match.ranged_weapons,
-                white_cloth: match.white_cloth,
-                green_cloth: match.green_cloth,
-                spells_packets: match.spells_packets,
-            })
+        const matched = Array.from(characterClasses?.keys() || []) // Grab class is of the character.
+        // .map((className) => classList.rows.find((row) => row.classses === className))// For each class name I'm gonna look in the classList rows For row where the class is equals the class name. This will return an array of rows
+        // .filter((row): row is typeof classList.rows[number] => !!row);
+        //So this is filtering out any row that would be undefined or Null. And reassuring Typescript of the type of each row
+        const reducedClassInfo = /*matched*/[].reduce((acc, cur) => {
+            return {
+                classDescription: cur.description,
+                lightWeapons: acc.lightWeapons || cur.lightWeapons,
+                mediumWeapons: acc.mediumWeapons || cur.mediumWeapons,
+                heavyWeapons: acc.heavyWeapons || cur.heavyWeapons,
+                heavyArmor: acc.heavyArmor || cur.heavyArmor,
+                mediumArmor: acc.mediumArmor || cur.mediumArmor,
+                lightArmor: acc.lightArmor || cur.lightArmor,
+                lightShield: acc.lightShield || cur.lightShield,
+                mediumShield: acc.mediumShield || cur.mediumShield,
+                heavyShield: acc.heavyShield || cur.heavyShield,
+                twoWeapon: acc.twoWeapon || cur.twoWeapon,
+                rangedWeapons: acc.rangedWeapons || cur.rangedWeapons,
+                whiteCloth: Math.max(acc.whiteCloth, cur.whiteCloth),
+                greenCloth: Math.max(acc.greenCloth, cur.greenCloth),
+                spellsPackets: Math.max(acc.spellsPackets, cur.spellsPackets)
+            }
+        }, {
+            classDescription: "",
+            lightWeapons: false,
+            mediumWeapons: false,
+            heavyWeapons: false,
+            heavyArmor: false,
+            mediumArmor: false,
+            lightArmor: false,
+            lightShield: false,
+            mediumShield: false,
+            heavyShield: false,
+            twoWeapon: false,
+            rangedWeapons: false,
+            whiteCloth: 0,
+            greenCloth: 0,
+            spellsPackets: 0,
         }
-    }, [classesModel.name, classes])
+        );
+        setCharacter({
+            ...character!,
+            classDescription: reducedClassInfo.classDescription,
+            lightWeapons: reducedClassInfo.lightWeapons,
+            mediumWeapons: reducedClassInfo.mediumWeapons,
+            heavyWeapons: reducedClassInfo.heavyWeapons,
+            heavyArmor: reducedClassInfo.heavyArmor,
+            mediumArmor: reducedClassInfo.mediumArmor,
+            lightArmor: reducedClassInfo.lightArmor,
+            lightShield: reducedClassInfo.lightShield,
+            mediumShield: reducedClassInfo.mediumShield,
+            heavyShield: reducedClassInfo.heavyShield,
+            twoWeapon: reducedClassInfo.twoWeapon,
+            rangedWeapons: reducedClassInfo.rangedWeapons,
+            whiteCloth: reducedClassInfo.whiteCloth,
+            greenCloth: reducedClassInfo.greenCloth,
+            spellsPackets: reducedClassInfo.spellsPackets,
+        });
+    }, [characterClasses/*, classList*/]);
+    //DEITIES
     useEffect(() => {
-        const match = deities?.rows.find((row) => row.God === deitiesModel.name);
+        const match = deitiesList?.rows.find((row) => row.God === character.deity);
         if (match) {
-            setDeitiesModel({
-                ...deitiesModel,
-                description: match.description,
-                image: match.image,
+            setCharacter({
+                ...character,
+                deityDescription: match.description,
+                deityImage: match.image,
             });
         }
-    }, [deitiesModel.name, deities]);
+    }, [character.deity, deitiesList]);
+    // useEffect(() => { }, [levelModel.total])
+    // function decreaseLevel() {
+    //     character.level.reduce((a, b) => a + b, 0)
+    //     if (character.level[3] > 0) {
+    //         setCharacter((character) => ({
+    //             ...character,
+    //             level: [character.level[0], character.level[1], character.level[2], character.level[3] - 1]
+    //         }))
+    //     }
+    // }
+    function totalLevel(classLevelPairs: Map<string, number>): number {
+        const toBeSummed = Array.from(classLevelPairs.values())
+        if (Array.isArray(toBeSummed)) {
+            return toBeSummed?.reduce((sum, addends) => sum + addends, 0)
+        }
+        else return 0
+    }
+    function increaseLevel() {
+        console.log("increase pressed")
+        console.log(typeof characterClasses)
+        // Check to see if there are three classes. Need to check if the total classes or 10
+        console.log(formInputs.class && totalLevel(characterClasses) < 10 && (characterClasses.size <= 3 || undefined))
+        if (formInputs.class && totalLevel(characterClasses) < 10 && (characterClasses.size <= 3 || undefined)) {
 
+            // check To see if the selected class is in the  characterClass object already
+            console.log("This character can level up Level:", totalLevel(characterClasses));
 
+            if (!Array.from(characterClasses.keys()).some((className) => className === formInputs.class)) {
+                //If the class has not been added we need to add the Class and the level of one to the characterClass array
+                setCharacterClasses((characterClasses) => {
+                    const updatedClasses = new Map(characterClasses);
+                    updatedClasses.set(formInputs.class, 1);
+                    return updatedClasses;
+                });
+                setFormInputs((formInputs) => ({ class: formInputs.class, level: 1 }))
+                console.log("This character hasn't a level in this class", characterClasses)
+
+            } else {
+                console.log("This character's level", characterClasses)
+                //      Else we will increment the level of the current class.
+                setCharacterClasses((characterClasses) => {
+                    const classList = new Map(characterClasses);
+                    classList.set(formInputs.class, formInputs.level + 1);
+                    return classList;
+                })
+                setFormInputs((formInputs) => ({
+                    ...formInputs,
+                    level: formInputs.level++
+                }))
+                console.log("This character has a level in this class", characterClasses)
+            }
+
+            //         //      Then we need to check and see if there are any abilities associated with that level of class.
+            //         //             If true we check if that ability is in the character ability list.
+            //         //                  If it isn't we'll add ability ID to the ability list and the scale
+            //         //                  Else we will update the scale. 
+
+        }
+    }
+    const subraceOptions: Record<string, string[]> = {
+        Chimera: ["Artanos", "Felinos", "Lacetros", "Lykinthros", "Minotaur", "Satyr", "Vulpine"],
+        Dwarf: ["Dark Dwarf", "Hill Dwarf"],
+        Elf: ["Dark Elf", "High Elf", "Wood Elf"],
+        Human: ["Human"],
+        Orc: ["Grunthar Orc", "Moruk Orc", "Uroken Orc"],
+        Troll: ["Jungle Troll"],
+        WeeFolk: ["Buraling", "Gnome", "Halfling"],
+        HalfBreed: ["Half-Elf", "Half-Orc"],
+    };
+    function classSelected(chosenClass): void {
+        const classMatch = Array.from(characterClasses.keys()).find((className) => className === chosenClass)
+        if (classMatch === chosenClass) {
+            setFormInputs((inputs) => {
+                return ({
+                    ...inputs,
+                    "class": chosenClass,
+                    level: characterClasses.get(classMatch)
+                })
+            })
+        } else {
+            setFormInputs((inputs) => {
+                return ({
+                    ...inputs,
+                    "class": chosenClass,
+                    level: 0
+                })
+            })
+        }
+    }
 
     return (
 
@@ -232,99 +321,68 @@ const CharacterCreationPage = () => {
                         <div className='flex justify-between'>
                             <label htmlFor='name' className='ml-2 w-2/5'>Name:</label>
                             <input type="text" name="name"
-                                className='text-black border-2 w-3/5 border-black rounded-2xl px-2 bg-white m-2' onChange={(e) => setNameModel(e.target.value)} required />
+                                className='text-black border-2 w-3/5 border-black rounded-2xl px-2 bg-white m-2' onChange={(e) => setCharacter((character) => ({
+                                    ...character,
+                                    name: e.target.value
+                                }))}
+                                required />
                         </div>
                         <div className='flex justify-between'>
                             <label htmlFor='races' className='ml-2 w-2/5'>Race:</label>
-                            <select name="races" id="races" className="  border-2 border-black rounded-2xl px-2 bg-white m-2 w-3/5 text-black" onChange={(e) => setRacesModel(e.target.value)}>
+                            <select name="races" id="races" className="  border-2 border-black rounded-2xl px-2 bg-white m-2 w-3/5 text-black" onChange={(e) => setCharacter(({
+                                ...character,
+                                race: e.target.value
+                            }))}>
                                 <option value="choose">Choose...</option>
-                                <option value="elf">Elf</option>
-                                <option value="dwarf">Dwarf</option>
-                                <option value="orc">Orc</option>
-                                <option value="chimera">Chimera</option>
-                                <option value="troll">Troll</option>
-                                <option value="weeFolk">WeeFolk</option>
-                                <option value="halfBreed">Half-Breed</option>
+                                {RACES.map((race) => (<option value={race} key={race}>{race}</option
+                                >))}
                             </select>
-
                         </div>
                         <div className='flex justify-between'>
                             <label htmlFor='subRace' className='ml-2 w-2/5'>Sub-Race:</label>
-                            <select name="subRace" id="subRaceList" className=" border-2 border-black rounded-2xl px-2 bg-white m-2 w-3/5 text-black" onChange={(e) => setSubRacesModel((race) => ({
-                                ...race!, name: e.target.value
+                            <select name="subRace" id="subRaceList" className=" border-2 border-black rounded-2xl px-2 bg-white m-2 w-3/5 text-black" onChange={(e) => setCharacter((character) => ({
+                                ...character, subRace: e.target.value
                             }))}>
                                 <option value="choose">Choose...</option>
-                                {racesModel === "chimera" && <option value="Artanos">Artanos</option>}
-                                {racesModel === "chimera" && <option value="Felinos">Felinos</option >}
-                                {racesModel === "chimera" && <option value="Lacetros" >Lacetros</option >}
-                                {racesModel === "chimera" && <option value="Lykinthros" >Lykinthros</option >}
-                                {racesModel === "chimera" && <option value="Minotaur" >Minotaur</option >}
-                                {racesModel === "chimera" && <option value="Satyr" >Satyr</option >}
-                                {racesModel === "chimera" && <option value="Vulpine" >Vulpine</option >}
-                                {racesModel === "dwarf" && <option value="Dark Dwarf" >Dark Dwarf</option >}
-                                {racesModel === "dwarf" && <option value="Hill Dwarf" >Hill Dwarf</option >}
-                                {racesModel === "elf" && <option value="Dark Elf" >Dark Elf</option >}
-                                {racesModel === "elf" && <option value="High Elf" >High Elf</option >}
-                                {racesModel === "elf" && <option value="Wood Elf" >Wood Elf</option >}
-                                {racesModel === "human" && <option value="Human" >Human</option >}
-                                {racesModel === "orc" && <option value="Grunthar Orc">Grunthar Orc</option >}
-                                {racesModel === "orc" && <option value="Moruk Orc" >Moruk Orc</option >}
-                                {racesModel === "orc" && <option value="Uroken Orc" >Uroken Orc</option >}
-                                {racesModel === "troll" && <option value="Jungle Troll" >Jungle Troll</option >}
-                                {racesModel === "weeFolk" && <option value="Buraling" >Buraling</option >}
-                                {racesModel === "weeFolk" && <option value="Gnome" >Gnome</option >}
-                                {racesModel === "weeFolk" && <option value="Halfling" >Halfling</option >}
-                                {racesModel === "halfBreed" && <option value="Half-Elf" >Half-Elf</option >}
-                                {racesModel === "halfBreed" && <option value="Half-Orc" >Half-Orc</option >}
+                                {subraceOptions[character.race]?.map((subrace) => (
+                                    <option key={subrace} value={subrace}>{subrace}</option>
+                                ))}
                             </select >
                         </div >
                         <div className='flex justify-between'>
                             <label htmlFor='classes' className='ml-2 w-2/5'>Class:</label>
-                            <select name="classes" id="classes" className="  border-2 border-black rounded-2xl px-2 bg-white m-2 w-3/5 text-black" onChange={(e) => setClassesModel((prev) => ({
-                                ...prev!, name: e.target.value
-                            }))}>
-                                <option value="choose">Choose...</option>
-                                <option value="Cleric">Cleric</option>
-                                <option value="Fighter">Fighter</option>
-                                <option value="Mage">Mage</option>
-                                <option value="Ranger">Ranger</option>
-                                <option value="Rogue">Rogue</option>
+                            <select name="classes" id="classes" className="  border-2 border-black rounded-2xl px-2 bg-white m-2 w-3/5 text-black" onChange={
+                                (e) => classSelected(e.target.value)}>
+                                {(characterClasses.size === 0 || totalLevel(characterClasses) >= 3) && <option value="choose">Choose...</option>}
+                                {CLASSNAMES.map((className) => (
+                                    (characterClasses.size === 0 || totalLevel(characterClasses) >= 3 || formInputs.class === className) &&
+
+                                    <option value={className} key={className}>{className}</option>
+                                ))}
                             </select>
                         </div>
                         <div className='flex justify-between'>
                             <label htmlFor='classes' className='ml-2 w-2/5'>Level:</label>
                             <div className="flex w-3/5">
-                                <input type="button" name="levelDown" id="levelDown" value="-" className="border-2  border-black rounded-l-2xl pl-2 bg-white  my-2 w-1/3 text-black" onClick={() => { if (levelModel > 0) setLevelModel(levelModel - 1) }} />
-                                <span className="border-y-2 border-black  px-2 bg-white my-2 w-1/3 text-black text-center"> {levelModel}</span>
-                                <input type="button" name="levelUp" id="levelUp" value="+" className="border-2 border-black rounded-r-2xl pr-2 bg-white mr-2 w-1/3 my-2 text-black" onClick={() => { if (levelModel < 10) setLevelModel(levelModel + 1) }} />
+                                <input type="button" name="levelDown" id="levelDown" value="-" className="border-2  border-black rounded-l-2xl pl-2 bg-white  my-2 w-1/3 text-black" /*onClick={decreaseLevel}*/ />
+                                <span className="border-y-2 border-black  px-2 bg-white my-2 w-1/3 text-black text-center"> {formInputs.level || '0'}</span>
+                                <input type="button" name="levelUp" id="levelUp" value="+" className="border-2 border-black rounded-r-2xl pr-2 bg-white mr-2 w-1/3 my-2 text-black" onClick={increaseLevel} />
                             </div>
                         </div>
                         <div className='flex justify-between'>
                             <label htmlFor='deities' className='ml-2 w-2/5'>Deities:</label>
-                            <select name="deities" id="deities" className=" border-2 border-black rounded-2xl px-2 bg-white m-2 w-3/5 text-black" onChange={(e) => setDeitiesModel((deity) => ({ ...deity!, name: e.target.value }))}>
+                            <select name="deities" id="deities" className=" border-2 border-black rounded-2xl px-2 bg-white m-2 w-3/5 text-black" onChange={(e) => setCharacter((character) => ({ ...character!, deity: e.target.value }))}>
                                 <option value="choose">Choose...</option>
-                                <option value="Celnuntos">Celnuntos</option>
-                                <option value="Corin">Corin</option>
-                                <option value="Deidre">Deidre</option>
-                                <option value="Dolus">Dolus</option>
-                                <option value="Fleatea">Fleatea</option>
-                                <option value="Gromtusk">Gromtusk</option>
-                                <option value="Kahlee">Kahlee</option>
-                                <option value="Izaryle">Izaryle</option>
-                                <option value="Melaka">Melaka</option>
-                                <option value="Osirus"> Osirus</option>
-                                <option value="Ozmodius">Ozmodius</option>
-                                <option value="Ragnarous">Ragnarous</option>
-                                <option value="Rahul">Rahul</option>
-                                <option value="Sulis">Sulis</option>
-                                <option value="Theratis">Theratis</option>
+                                {DEITIES.map((god) => (
+                                    <option value={god} key={god}>{god}</option>
+                                ))}
                             </select>
 
                         </div>
 
                         <div className='flex justify-between'>
                             <label htmlFor='Backstory' className='ml-2'>Backstory:</label>
-                            <textarea name="Backstory" rows={10} onChange={(e) => setBackStoryModel(e.target.value)}
+                            <textarea name="Backstory" rows={10} onChange={(e) => setCharacter((character) => ({ ...character, history: e.target.value }))}
                                 className='text-black border-2 border-black rounded-2xl px-2 bg-white m-2' />
                         </div>
                         <div className='flex justify-center content-center'>
@@ -338,28 +396,35 @@ const CharacterCreationPage = () => {
                     <div className='flex justify-between'>
                         <div>
 
-                            <div className='flex'><h2>Name:  </h2> <p> {nameModel}</p></div>
-                            <div className='flex '><h2>Race: </h2> <p> {subRacesModel.name}</p></div>
-                            <div className='flex '><h2>Class: </h2> <p> {classesModel.name}</p></div>
-                            <div className='flex '><h2>Level: </h2> <p> {`${levelModel}`}</p></div>
+                            <div className='flex'><h2>Name:  </h2> <p> {character.name}</p></div>
+                            <div className='flex '><h2>Race: </h2> <p> {character.subRace}</p></div>
+                            <h2>Class:&nbsp;</h2>
+                            {characterClasses.size > 0 &&
+                                Array.from(characterClasses.keys()).map((className) => (
+                                    <React.Fragment key={className}>
+                                        <div className='flex'>  <h2 className="ml-4">Class:</h2><span> {className} {characterClasses.get(className)} lvl</span></div>
+                                        <div className='flex'></div>
+                                    </React.Fragment>
+                                ))}
 
-                            {deities && <div className='flex '>
+
+                            {deitiesList && <div className='flex '>
                                 <h2>Deity: </h2>
 
-                                {/* <p> {deitiesModel.image}"</p> */}
-                                {deitiesModel?.image?.startsWith('http') && (
+
+                                {character.deityImage?.startsWith('http') && (
                                     <Image
-                                        src={deitiesModel.image}
-                                        alt={`Deity: ${deitiesModel.name}`}
+                                        src={character.deityImage}
+                                        alt={`Deity: ${character.deity}`}
                                         width={1200}
                                         height={800}
                                         className=" object-scale-down h-4 w-fit self-center
 
                                         "
                                     />)}
-                                <p className=" flex justify-start"> {deitiesModel.name} </p>
+                                <p className=" flex justify-start"> {character.deity} </p>
                             </div>}
-                            {deities && <div className='flex '> <p> {deitiesModel.description}</p></div>}
+                            {deitiesList && <div className='flex '> <p> {character.deityDescription}</p></div>}
                             <table border={1} className="grid-cols-3 grid-row-3 w-full ">
                                 <thead className="text-center">
                                     <tr>
@@ -372,40 +437,40 @@ const CharacterCreationPage = () => {
                                 <tbody>
                                     <tr>
                                         <th scope="row" className='text-end'>Weapons:</th>
-                                        <td className="text-center">{classesModel.light_weapons ? "\u2705" : "\u26D4"}</td>
-                                        <td className="text-center">{classesModel.medium_weapons ? "\u2705" : "\u26D4"}</td>
-                                        <td className="text-center">{classesModel.heavy_weapons ? "\u2705" : "\u26D4"}</td>
+                                        <td className="text-center">{character.lightWeapons ? "\u2705" : "\u26D4"}</td>
+                                        <td className="text-center">{character.mediumWeapons ? "\u2705" : "\u26D4"}</td>
+                                        <td className="text-center">{character.heavyWeapons ? "\u2705" : "\u26D4"}</td>
                                     </tr>
                                     <tr>
                                         <th scope="row" className='text-end'>Armor:</th>
-                                        <td className="text-center">{classesModel.light_armor ? "\u2705" : "\u26D4"}</td>
-                                        <td className="text-center">{classesModel.medium_armor ? "\u2705" : "\u26D4"}</td>
-                                        <td className="text-center">{classesModel.heavy_armor ? "\u2705" : "\u26D4"}</td>
+                                        <td className="text-center">{character.lightArmor ? "\u2705" : "\u26D4"}</td>
+                                        <td className="text-center">{character.mediumArmor ? "\u2705" : "\u26D4"}</td>
+                                        <td className="text-center">{character.heavyArmor ? "\u2705" : "\u26D4"}</td>
                                     </tr>
                                     <tr className='- border-b'>
                                         <th scope="row" className='text-end'>Shield:</th>
-                                        <td className="text-center">{classesModel.light_shield ? "\u2705" : "\u26D4"}</td>
-                                        <td className="text-center">{classesModel.medium_shield ? "\u2705" : "\u26D4"}</td>
-                                        <td className="text-center">{classesModel.heavy_shield ? "\u2705" : "\u26D4"}</td>
+                                        <td className="text-center">{character.lightShield ? "\u2705" : "\u26D4"}</td>
+                                        <td className="text-center">{character.mediumShield ? "\u2705" : "\u26D4"}</td>
+                                        <td className="text-center">{character.heavyShield ? "\u2705" : "\u26D4"}</td>
 
                                     </tr>
                                     <tr>
 
                                         <th scope="row" className='text-end border-t'>Two-Weapon:</th>
-                                        <td className="text-center">{classesModel.two_weapon ? "\u2705" : "\u26D4"}</td>
+                                        <td className="text-center">{character.twoWeapon ? "\u2705" : "\u26D4"}</td>
 
                                     </tr>
                                     <tr>
                                         <th scope="row" className='text-end'>Green Strips:</th>
-                                        <td className="text-center">{classesModel.green_cloth}</td>
+                                        <td className="text-center">{character.greenCloth}</td>
                                     </tr>
                                     <tr>
                                         <th scope="row" className='text-end'>White Strips:</th>
-                                        <td className="text-center">{classesModel.white_cloth}</td>
+                                        <td className="text-center">{character.whiteCloth}</td>
                                     </tr>
                                     <tr>
                                         <th scope="row" className='text-end'>Spell Packets:</th>
-                                        <td className="text-center">{classesModel.spells_packets}</td>
+                                        <td className="text-center">{character.spellsPackets}</td>
                                     </tr>
 
 
@@ -413,7 +478,7 @@ const CharacterCreationPage = () => {
                             </table>
                             <div>
                                 <div>
-                                    <p>{JSON.stringify(subRacesModel)}: {subRacesModel.ability_description}</p>
+                                    <h2>{character.raceAbilities}: </h2> <p>{character.raceAbilityDescription}</p>
                                 </div>
                                 <div>
                                     <h2> Class Skills:</h2>
@@ -432,8 +497,20 @@ const CharacterCreationPage = () => {
                         />
                     </div >
                     <div></div>
-                    {/* <div className='flex '><h2>Skills: </h2> <p> {JSON.stringify(classAbilites)}</p></div> */}
-                    <div className='flex '><h2>Backstory: </h2> <p> {backStoryModel}</p></div>
+                    {/* <div className='flex '><h2>Class Skills: </h2> <p> {JSON.stringify(classAbilities.rows)}</p></div> */}
+                    <ol>
+                        {characterClassAbilities.length && characterClassAbilities.map((li, i) => (
+                            <li key={i}>
+                                <h2>
+                                    {li.title}
+                                </h2>
+                                <p>
+                                    {li.description}
+                                </p>
+                            </li>
+                        ))}
+                    </ol>
+                    <div className='flex '><h2>Backstory: </h2> <p> {character.history}</p></div>
                 </section >
             </section >
         </section >
