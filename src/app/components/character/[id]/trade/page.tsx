@@ -1,7 +1,7 @@
 "use client";
 import React from 'react'
 import { useState } from "react";
-import { account, ID } from "@/lib/appwrite";
+import { getAuthenticatedAccount } from "@/lib/appwrite";
 import { useAuth } from "@/app/providers/AuthProvider";
 
 
