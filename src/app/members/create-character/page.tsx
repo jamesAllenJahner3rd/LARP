@@ -144,7 +144,7 @@ const CharacterCreationPage = () => {
     // );
     // CLASS
 
-    useEffect(() => {
+    function updateClassInfo() {
 
         if (!classList || characterClasses.size) return;
         console.log(typeof characterClasses, "characterClasses", characterClasses)
@@ -207,7 +207,7 @@ const CharacterCreationPage = () => {
             greenCloth: reducedClassInfo.greenCloth,
             spellsPackets: reducedClassInfo.spellsPackets,
         });
-    }, [characterClasses/*, classList*/]);
+    }
     //DEITIES
     useEffect(() => {
         const match = deitiesList?.rows.find((row) => row.God === character.deity);
@@ -269,6 +269,7 @@ const CharacterCreationPage = () => {
                     level: formInputs.level++
                 }))
                 console.log("This character has a level in this class", characterClasses)
+                updateClassInfo()
             }
 
             //         //      Then we need to check and see if there are any abilities associated with that level of class.

@@ -1,6 +1,6 @@
 "use client";
 
-import { account } from "@/lib/appwrite";
+import { getAuthenticatedAccount } from "@/lib/appwrite";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
@@ -13,6 +13,7 @@ const VerificationPage = () => {
             const userId = urlParams.get('userId');
             if (userId && secret) {
                 try {
+                    const account = await getAuthenticatedAccount()
                     const promise = await account.updateVerification({
                         userId,
                         secret
