@@ -14,9 +14,9 @@ export async function getCharacters() {
     );
   const tableDB = new TablesDB(client);
   const characterList = await tableDB.listRows({
-    databaseId: "68c1161d0005b831d8b7",
+    databaseId: "68ccc1ab0001250042a8",
     tableId: "characters",
-    queries: [Query.equal("memberId", "68ccbf0f0026eb9a8d4f")], // optional
+    queries: [Query.equal("memberId", "12345678912345678912")], // optional
     // transactionId: '<TRANSACTION_ID>' // optional
   });
 

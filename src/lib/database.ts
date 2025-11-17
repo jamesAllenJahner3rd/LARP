@@ -1,6 +1,8 @@
 import type { Models } from "appwrite";
-import { tablesDB } from "./appwrite";
-
+import { TablesDB } from "appwrite";
+import { getClient } from "./appwrite";
+const client = getClient();
+const tablesDB = new TablesDB(client);
 export async function getData(
   dbId: string,
   tableId: string,
