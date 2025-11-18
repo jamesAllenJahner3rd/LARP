@@ -1,12 +1,12 @@
 "use client";
 import React, { useState } from 'react';
-import type { Models } from 'appwrite';
+import type { Models } from "node-appwrite";
 import { Timeline } from 'antd';
 import { CaretRightOutlined } from '@ant-design/icons';
 import Form from 'next/form'
 import { createStoryEntry } from '@/app/actions/createStoryEntry';
 import { useAuth } from "@/app/providers/AuthProvider";
-import { useEffect } from "react";
+
 
 const StorylineClient = ({ entries }: { entries: Models.RowList }) => {
     const { loggedInUser, isAdmin } = useAuth();
@@ -21,7 +21,7 @@ const StorylineClient = ({ entries }: { entries: Models.RowList }) => {
 
     return (
 
-        < div className='mb-48 mx-8' >
+        <div className='mb-48 mx-8' >
             <h2>Storyline</h2>
             <Timeline className='text-(--foreground)'
                 items={
@@ -47,7 +47,7 @@ const StorylineClient = ({ entries }: { entries: Models.RowList }) => {
                 }
             />
 
-            < fieldset className='flex justify-center' hidden={!isAdmin}>
+            <fieldset className='flex justify-center' hidden={!isAdmin}>
                 {/* <form action="/api/admin/storylineForm" method="POST" id="newlogForm" className='border-2 border-black rounded-2xl w-full
                  md:w-2/3 flex flex-col mb-48'> */}
                 <Form action={createStoryEntry} id="newlogForm" className='border-2 border-black rounded-2xl w-full
@@ -58,7 +58,7 @@ const StorylineClient = ({ entries }: { entries: Models.RowList }) => {
                     <label htmlFor="body" className='ml-2'>Article:</label>
                     <textarea id="body" name="newLog" rows={10} className='text-black m-2 border-2 border-black rounded-2xl px-2 bg-(--background-alpha)' placeholder='Enter Article here.' />
 
-                    <button className='border-2 type="submit" id="addLog" border-black rounded-2xl bg-(--button) w-fit p-3 justify-self-center self-center-safe m-2 flex '>
+                    <button type="submit" id="addLog" className='border-2 border-black rounded-2xl bg-(--button) w-fit p-3 justify-self-center self-center-safe m-2 flex '>
                         Upload Article
                     </button>
                 </Form>

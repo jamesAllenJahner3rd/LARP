@@ -1,5 +1,3 @@
-import React from 'react'
-import { Client, Storage } from "appwrite";
 import Image from 'next/image';
 import { getFileURL } from '@/lib/storage';
 
@@ -99,8 +97,7 @@ const Premade = async () => {
         }
     ];
 
-    const daedra = await getFileURL("68c11c240013701075bb",
-        "")
+
     return (
         <article className="md:flex md:flex-col  md:w-2/5 md:justify-center">
             <h4 className='flex justify-center'>Premade Character Concepts</h4>

@@ -1,8 +1,11 @@
-import type { Models } from "appwrite";
-import { TablesDB } from "appwrite";
-import { getClient } from "./appwrite";
-const client = getClient();
-const tablesDB = new TablesDB(client);
+import type { Models } from "node-appwrite";
+import { TablesDB } from "node-appwrite";
+import { getClient } from "./appwrite-node";
+const tablesDB = async () => {
+  const client = await getClient();
+  return new TablesDB(client);
+};
+
 export async function getData(
   dbId: string,
   tableId: string,
@@ -10,7 +13,8 @@ export async function getData(
   queries: any,
 ) {
   try {
-    const result = await tablesDB.getRow(dbId, tableId, rowId, queries);
+    const rowPromise = await tablesDB();
+    const result = rowPromise.getRow(dbId, tableId, rowId, queries);
     console.log("Document retrieved:", dbId);
     return result;
   } catch (error) {
@@ -18,9 +22,13 @@ export async function getData(
     throw error;
   }
 }
-export async function getList(dbId: string, tableId: string) {
+export async function getList(
+  dbId: string,
+  tableId: string,
+): Promise<Models.RowList<Models.DefaultRow>> {
   try {
-    const result = await tablesDB.listRows(dbId, tableId);
+    const rowPromise = await tablesDB();
+    const result = rowPromise.listRows(dbId, tableId);
     console.log("Table was found:", dbId);
 
     return result;
@@ -41,7 +49,8 @@ export async function postData<Row extends Models.Row = Models.DefaultRow>(
   permissions?: string[],
 ): Promise<Row> {
   try {
-    const result = await tablesDB.createRow(
+    const rowPromise = await tablesDB();
+    const result = rowPromise.createRow(
       dbId,
       tableId,
       rowId,
@@ -63,7 +72,8 @@ export async function patchData(
   permissions: any,
 ) {
   try {
-    const result = await tablesDB.updateRow(
+    const rowPromise = await tablesDB();
+    const result = rowPromise.updateRow(
       dbId,
       tableId,
       rowId,
@@ -83,7 +93,8 @@ export async function deleteData(
   rowId: string,
 ): Promise<void> {
   try {
-    const result = await tablesDB.deleteRow(dbId, tableId, rowId);
+    const rowPromise = await tablesDB();
+    const result = rowPromise.deleteRow(dbId, tableId, rowId);
 
     console.log("Document deleted:", dbId);
   } catch (error) {

@@ -1,12 +1,12 @@
 
 import { Timeline } from "antd";
-import { storage } from '@/lib/appwrite'
+// import { storage } from '@/lib/appwrite-node'
 import { postData, getData, patchData, deleteData, getList } from '@/lib/database';
 import StorylineClient from './StorylineClient';
 import Image from "next/image";
 const Storyline = async () => {
     const table = await getList("68c1160a001638ade3a0", "storyentries")
-    const entries = table
+    const entries = await table
 
     return (
         <><main className="bg-[url(https://nyc.cloud.appwrite.io/v1/storage/buckets/68c11c240013701075bb/files/68c8e013000c7cf62c6b/view?project=68bb084a0032b02608c4)]">

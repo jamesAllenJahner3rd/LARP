@@ -1,11 +1,12 @@
 import { EXPORT_DETAIL } from "next/dist/shared/lib/constants";
-import { storage } from "./appwrite"; // uses your existing client
+import { storage } from "./appwrite-node"; // uses your existing client
 
 export async function getFileURL(bucketId: string, fileId: string) {
   try {
-    const result = await storage.getFileView(bucketId, fileId);
-    console.log(result);
-    return result;
+    const result = await storage();
+    const file = await result.getFileView(bucketId, fileId);
+    console.log(file);
+    return file;
   } catch (error) {
     console.error("Failed to get file download URL:", error);
     throw error;

@@ -1,8 +1,8 @@
 "use client";
 import React, { useEffect, useRef } from 'react'
 import { useState } from "react";
-import { getAuthenticatedAccount, getClient } from "@/lib/appwrite";
-import { getList } from '@/lib/database';
+import { getAuthenticatedAccount, getClient, getList } from "@/lib/appwrite";
+
 import { ID, Query, TablesDB, Models } from "appwrite";
 // import { RowList } from "@/types";
 import { useAuth } from "@/app/providers/AuthProvider";
@@ -76,7 +76,7 @@ const CharacterCreationPage = () => {
     const tableDB = new TablesDB(client);
     //GET DATA FROM DATABASE
     useEffect(() => {
-        console.log("useEffect ran")
+        console.log("GET DATA FROM DATABASE")
         let active = true;
         (async () => {
             try {
@@ -105,11 +105,7 @@ const CharacterCreationPage = () => {
 
     //RACES
     useEffect(() => {
-        console.log("subRaceList", character.race)
-        console.dir(character)
-        console.dir(raceList)
         const match = raceList?.rows.find((row) => row.races === character.subRace)
-        console.dir("subRaceList", match);
         if (match) {
             setCharacter({
                 ...character,
@@ -142,72 +138,6 @@ const CharacterCreationPage = () => {
     // }
     // }, []
     // );
-    // CLASS
-
-    function updateClassInfo() {
-
-        if (!classList || characterClasses.size) return;
-        console.log(typeof characterClasses, "characterClasses", characterClasses)
-
-        const matched = Array.from(characterClasses?.keys() || []) // Grab class is of the character.
-        // .map((className) => classList.rows.find((row) => row.classses === className))// For each class name I'm gonna look in the classList rows For row where the class is equals the class name. This will return an array of rows
-        // .filter((row): row is typeof classList.rows[number] => !!row);
-        //So this is filtering out any row that would be undefined or Null. And reassuring Typescript of the type of each row
-        const reducedClassInfo = /*matched*/[].reduce((acc, cur) => {
-            return {
-                classDescription: cur.description,
-                lightWeapons: acc.lightWeapons || cur.lightWeapons,
-                mediumWeapons: acc.mediumWeapons || cur.mediumWeapons,
-                heavyWeapons: acc.heavyWeapons || cur.heavyWeapons,
-                heavyArmor: acc.heavyArmor || cur.heavyArmor,
-                mediumArmor: acc.mediumArmor || cur.mediumArmor,
-                lightArmor: acc.lightArmor || cur.lightArmor,
-                lightShield: acc.lightShield || cur.lightShield,
-                mediumShield: acc.mediumShield || cur.mediumShield,
-                heavyShield: acc.heavyShield || cur.heavyShield,
-                twoWeapon: acc.twoWeapon || cur.twoWeapon,
-                rangedWeapons: acc.rangedWeapons || cur.rangedWeapons,
-                whiteCloth: Math.max(acc.whiteCloth, cur.whiteCloth),
-                greenCloth: Math.max(acc.greenCloth, cur.greenCloth),
-                spellsPackets: Math.max(acc.spellsPackets, cur.spellsPackets)
-            }
-        }, {
-            classDescription: "",
-            lightWeapons: false,
-            mediumWeapons: false,
-            heavyWeapons: false,
-            heavyArmor: false,
-            mediumArmor: false,
-            lightArmor: false,
-            lightShield: false,
-            mediumShield: false,
-            heavyShield: false,
-            twoWeapon: false,
-            rangedWeapons: false,
-            whiteCloth: 0,
-            greenCloth: 0,
-            spellsPackets: 0,
-        }
-        );
-        setCharacter({
-            ...character!,
-            classDescription: reducedClassInfo.classDescription,
-            lightWeapons: reducedClassInfo.lightWeapons,
-            mediumWeapons: reducedClassInfo.mediumWeapons,
-            heavyWeapons: reducedClassInfo.heavyWeapons,
-            heavyArmor: reducedClassInfo.heavyArmor,
-            mediumArmor: reducedClassInfo.mediumArmor,
-            lightArmor: reducedClassInfo.lightArmor,
-            lightShield: reducedClassInfo.lightShield,
-            mediumShield: reducedClassInfo.mediumShield,
-            heavyShield: reducedClassInfo.heavyShield,
-            twoWeapon: reducedClassInfo.twoWeapon,
-            rangedWeapons: reducedClassInfo.rangedWeapons,
-            whiteCloth: reducedClassInfo.whiteCloth,
-            greenCloth: reducedClassInfo.greenCloth,
-            spellsPackets: reducedClassInfo.spellsPackets,
-        });
-    }
     //DEITIES
     useEffect(() => {
         const match = deitiesList?.rows.find((row) => row.God === character.deity);
@@ -229,6 +159,74 @@ const CharacterCreationPage = () => {
     //         }))
     //     }
     // }
+    // CLASS
+
+    function updateClassInfo() {
+        console.log("update Class info triggered")
+        if (!classList || !characterClasses.size) return;
+        console.log(typeof characterClasses, "characterClasses", characterClasses)
+
+        const currentClasses = Array.from(characterClasses?.keys() || []) // Grab class is of the character.
+        const matched = currentClasses.map((className) => classList.rows.find((row) => row.classes === className))// For each class name I'm gonna look in the classList rows For row where the class is equals the class name. This will return an array of rows
+        // .filter((row): row is typeof classList.rows[number] => !!row);
+        //So this is filtering out any row that would be undefined or Null. And reassuring Typescript of the type of each row
+        const reducedClassInfo = matched
+            .reduce((acc, cur) => {
+                return {
+                    classDescription: cur.description,
+                    lightWeapons: acc.lightWeapons || cur.lightWeapons,
+                    mediumWeapons: acc.mediumWeapons || cur.mediumWeapons,
+                    heavyWeapons: acc.heavyWeapons || cur.heavyWeapons,
+                    heavyArmor: acc.heavyArmor || cur.heavyArmor,
+                    mediumArmor: acc.mediumArmor || cur.mediumArmor,
+                    lightArmor: acc.lightArmor || cur.lightArmor,
+                    lightShield: acc.lightShield || cur.lightShield,
+                    mediumShield: acc.mediumShield || cur.mediumShield,
+                    heavyShield: acc.heavyShield || cur.heavyShield,
+                    twoWeapon: acc.twoWeapon || cur.twoWeapon,
+                    rangedWeapons: acc.rangedWeapons || cur.rangedWeapons,
+                    whiteCloth: Math.max(acc.whiteCloth, cur.whiteCloth),
+                    greenCloth: Math.max(acc.greenCloth, cur.greenCloth),
+                    spellsPackets: Math.max(acc.spellsPackets, cur.spellsPackets)
+                }
+            }, {
+                classDescription: "",
+                lightWeapons: false,
+                mediumWeapons: false,
+                heavyWeapons: false,
+                heavyArmor: false,
+                mediumArmor: false,
+                lightArmor: false,
+                lightShield: false,
+                mediumShield: false,
+                heavyShield: false,
+                twoWeapon: false,
+                rangedWeapons: false,
+                whiteCloth: 0,
+                greenCloth: 0,
+                spellsPackets: 0,
+            }
+            );
+        setCharacter({
+            ...character!,
+            classDescription: reducedClassInfo.classDescription,
+            lightWeapons: reducedClassInfo.lightWeapons,
+            mediumWeapons: reducedClassInfo.mediumWeapons,
+            heavyWeapons: reducedClassInfo.heavyWeapons,
+            heavyArmor: reducedClassInfo.heavyArmor,
+            mediumArmor: reducedClassInfo.mediumArmor,
+            lightArmor: reducedClassInfo.lightArmor,
+            lightShield: reducedClassInfo.lightShield,
+            mediumShield: reducedClassInfo.mediumShield,
+            heavyShield: reducedClassInfo.heavyShield,
+            twoWeapon: reducedClassInfo.twoWeapon,
+            rangedWeapons: reducedClassInfo.rangedWeapons,
+            whiteCloth: reducedClassInfo.whiteCloth,
+            greenCloth: reducedClassInfo.greenCloth,
+            spellsPackets: reducedClassInfo.spellsPackets,
+        });
+    }
+
     function totalLevel(classLevelPairs: Map<string, number>): number {
         const toBeSummed = Array.from(classLevelPairs.values())
         if (Array.isArray(toBeSummed)) {
@@ -238,14 +236,9 @@ const CharacterCreationPage = () => {
     }
     function increaseLevel() {
         console.log("increase pressed")
-        console.log(typeof characterClasses)
         // Check to see if there are three classes. Need to check if the total classes or 10
-        console.log(formInputs.class && totalLevel(characterClasses) < 10 && (characterClasses.size <= 3 || undefined))
         if (formInputs.class && totalLevel(characterClasses) < 10 && (characterClasses.size <= 3 || undefined)) {
-
             // check To see if the selected class is in the  characterClass object already
-            console.log("This character can level up Level:", totalLevel(characterClasses));
-
             if (!Array.from(characterClasses.keys()).some((className) => className === formInputs.class)) {
                 //If the class has not been added we need to add the Class and the level of one to the characterClass array
                 setCharacterClasses((characterClasses) => {
@@ -254,10 +247,9 @@ const CharacterCreationPage = () => {
                     return updatedClasses;
                 });
                 setFormInputs((formInputs) => ({ class: formInputs.class, level: 1 }))
-                console.log("This character hasn't a level in this class", characterClasses)
-
+                console.log("This character hasn't a level in this class")
             } else {
-                console.log("This character's level", characterClasses)
+                console.log("This character's level")
                 //      Else we will increment the level of the current class.
                 setCharacterClasses((characterClasses) => {
                     const classList = new Map(characterClasses);
@@ -268,8 +260,8 @@ const CharacterCreationPage = () => {
                     ...formInputs,
                     level: formInputs.level++
                 }))
-                console.log("This character has a level in this class", characterClasses)
-                updateClassInfo()
+                console.log("trigger update class info from increase")
+
             }
 
             //         //      Then we need to check and see if there are any abilities associated with that level of class.
@@ -277,7 +269,7 @@ const CharacterCreationPage = () => {
             //         //                  If it isn't we'll add ability ID to the ability list and the scale
             //         //                  Else we will update the scale. 
 
-        }
+        } updateClassInfo()
     }
     const subraceOptions: Record<string, string[]> = {
         Chimera: ["Artanos", "Felinos", "Lacetros", "Lykinthros", "Minotaur", "Satyr", "Vulpine"],

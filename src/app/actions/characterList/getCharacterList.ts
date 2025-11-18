@@ -1,7 +1,7 @@
 "use server";
 
-import { getClient } from "@/lib/appwrite";
-import { Client, Query, TablesDB } from "appwrite";
+import { getClient, getAuthenticatedAccount } from "@/lib/appwrite-node";
+import { Client, Query, TablesDB } from "node-appwrite";
 
 export async function getCharacters() {
   const client = new Client()

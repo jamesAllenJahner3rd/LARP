@@ -1,8 +1,10 @@
 "use server";
 
 // import { revalidatePath } from "next/cache";
-import { getAuthenticatedAccount } from "@/lib/appwrite";
+import { Account, Client } from "node-appwrite";
 import { AppError } from "@/lib/errors/AppError";
+import { getAuthenticatedAccount } from "@/lib/appwrite-node";
+
 /**
  * updateUserEmail(formData)
  * Purpose:
@@ -33,7 +35,7 @@ export async function updateUserEmail(formData: FormData): Promise<void> {
     throw new Error(" Your new email doesn't match the Confirmation email");
   }
   try {
-    const account = getAuthenticatedAccount();
+    const account = await getAuthenticatedAccount();
     const result = await account.updateEmail({
       email: updatedEmail,
       password: password,
