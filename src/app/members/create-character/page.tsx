@@ -160,11 +160,12 @@ const CharacterCreationPage = () => {
     // CLASS
 
     function updateClassInfo() {
-        console.log("update Class info triggered")
-        if (!classList || !characterClasses.size) return;
+        console.log("updateClassInfo: update Class FART info triggered", "characterClasses.size", "classList", !classList);
+        console.dir(characterClasses.size)
+        if (!classList) return;
         console.log(typeof characterClasses, "characterClasses", characterClasses)
 
-        const currentClasses = Array.from(characterClasses?.keys() || []) // Grab class is of the character.
+        const currentClasses = formInputs.level ? Array.from(characterClasses?.keys()) : [...(characterClasses?.keys() ?? []), formInputs.class] // Grab class is of the character.
         const matched = currentClasses.map((className) => classList.rows.find((row) => row.classes === className))// For each class name I'm gonna look in the classList rows For row where the class is equals the class name. This will return an array of rows
         // .filter((row): row is typeof classList.rows[number] => !!row);
         //So this is filtering out any row that would be undefined or Null. And reassuring Typescript of the type of each row
@@ -233,6 +234,7 @@ const CharacterCreationPage = () => {
         else return 0
     }
     function increaseLevel() {
+        let tempLevel = 0;
         console.log("increase pressed")
         // Check to see if there are three classes. Need to check if the total classes or 10
         if (formInputs.class && totalLevel(characterClasses) < 10 && (characterClasses.size <= 3 || undefined)) {
@@ -242,32 +244,35 @@ const CharacterCreationPage = () => {
                 setCharacterClasses((characterClasses) => {
                     const updatedClasses = new Map(characterClasses);
                     updatedClasses.set(formInputs.class, 1);
+                    tempLevel = 1;
                     return updatedClasses;
                 });
-                setFormInputs((formInputs) => ({ class: formInputs.class, level: 1 }))
+                setFormInputs((formInputs) => ({ ...formInputs, "class": formInputs.class, "level": 1 }))
                 console.log("This character hasn't a level in this class")
             } else {
                 console.log("This character's level")
                 //      Else we will increment the level of the current class.
                 setCharacterClasses((characterClasses) => {
-                    const classList = new Map(characterClasses);
-                    classList.set(formInputs.class, formInputs.level + 1);
-                    return classList;
+                    const CharacterClassList = new Map(characterClasses);
+                    CharacterClassList.set(formInputs.class, formInputs.level + 1);
+                    return CharacterClassList;
                 })
                 setFormInputs((formInputs) => ({
                     ...formInputs,
-                    level: formInputs.level++
+                    "level": formInputs.level + 1
                 }))
+                tempLevel = formInputs.level + 1
                 console.log("trigger update class info from increase")
 
-            }
+            } console.log("IncreaseLevel - trigger update class info from increase", characterClasses)
+            console.dir(formInputs)
 
             //         //      Then we need to check and see if there are any abilities associated with that level of class.
             //         //             If true we check if that ability is in the character ability list.
             //         //                  If it isn't we'll add ability ID to the ability list and the scale
             //         //                  Else we will update the scale. 
-
-        } updateClassInfo()
+            updateClassInfo()
+        }
     }
     const subraceOptions: Record<string, string[]> = {
         Chimera: ["Artanos", "Felinos", "Lacetros", "Lykinthros", "Minotaur", "Satyr", "Vulpine"],
@@ -286,7 +291,7 @@ const CharacterCreationPage = () => {
                 return ({
                     ...inputs,
                     "class": chosenClass,
-                    level: characterClasses.get(classMatch)
+                    "level": characterClasses.get(classMatch)
                 })
             })
         } else {
@@ -294,7 +299,7 @@ const CharacterCreationPage = () => {
                 return ({
                     ...inputs,
                     "class": chosenClass,
-                    level: 0
+                    "level": 0
                 })
             })
         }
