@@ -38,17 +38,17 @@ export function storage() {
   return new Storage(client);
 }
 
-export function getList(
+export async function getList(
   dbId: string,
   tableId: string,
 ): Promise<Models.RowList<Models.DefaultRow>> {
   try {
     const client = getClient();
     const tablesDB = new TablesDB(client);
-    const result = tablesDB.listRows(dbId, tableId);
+    const result = await tablesDB.listRows(dbId, tableId);
     console.log("Table was found:", dbId);
 
-    return result;
+    return await result;
   } catch (error) {
     console.error("Failed to create document:", error);
     throw error;

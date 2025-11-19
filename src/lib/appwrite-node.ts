@@ -8,7 +8,7 @@ export async function getAuthenticatedAccount(): Promise<Account> {
 
   return new Account(client);
 }
-export async function getClient() {
+export async function getServerClient() {
   const client = new Client()
     .setEndpoint(process.env.APPWRITE_ENDPOINT!)
     .setProject(process.env.APPWRITE_PROJECT_ID!)
@@ -32,6 +32,6 @@ export async function UserLogin(email: string, password: string) {
 }
 
 export async function storage() {
-  const client = await getClient();
+  const client = await getServerClient();
   return new Storage(client);
 }

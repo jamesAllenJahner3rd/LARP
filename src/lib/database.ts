@@ -1,8 +1,8 @@
 import type { Models } from "node-appwrite";
 import { TablesDB } from "node-appwrite";
-import { getClient } from "./appwrite-node";
+import { getServerClient } from "./appwrite-node";
 const tablesDB = async () => {
-  const client = await getClient();
+  const client = await getServerClient();
   return new TablesDB(client);
 };
 

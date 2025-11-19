@@ -41,8 +41,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }, [router]);
 
     const logout = async () => {
+        if (typeof window === 'undefined') return;
+
+        const { getAuthenticatedAccount } = await import('@/lib/appwrite');
         const account = await getAuthenticatedAccount();
-        account.deleteSession("current");
+        await account.deleteSession("current");
         setLoggedInUser(null);
     };
 
@@ -52,6 +55,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         </AuthContext.Provider>
     );
 };
+
+
 
 export const useAuth = () => {
     const context = useContext(AuthContext);

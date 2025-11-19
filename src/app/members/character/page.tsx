@@ -1,15 +1,31 @@
 "use client";
-import React, { useEffect, useState } from 'react'
-import { } from "react";
-
-import { getAuthenticatedAccount, getClient } from "@/lib/appwrite";
-import { getCharacters } from "@/app/actions/characterList/getCharacterList"
-
-import { ID } from "appwrite"
+import { useEffect, useState } from 'react'
+import { getClient } from "@/lib/appwrite";
+// import { getCharacters } from "@/app/actions/characterList/getCharacterList"
 import { useAuth } from "@/app/providers/AuthProvider";
 import Image from 'next/image'
+import { TablesDB, Query } from "appwrite";
 
-import { Client, TablesDB, Models, Query } from "appwrite";
+/**
+ * CharacterPage
+ *
+ * Purpose:
+ *   Displays the logged-in user's character list and details.
+ *
+ * Responsibilities:
+ *   - Fetch character data from Appwrite using client-side SDK
+ *   - Display character stats, equipment, and lore
+ *   - Allow user to select and view different characters
+ *
+ * Dependencies:
+ *   - `useAuth()` from AuthProvider for user context
+ *   - `getClient()` and `TablesDB` from Appwrite SDK (browser-safe)
+ *   - `next/image` for optimized image rendering
+ *
+ * Notes:
+ *   This is a client-only component (`"use client"`) due to use of React hooks and Appwrite client SDK.
+
+ */
 
 const CharacterPage = () => {
 

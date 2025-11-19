@@ -1,28 +1,44 @@
 "use client"
 import Link from 'next/link'
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import HamburgerMenu from '../HamburgerMenu'
 import Image from 'next/image'
 import { usePathname, useRouter } from "next/navigation"
 import { getNavForPath } from '@/lib/navConfig'
-import { get } from 'http'
 import { useAuth } from "@/app/providers/AuthProvider";
 import { getAuthenticatedAccount } from '@/lib/appwrite'
-import { revalidatePath } from 'next/cache'
 import { toast } from 'react-toastify'
 
-
-
-
-
+/**
+ * NavBar
+ *
+ * Purpose:
+ *   Renders the dynamic navigation bar for authenticated and public users.
+ *
+ * Responsibilities:
+ *   - Display route-specific navigation links based on current pathname
+ *   - Animate transitions and menu toggling via `HamburgerMenu`
+ *   - Handle user logout via Appwrite session deletion
+ *   - Adapt layout and visibility based on authentication state
+ *
+ * Dependencies:
+ *   - `useAuth()` from AuthProvider for user context
+ *   - `getNavForPath()` from navConfig for route-based headings
+ *   - `getAuthenticatedAccount()` from @/lib/appwrite for logout
+ *   - `next/navigation` for routing and pathname detection
+ *   - `react-toastify` for feedback
+ *
+ * Notes:
+ *   - This is a `"use client"` component due to use of React hooks and Appwrite browser SDK.
+ *   - Future iterations may include role-based visibility or Slack integration.
+ */
 
 const NavBar = () => {
-    const { loggedInUser, logout } = useAuth();
+    const { loggedInUser, logout, setLoggedInUser } = useAuth();
     const pathname = usePathname();
     const { heading, hyperRef } = getNavForPath(pathname);
     const [loaded, setLoaded] = useState(false);
     const router = useRouter();
-    const { setLoggedInUser } = useAuth();
     useEffect(() => {
         const timeout = setTimeout(() => setLoaded(true), 1000); // slight delay to trigger transition
         return () => clearTimeout(timeout);

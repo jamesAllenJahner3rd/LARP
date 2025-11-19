@@ -1,14 +1,12 @@
 "use client";
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect } from 'react'
 import { useState } from "react";
-import { getAuthenticatedAccount, getClient, getList } from "@/lib/appwrite";
+import { getClient, getList } from "@/lib/appwrite";
 
-import { ID, Query, TablesDB, Models } from "appwrite";
+import { Query, TablesDB, Models } from "appwrite";
 // import { RowList } from "@/types";
 import { useAuth } from "@/app/providers/AuthProvider";
-import TextArea from 'antd/es/input/TextArea';
 import Image from "next/image";
-import { match } from 'assert';
 import * as CharacterTypes from "@/lib/types/characterTypes"
 
 

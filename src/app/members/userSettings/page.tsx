@@ -1,13 +1,29 @@
 "use client"
-import Form from 'next/form'
-import React from 'react'
-import { updateUserPassword } from '@/app/actions/settings/updatePassword'
-import { updateUserEmail } from '@/app/actions/settings/updateEmail'
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { toast } from "react-toastify"
-import { AppError } from "@/lib/errors/AppError";
 import { getAuthenticatedAccount, getClient } from '@/lib/appwrite'
-// console.log(account)
+
+/**
+ * UserSettingsPage
+ *
+ * Purpose:
+ *   Allows authenticated users to update their email, password, or delete their account.
+ *
+ * Responsibilities:
+ *   - Validate and submit email update requests
+ *   - Validate and submit password update requests
+ *   - Trigger account deletion via Appwrite
+ *   - Display feedback using `react-toastify`
+ *
+ * Dependencies:
+ *   - `useState` for form visibility and input tracking
+ *   - `getAuthenticatedAccount()` from @/lib/appwrite for Appwrite session actions
+ *   - `react-toastify` for user feedback
+ *
+ * Notes:
+ *   - This is a `"use client"` component due to use of React hooks and Appwrite browser SDK.
+ *   - All Appwrite interactions are scoped to user-triggered events—no SSR leakage.
+ */
 
 
 const settings = () => {
@@ -21,7 +37,6 @@ const settings = () => {
 
     const handleDeletionForm = async (event) => {
         event.preventDefault();
-        const client = getClient();
         const account = getAuthenticatedAccount();
         const user = await account.get()
         console.log(user)

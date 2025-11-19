@@ -1,29 +1,40 @@
 "use client"
 import Link from 'next/link'
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import HamburgerMenu from '../HamburgerMenu'
 import Image from 'next/image'
 import { usePathname, useRouter } from "next/navigation"
-import { getNavForPath } from '@/lib/navConfig'
-import { get } from 'http'
 import { useAuth } from "@/app/providers/AuthProvider";
 import { getAuthenticatedAccount } from '@/lib/appwrite'
-import { revalidatePath } from 'next/cache'
 import { toast } from 'react-toastify'
 
-
-
-
-
-
+/**
+ * MembersNav
+ *
+ * Purpose:
+ *   Renders the navigation bar for authenticated members, with route links and logout functionality.
+ *
+ * Responsibilities:
+ *   - Display member-specific navigation links
+ *   - Animate transitions and toggle visibility via `HamburgerMenu`
+ *   - Handle logout via Appwrite session deletion and context reset
+ *
+ * Dependencies:
+ *   - `useAuth()` from AuthProvider for user session context
+ *   - `next/navigation` for routing and pathname detection
+ *   - `getAuthenticatedAccount()` from @/lib/appwrite for logout
+ *   - `react-toastify` for feedback
+ *
+ * Notes:
+ *   - This is a `"use client"` component due to use of React hooks and Appwrite browser SDK.
+ *   - Responsive behavior adapts layout for mobile and desktop views.
+ */
 
 const NavBar = () => {
-    const { loggedInUser, logout } = useAuth();
+    const { loggedInUser, logout, setLoggedInUser } = useAuth();
     const pathname = usePathname();
-    const { heading, hyperRef } = getNavForPath(pathname);
     const [loaded, setLoaded] = useState(false);
     const router = useRouter();
-    const { setLoggedInUser } = useAuth();
     useEffect(() => {
         const timeout = setTimeout(() => setLoaded(true), 1000); // slight delay to trigger transition
         return () => clearTimeout(timeout);
@@ -76,13 +87,6 @@ const NavBar = () => {
                     logoutHandler()
                 }}>Log Out</button>
             </nav>
-            {/* <Link href={hyperRef[0]} className=""><h3 className={`${ h3Css } delay - 0 `} onClick={() => setOpenMenu(!openMenu)}>{heading[0]} </h3></Link>
-                <Link href={hyperRef[1]} className=""><h3 className={`${ h3Css } delay - 2000`} onClick={() => setOpenMenu(!openMenu)}>{heading[1]}</h3></Link>
-
-                <Link href={hyperRef[2]} className=""><h3 className={`${ h3Css } delay - 1000`} onClick={() => setOpenMenu(!openMenu)}>{heading[2]}</h3></Link>
-                {!user && (<Link href={hyperRef[3]} className=""><h3 className={`${ h3Css } delay - 3000`} onClick={() => setOpenMenu(!openMenu)}>{heading[3]}</h3></Link>)} */}
-
-
 
         </>
     )

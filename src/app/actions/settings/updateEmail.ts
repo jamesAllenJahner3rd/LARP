@@ -31,7 +31,6 @@ export async function updateUserEmail(formData: FormData): Promise<void> {
       "EMAIL _MAISMATCH",
       "Your confirmation email doesn't match",
     );
-    throw new Error(" Your new email doesn't match the Confirmation email");
   }
   try {
     const account = await getAuthenticatedAccount();
