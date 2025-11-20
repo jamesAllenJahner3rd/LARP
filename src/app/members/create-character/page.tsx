@@ -105,12 +105,12 @@ const CharacterCreationPage = () => {
     useEffect(() => {
         const match = raceList?.rows.find((row) => row.races === character.subRace)
         if (match) {
-            setCharacter({
+            setCharacter((character) => ({
                 ...character,
                 raceDescription: `${match.description}`,
                 raceAbilities: [...character.raceAbilities, `${match.ability}`],
                 raceAbilityDescription: [...character.raceAbilityDescription, `${match.ability_description}`],
-            })
+            }))
         }
     }, [character?.subRace])
 
@@ -140,11 +140,11 @@ const CharacterCreationPage = () => {
     useEffect(() => {
         const match = deitiesList?.rows.find((row) => row.God === character.deity);
         if (match) {
-            setCharacter({
+            setCharacter((character) => ({
                 ...character,
                 deityDescription: match.description,
                 deityImage: match.image,
-            });
+            }));
         }
     }, [character.deity, deitiesList]);
     // useEffect(() => { }, [levelModel.total])
@@ -206,7 +206,7 @@ const CharacterCreationPage = () => {
                 spellsPackets: 0,
             }
             );
-        setCharacter({
+        setCharacter((character) => ({
             ...character!,
             classDescription: reducedClassInfo.classDescription,
             lightWeapons: reducedClassInfo.lightWeapons,
@@ -223,7 +223,7 @@ const CharacterCreationPage = () => {
             whiteCloth: reducedClassInfo.whiteCloth,
             greenCloth: reducedClassInfo.greenCloth,
             spellsPackets: reducedClassInfo.spellsPackets,
-        });
+        }));
     }
 
     function totalLevel(classLevelPairs: Map<string, number>): number {
@@ -274,6 +274,12 @@ const CharacterCreationPage = () => {
             updateClassInfo()
         }
     }
+    useEffect(() => {
+        if (characterClasses.size > 0 && classList) {
+            updateClassInfo();
+        }
+    }, [characterClasses, formInputs.class, classList]);
+
     const subraceOptions: Record<string, string[]> = {
         Chimera: ["Artanos", "Felinos", "Lacetros", "Lykinthros", "Minotaur", "Satyr", "Vulpine"],
         Dwarf: ["Dark Dwarf", "Hill Dwarf"],
