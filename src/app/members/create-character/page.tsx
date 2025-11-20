@@ -107,9 +107,9 @@ const CharacterCreationPage = () => {
         if (match) {
             setCharacter((character) => ({
                 ...character,
-                raceDescription: `${match.description}`,
-                raceAbilities: [...character.raceAbilities, `${match.ability}`],
-                raceAbilityDescription: [...character.raceAbilityDescription, `${match.ability_description}`],
+                raceDescription: match.description,
+                raceAbilities: [match.ability],
+                raceAbilityDescription: [match.ability_description],
             }))
         }
     }, [character?.subRace])
@@ -165,7 +165,7 @@ const CharacterCreationPage = () => {
         if (!classList) return;
         console.log(typeof characterClasses, "characterClasses", characterClasses)
 
-        const currentClasses = formInputs.level ? Array.from(characterClasses?.keys()) : [...(characterClasses?.keys() ?? []), formInputs.class] // Grab class is of the character.
+        const currentClasses = Array.from(characterClasses?.keys()) // Grab class is of the character.
         const matched = currentClasses.map((className) => classList.rows.find((row) => row.classes === className))// For each class name I'm gonna look in the classList rows For row where the class is equals the class name. This will return an array of rows
         // .filter((row): row is typeof classList.rows[number] => !!row);
         //So this is filtering out any row that would be undefined or Null. And reassuring Typescript of the type of each row
