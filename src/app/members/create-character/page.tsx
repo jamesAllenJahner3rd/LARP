@@ -237,7 +237,7 @@ const CharacterCreationPage = () => {
         let tempLevel = 0;
         console.log("increase pressed")
         // Check to see if there are three classes. Need to check if the total classes or 10
-        if (formInputs.class && totalLevel(characterClasses) < 10 && (characterClasses.size <= 3 || undefined)) {
+        if (formInputs.class && totalLevel(characterClasses) < 10 && (characterClasses.size <= 3)) {
             // check To see if the selected class is in the  characterClass object already
             if (!Array.from(characterClasses.keys()).some((className) => className === formInputs.class)) {
                 //If the class has not been added we need to add the Class and the level of one to the characterClass array
@@ -357,7 +357,7 @@ const CharacterCreationPage = () => {
                                 (e) => classSelected(e.target.value)}>
                                 {(characterClasses.size === 0 || totalLevel(characterClasses) >= 3) && <option value="choose">Choose...</option>}
                                 {CLASSNAMES.map((className) => (
-                                    (characterClasses.size === 0 || totalLevel(characterClasses) >= 3 || formInputs.class === className) &&
+                                    ((characterClasses.size === 0 || totalLevel(characterClasses) >= 3 || formInputs.class === className) && !(characterClasses.size === 3 && !characterClasses.has(className))) &&
 
                                     <option value={className} key={className}>{className}</option>
                                 ))}
