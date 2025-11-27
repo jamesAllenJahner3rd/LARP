@@ -12,7 +12,7 @@
 .gitignore
 # testing
 /coverage
-
+/src/app/members/create-character copy
 # next.js
 /.next/
 /out/
