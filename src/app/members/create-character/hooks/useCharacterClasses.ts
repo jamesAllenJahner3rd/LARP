@@ -168,94 +168,92 @@ const useCharacterClasses = ({
   }, [characterClasses, classList]);
 
   const decreaseLevel = useCallback(() => {
-    let tempLevel = 0;
     console.log("decrease pressed");
-    // Check to see if there are three classes. Need to check if the total classes or 10
-    console.log(
-      " Checking to see if the class exists,that this character has a class, and  on you actually have a level in the class",
-      formInputs.class &&
-        totalLevel(characterClasses) > 0 &&
-        characterClasses.size > 0,
-    );
-    if (
-      formInputs.class &&
-      totalLevel(characterClasses) > 0 &&
-      characterClasses.size > 0
-    ) {
-      // check To see if the selected class is in the  characterClass object already
-      console.log(characterClasses.has(formInputs.class));
-      if (characterClasses.has(formInputs.class)) {
-        console.log("This character's level can decrease");
-        //      Else we will increment the level of the current class.
-        setCharacterClasses((characterClasses) => {
-          const CharacterClassList = new Map(characterClasses);
-          CharacterClassList.set(formInputs.class, formInputs.level - 1);
-          if (CharacterClassList.get(formInputs.class) <= 0) {
-            CharacterClassList.delete(formInputs.class);
-          }
-          return CharacterClassList;
-        });
-        setFormInputs((formInputs) => ({
-          ...formInputs,
-          level: formInputs.level - 1,
-        }));
-        tempLevel = formInputs.level - 1;
-        console.log("trigger update class info from increase");
-      }
-      console.log(
-        "decreaseLevel - trigger update class info from increase",
-        characterClasses,
-      );
-      console.dir(formInputs);
 
+    const currentLevel = formInputs.level;
+    const currentClass = formInputs.class;
+
+    // Guard: must have a class selected
+    if (!currentClass) return;
+
+    // Guard: must have at least one level total
+    if (totalLevel(characterClasses) <= 0 || characterClasses.size === 0)
+      return;
+
+    // Special rule: prevent dropping below 3 if it's the only level‑3 class
+    if (
+      characterClasses.size > 1 &&
+      currentLevel <= 3 &&
+      characterClasses.get(currentClass) === 3
+    ) {
+      const hasOtherLevel3 = Array.from(characterClasses.entries()).some(
+        ([className, level]) => className !== currentClass && level >= 3,
+      );
+      if (!hasOtherLevel3) return;
+    }
+
+    // If the class exists, decrement its level
+    if (characterClasses.has(currentClass)) {
+      setCharacterClasses((prev) => {
+        const updated = new Map(prev);
+        const newLevel = currentLevel - 1;
+
+        if (newLevel > 0) {
+          updated.set(currentClass, newLevel);
+        } else {
+          updated.delete(currentClass);
+        }
+
+        return updated;
+      });
+
+      setFormInputs((prev) => ({
+        ...prev,
+        level: prev.level - 1,
+      }));
+
+      console.log("trigger update class info from decrease");
       updateClassInfo();
     }
-  }, [formInputs, characterClasses]);
+  }, [formInputs, characterClasses, updateClassInfo]);
   const increaseLevel = useCallback(() => {
-    let tempLevel = 0;
     console.log("increase pressed");
     // Check to see if there are three classes. Need to check if the total classes or 10
+    const currentLevel = formInputs.level;
+    const currentClass = formInputs.class;
+    if (!currentClass) return;
+
     if (
-      formInputs.class &&
+      currentClass &&
       totalLevel(characterClasses) < 10 &&
       characterClasses.size <= 3
     ) {
       // check To see if the selected class is in the  characterClass object already
-      if (!characterClasses.has(formInputs.class)) {
+      if (!characterClasses.has(currentClass)) {
         //If the class has not been added we need to add the Class and the level of one to the characterClass array
         setCharacterClasses((characterClasses) => {
           const updatedClasses = new Map(characterClasses);
-          updatedClasses.set(formInputs.class, 1);
-          tempLevel = 1;
+          updatedClasses.set(currentClass, 1);
           return updatedClasses;
         });
         setFormInputs((formInputs) => ({
           ...formInputs,
-          class: formInputs.class,
+          class: currentClass,
           level: 1,
         }));
         console.log("This character hasn't a level in this class");
       } else {
-        console.log("This character's level");
         //      Else we will increment the level of the current class.
         setCharacterClasses((characterClasses) => {
           const CharacterClassList = new Map(characterClasses);
-          CharacterClassList.set(formInputs.class, formInputs.level + 1);
+          CharacterClassList.set(formInputs.class, currentLevel + 1);
           return CharacterClassList;
         });
         setFormInputs((formInputs) => ({
           ...formInputs,
-          level: formInputs.level + 1,
+          level: currentLevel + 1,
         }));
-        tempLevel = formInputs.level + 1;
-        console.log("trigger update class info from increase");
       }
-      console.log(
-        "IncreaseLevel - trigger update class info from increase",
-        characterClasses,
-      );
-      console.dir(formInputs);
-
       updateClassInfo();
     }
   }, [formInputs, characterClasses]);
