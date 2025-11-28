@@ -56,16 +56,15 @@ const useCharacterClasses = ({
     const CharacterAbilitiesList: any[] = [];
 
     characterClasses.forEach((level: number, className: string) => {
-      const abilitiesArray = classAbilitiesList.rows.filter((ability) => {
-        ability.level <= level && ability.class === className;
-      });
+      const abilitiesArray = classAbilitiesList.rows.filter(
+        (ability) => ability.level <= level && ability.class === className,
+      );
       CharacterAbilitiesList.push(...abilitiesArray);
     });
-
     const correctLevelAbilities: CharacterTypes.ClassAbilities = [];
 
     CharacterAbilitiesList.forEach((ability) => {
-      const level = characterClasses.has(ability.class);
+      const level = characterClasses.get(ability.class);
       if (level && level >= ability.level) {
         const existingIndex: number = correctLevelAbilities.findIndex(
           (currentAbility) => currentAbility.title === ability.title,

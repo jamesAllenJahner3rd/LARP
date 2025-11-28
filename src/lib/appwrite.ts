@@ -1,5 +1,5 @@
 "use client";
-import { Client, Account, Storage, TablesDB, Models } from "appwrite";
+import { Client, Account, Storage, TablesDB, Models, Query } from "appwrite";
 export function getAuthenticatedAccount(): Account {
   const client = new Client()
     .setEndpoint(
@@ -45,7 +45,7 @@ export async function getList(
   try {
     const client = getClient();
     const tablesDB = new TablesDB(client);
-    const result = await tablesDB.listRows(dbId, tableId);
+    const result = await tablesDB.listRows(dbId, tableId, [Query.limit(81)]);
     console.log("Table was found:", dbId);
 
     return await result;
