@@ -260,7 +260,7 @@ const useCharacterClasses = ({
     }
   }, [formInputs, characterClasses]);
   useEffect(() => {
-    if (characterClasses.size > 0 && classList) {
+    if (characterClasses.size >= 0 && classList) {
       updateClassInfo();
     }
   }, [characterClasses, formInputs.class, classList]);
