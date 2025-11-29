@@ -49,7 +49,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             await account.deleteSession("current");
             setLoggedInUser(null);
         } catch (error) {
-            console.error(error, Authentication, delete session failed, AuthProvider.tsx)
+            console.error(error, " Authentication, delete session failed, AuthProvider.tsx")
         }
     };
 
