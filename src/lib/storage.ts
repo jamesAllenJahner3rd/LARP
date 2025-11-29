@@ -4,7 +4,18 @@ import { storage, getServerClient } from "./appwrite-node"; // uses your existin
 export async function getFileURL(bucketId: string, fileId: string) {
   try {
     const result = await storage();
-    const file = await result.getFileView(bucketId, fileId);
+    // Fail fast if Appwrite storage is slow
+    const timeoutMs = Number(process.env.APPWRITE_REQUEST_TIMEOUT_MS || 5000);
+    const file = await Promise.race([
+      result.getFileView(bucketId, fileId),
+      new Promise((_r, rej) =>
+        setTimeout(
+          () =>
+            rej(new Error(`Storage request timed out after ${timeoutMs}ms`)),
+          timeoutMs,
+        ),
+      ),
+    ]);
     console.log(file);
     return file;
   } catch (error) {

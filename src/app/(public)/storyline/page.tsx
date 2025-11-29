@@ -9,13 +9,22 @@ import { StoryEntry } from "@/lib/types/types"
 
 
 const Storyline = async () => {
-    const table = await getList("68c1160a001638ade3a0", "storyentries")
-    const entries: StoryEntry[] = table.rows.map(row => ({
-        id: row.$id,
-        heading: row.heading,
-        body: row.body,
-        createdAt: row.$createdAt,
-    }));
+    let entries: StoryEntry[] = [];
+    try {
+        const table = await getList("68c1160a001638ade3a0", "storyentries");
+        entries = table.rows.map((row) => ({
+            id: row.$id,
+            heading: row.heading,
+            body: row.body,
+            createdAt: row.$createdAt,
+        }));
+    } catch (err) {
+        // Fail gracefully: log error and continue with empty entries so render doesn't timeout
+        // Server logs will show the real issue in deployment logs.
+        // eslint-disable-next-line no-console
+        console.error("storyline: failed to load entries", err);
+        entries = [];
+    }
 
 
     return (

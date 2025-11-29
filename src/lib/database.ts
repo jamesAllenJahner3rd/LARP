@@ -6,6 +6,29 @@ const tablesDB = async () => {
   return new TablesDB(client);
 };
 
+// Small helper to make any promise fail-fast after a timeout so server renders don't hang
+function withTimeout<T>(
+  promise: Promise<T>,
+  timeoutMs = Number(process.env.APPWRITE_REQUEST_TIMEOUT_MS || 5000),
+) {
+  let timer: NodeJS.Timeout | undefined;
+  return new Promise<T>((resolve, reject) => {
+    timer = setTimeout(
+      () => reject(new Error(`Request timed out after ${timeoutMs}ms`)),
+      timeoutMs,
+    );
+    promise
+      .then((v) => {
+        if (timer) clearTimeout(timer);
+        resolve(v);
+      })
+      .catch((err) => {
+        if (timer) clearTimeout(timer);
+        reject(err);
+      });
+  });
+}
+
 export async function getData(
   dbId: string,
   tableId: string,
@@ -14,7 +37,9 @@ export async function getData(
 ) {
   try {
     const rowPromise = await tablesDB();
-    const result = rowPromise.getRow(dbId, tableId, rowId, queries);
+    const result = withTimeout(
+      rowPromise.getRow(dbId, tableId, rowId, queries),
+    );
     console.log("Document retrieved:", dbId);
     return result;
   } catch (error) {
@@ -28,7 +53,7 @@ export async function getList(
 ): Promise<Models.RowList<Models.DefaultRow>> {
   try {
     const rowPromise = await tablesDB();
-    const result = rowPromise.listRows(dbId, tableId);
+    const result = withTimeout(rowPromise.listRows(dbId, tableId));
     console.log("Table was found:", dbId);
 
     return result;
@@ -50,12 +75,8 @@ export async function postData<Row extends Models.Row = Models.DefaultRow>(
 ): Promise<Row> {
   try {
     const rowPromise = await tablesDB();
-    const result = rowPromise.createRow(
-      dbId,
-      tableId,
-      rowId,
-      postData,
-      permissions,
+    const result = await withTimeout(
+      rowPromise.createRow(dbId, tableId, rowId, postData, permissions),
     );
     console.log("Document created:", dbId);
     return result;
@@ -73,12 +94,8 @@ export async function patchData(
 ) {
   try {
     const rowPromise = await tablesDB();
-    const result = rowPromise.updateRow(
-      dbId,
-      tableId,
-      rowId,
-      putData, // optional
-      permissions, // optional
+    const result = await withTimeout(
+      rowPromise.updateRow(dbId, tableId, rowId, putData, permissions),
     );
     console.log("Document updated:", dbId);
     return result;
@@ -94,7 +111,7 @@ export async function deleteData(
 ): Promise<void> {
   try {
     const rowPromise = await tablesDB();
-    const result = rowPromise.deleteRow(dbId, tableId, rowId);
+    const result = withTimeout(rowPromise.deleteRow(dbId, tableId, rowId));
 
     console.log("Document deleted:", dbId);
   } catch (error) {
