@@ -43,10 +43,14 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const logout = async () => {
         if (typeof window === 'undefined') return;
 
-        const { getAuthenticatedAccount } = await import('@/lib/appwrite');
-        const account = await getAuthenticatedAccount();
-        await account.deleteSession("current");
-        setLoggedInUser(null);
+        try {
+            const { getAuthenticatedAccount } = await import('@/lib/appwrite');
+            const account = await getAuthenticatedAccount();
+            await account.deleteSession("current");
+            setLoggedInUser(null);
+        } catch (error) {
+            console.error(error, Authentication, delete session failed, AuthProvider.tsx)
+        }
     };
 
     return (

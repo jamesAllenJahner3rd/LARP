@@ -2,8 +2,10 @@ import type { Models } from "node-appwrite";
 import { TablesDB } from "node-appwrite";
 import { getServerClient } from "./appwrite-node";
 const tablesDB = async () => {
-  const client = await getServerClient();
+  {const client = await getServerClient();
   return new TablesDB(client);
+}catch(error){console.error(error," getServerClient not found - database.ts")}
+
 };
 
 // Small helper to make any promise fail-fast after a timeout so server renders don't hang

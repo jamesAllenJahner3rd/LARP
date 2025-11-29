@@ -38,9 +38,14 @@ const settings = () => {
     const handleDeletionForm = async (event) => {
         event.preventDefault();
         const account = getAuthenticatedAccount();
-        const user = await account.get()
-        console.log(user)
-        await account.updateStatus();
+        try {
+            const user = await account.get()
+            console.log(user)
+            await account.updateStatus();
+        } catch (error) {
+            console.error(error, " Authentication errored -usersettings, page.tsx")
+        }
+
     }
     const handleEmailUpdate = async (event) => {
         event.preventDefault();

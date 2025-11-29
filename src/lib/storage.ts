@@ -52,7 +52,8 @@ export async function uploadFileFromPath(
     process.env.NEXT_PUBLIC_APPWRITE_BUCKET;
   if (!bucketId) throw new Error("No bucket id provided (APPWRITE_BUCKET_ID)");
 
-  const client = await getServerClient();
+ try{
+   const client = await getServerClient();
   const storageClient = await storage();
 
   const nodeFile = InputFile.fromPath(filePath, opts?.fileName ?? undefined);
@@ -64,4 +65,5 @@ export async function uploadFileFromPath(
   });
 
   return createResult;
+}catch(error){console.error(error," Upload file from path failed - storage.ts")}
 }

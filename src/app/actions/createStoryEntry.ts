@@ -9,18 +9,21 @@ export async function createStoryEntry(formData: FormData): Promise<void> {
   const body = formData.get("newLog");
 
   if (!heading || !body) throw new Error("Missing fields");
-
-  await postData(
-    process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID!,
-    "storyentries",
-    ID.unique(),
-    { heading, body },
-    [
-      Permission.read(Role.any()),
-      //   Permission.write(Role.team("admin")),
-      //   Permission.update(Role.team("admin")),
-      //   Permission.delete(Role.team("admin")),
-    ],
-  );
-  revalidatePath("/explore/storyline");
+  try {
+    await postData(
+      process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID!,
+      "storyentries",
+      ID.unique(),
+      { heading, body },
+      [
+        Permission.read(Role.any()),
+        //   Permission.write(Role.team("admin")),
+        //   Permission.update(Role.team("admin")),
+        //   Permission.delete(Role.team("admin")),
+      ],
+    );
+    revalidatePath("/explore/storyline");
+  } catch (error) {
+    console.error(error, "Error couldn't Post Data - createStoryEntry");
+  }
 }

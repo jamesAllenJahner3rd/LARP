@@ -23,12 +23,16 @@ import { Query, TablesDB, Models } from "node-appwrite";
  */
 
 export async function getCharacters(): Promise<Models.RowList> {
-  const client = await getServerClient();
-  const tableDB = new TablesDB(client);
-  const characterList = await tableDB.listRows({
-    databaseId: "68ccc1ab0001250042a8",
-    tableId: "characters",
-    queries: [Query.equal("memberId", "12345678912345678912")],
-  });
-  return await characterList;
+  try {
+    const client = await getServerClient();
+    const tableDB = new TablesDB(client);
+    const characterList = await tableDB.listRows({
+      databaseId: "68ccc1ab0001250042a8",
+      tableId: "characters",
+      queries: [Query.equal("memberId", "12345678912345678912")],
+    });
+    return await characterList;
+  } catch (error) {
+    console.error(error, " Could not get characters- getCharacterList.Ts");
+  }
 }

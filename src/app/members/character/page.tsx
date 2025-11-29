@@ -28,7 +28,6 @@ import { TablesDB, Query } from "appwrite";
 
 const CharacterPage = () => {
 
-    // const characterDB = await tablesDB()
     const DATABASE_ID = "68c1161d0005b831d8b7"
     const TABLE_ID = "characters"
     const QUERIES = [Query.equal("memberId", "68ccbf0f0026eb9a8d4f")]
@@ -40,7 +39,6 @@ const CharacterPage = () => {
     const [error, setError] = useState(null)
     const [characterSeleted, setCharacterSelected] = useState(1)
     const [characterList, setCharacterList] = useState(null)
-    // characterList = characterDB.listRows
     useEffect(() => {
         let active = true;
         const fetchData = async () => {

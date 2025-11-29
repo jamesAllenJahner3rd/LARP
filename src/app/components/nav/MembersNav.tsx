@@ -49,10 +49,14 @@ const NavBar = () => {
     const logoutHandler = async () => {
         const account = getAuthenticatedAccount()
         if (!account) return;
-        await account.deleteSession("current");
-        toast.success("Logged Out")
-        setTimeout(() => router.push("/"), 700);
-        setLoggedInUser(null)
+        try {
+            await account.deleteSession("current");
+            toast.success("Logged Out")
+            setTimeout(() => router.push("/"), 700);
+            setLoggedInUser(null)
+        } catch (error) {
+            console.error(error, " Failed to log out - MembersNav")
+        }
 
     }
     const tabLinks = "md:bg-[var(--navbar-background)] md:w-35 md:flex md:flex-col md:h-auto md:pl-2 md:shadow-2xs md:border-1 md:border-black md:rounded-[50px_0_0_50px]";
