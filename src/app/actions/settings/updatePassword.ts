@@ -1,6 +1,5 @@
 "use server";
 import { ID, Permission, Role } from "node-appwrite";
-// import { revalidatePath } from "next/cache";
 import { getAuthenticatedAccount } from "@/lib/appwrite-node";
 /**
  *  updateUserPassword(formData)

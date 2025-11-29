@@ -1,17 +1,17 @@
 "use client";
 import React, { useState } from 'react';
-import type { Models } from "node-appwrite";
+// import type { Models, TablesDB } from "appwrite";
 import { Timeline } from 'antd';
 import { CaretRightOutlined } from '@ant-design/icons';
 import Form from 'next/form'
 import { createStoryEntry } from '@/app/actions/createStoryEntry';
 import { useAuth } from "@/app/providers/AuthProvider";
+import { StoryEntry } from "@/lib/types/types"
 
-
-const StorylineClient = ({ entries }: { entries: Models.RowList }) => {
+const StorylineClient = ({ entries }: { entries: StoryEntry[] }) => {
     const { loggedInUser, isAdmin } = useAuth();
 
-    const [logExpanded, setLogExpanded] = useState<boolean[]>(Array(entries.rows.length).fill(false))
+    const [logExpanded, setLogExpanded] = useState<boolean[]>(Array(entries.length).fill(false))
 
     function expandToggle(id: number, text: string) {
         let print: string[] = [""]
@@ -25,14 +25,14 @@ const StorylineClient = ({ entries }: { entries: Models.RowList }) => {
             <h2>Storyline</h2>
             <Timeline className='text-(--foreground)'
                 items={
-                    entries.rows.map((log, id) => (
+                    entries.map((log, id) => (
                         {
                             dot: <CaretRightOutlined style={{ color: 'var(--foreground)' }} />,
 
 
-                            children: <article key={log.$id}>
+                            children: <article key={log.id}>
                                 <h4 className=' cursor-default text-(--foreground)'>{log.heading}</h4>
-                                <time className='text-(--foreground)'>{new Date(log.$createdAt).toLocaleDateString()}</time>
+                                <time className='text-(--foreground)'>{new Date(log.createdAt).toLocaleDateString()}</time>
                                 <div className='indent-1 w-4/5 justify-self-center-safe cursor-pointer text-(--foreground)' onClick={() => { setLogExpanded(prev => prev.map((t, i) => i === id ? !t : t)) }}>
                                     {expandToggle(id, log.body).split("\\n").map((line, i) => (
                                         <React.Fragment key={i}>

@@ -1,7 +1,6 @@
 "use client";
 import { useEffect, useState } from 'react'
 import { getClient } from "@/lib/appwrite";
-// import { getCharacters } from "@/app/actions/characterList/getCharacterList"
 import { useAuth } from "@/app/providers/AuthProvider";
 import Image from 'next/image'
 import { TablesDB, Query } from "appwrite";

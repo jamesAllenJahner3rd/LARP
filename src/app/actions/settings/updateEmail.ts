@@ -1,6 +1,4 @@
 "use server";
-
-// import { revalidatePath } from "next/cache";
 import { AppError } from "@/lib/errors/AppError";
 import { getAuthenticatedAccount } from "@/lib/appwrite-node";
 
