@@ -3,8 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "turbo":npx next dev --turbo,
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build --turbopack",
     "start": "next start",
     "lint": "next lint",
     "test": "next dev --https --cert ./localhost.pem --key ./localhost-key.pem"
