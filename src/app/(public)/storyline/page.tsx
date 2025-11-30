@@ -29,13 +29,13 @@ const Storyline = async () => {
 
     return (
         <>
-            <Image
+            {/* <Image
                 src="https://nyc.cloud.appwrite.io/v1/storage/buckets/68c11c240013701075bb/files/68c8e013000c7cf62c6b/view?project=68bb084a0032b02608c4&mode=admin"
                 alt="Background"
                 fill
                 unoptimized
                 className="object-cover"
-            />
+            /> */}
             <main >
                 <Image
                     src="/images/Eldarlands-LARP-Logo-full-size.webp"
