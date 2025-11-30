@@ -2,7 +2,7 @@
 "use server";
 
 import { postData } from "@/lib/database";
-import { ID, Permission, Role } from "appwrite";
+import { ID, Permission, Role } from "node-appwrite";
 import { revalidatePath } from "next/cache";
 export async function createStoryEntry(formData: FormData): Promise<void> {
   const heading = formData.get("heading");
