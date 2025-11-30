@@ -1,6 +1,6 @@
 import React from 'react'
 import Image from 'next/image'
-import { GODS } from "@/data/gods"
+// import { GODS } from "@/data/gods"
 const Pantheon = () => {
 
     const figureCss = "w-[20rem] flex flex-col mx-3 snap-center select-none"
@@ -42,7 +42,7 @@ const Pantheon = () => {
             <aside className="w-screen flex-col-reverse overflow-x-scroll scroll-p-36  scroll-smooth snap-x snap-mandatory flex scrollbar-thick touch-pan-x ">
 
                 <section className=" w-max inline-flex">
-                    {GODS.map(({ name, alt, image, description }) => (
+                    {/*GODS.map(({ name, alt, image, description }) => (
                         <figure key={name} className={figureCss}>
                             <Image
                                 src={image}
@@ -55,7 +55,7 @@ const Pantheon = () => {
                                 {description}
                             </figcaption>
                         </figure>
-                    ))}
+                    ))*/}
                 </section>
             </aside>
         </>

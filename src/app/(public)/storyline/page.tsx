@@ -28,7 +28,7 @@ const Storyline = async () => {
 
 
     return (
-        <><main className="bg-[url(https://nyc.cloud.appwrite.io/v1/storage/buckets/68c11c240013701075bb/files/68c8e013000c7cf62c6b/view?project=68bb084a0032b02608c4)]">
+        <><main {/*className="bg-[url(https://nyc.cloud.appwrite.io/v1/storage/buckets/68c11c240013701075bb/files/68c8e013000c7cf62c6b/view?project=68bb084a0032b02608c4)]"*/}>
             <Image
                 src="/images/Eldarlands-LARP-Logo-full-size.webp"
                 alt="Group of characters ready to adventure"

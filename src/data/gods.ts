@@ -1,4 +1,4 @@
-export const GODS = [
+/*export const GODS = [
   {
     name: "Celnuntos",
     alt: "Celnuntos Holy Symbol",
@@ -105,3 +105,4 @@ export const GODS = [
       "Theratis – The god of psionics, Theratis is the seeker of knowledge and self-sustainability. He is the left hand of Ozmodius. His followers are often Dark Dwarves or Mages.",
   },
 ];
+*/

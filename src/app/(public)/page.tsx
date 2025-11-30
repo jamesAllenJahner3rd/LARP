@@ -9,9 +9,9 @@ const Prop = {
   hyperRef: ["/", "/explore/about", "/player", "https://armstreet.com/collections/fireside-family-larp-costume-basics-and-more"]
 }
 const IMAGES = {
-  "WINNING": "https://nyc.cloud.appwrite.io/v1/storage/buckets/68c11c240013701075bb/files/690e46930038d63a2878/view?project=68bb084a0032b02608c4",
-  "CAMPING": "https://nyc.cloud.appwrite.io/v1/storage/buckets/68c11c240013701075bb/files/690e4841003330f3be86/view?project=68bb084a0032b02608c4",
-  "GATE": "https://nyc.cloud.appwrite.io/v1/storage/buckets/68c11c240013701075bb/files/690e49290036b9401721/view?project=68bb084a0032b02608c4",
+  "WINNING": "public/images/winning.webp",//"https://nyc.cloud.appwrite.io/v1/storage/buckets/68c11c240013701075bb/files/690e46930038d63a2878/view?project=68bb084a0032b02608c4",
+  "CAMPING": "public/images/camping.webp",//"https://nyc.cloud.appwrite.io/v1/storage/buckets/68c11c240013701075bb/files/690e4841003330f3be86/view?project=68bb084a0032b02608c4",
+  "GATE": "public/images/town-bg-wide.webp",//"https://nyc.cloud.appwrite.io/v1/storage/buckets/68c11c240013701075bb/files/690e49290036b9401721/view?project=68bb084a0032b02608c4",
 };
 
 const page = (Prop) => {
