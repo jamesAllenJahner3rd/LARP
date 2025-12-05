@@ -1,5 +1,15 @@
 "use client";
-import { Client, Account, Storage, TablesDB, Models, Query } from "appwrite";
+import {
+  Client,
+  Account,
+  Storage,
+  TablesDB,
+  Models,
+  Query,
+  ID,
+} from "appwrite";
+import * as CharacterTypes from "@/lib/types/characterTypes";
+
 export function getAuthenticatedAccount(): Account {
   const client = new Client()
     .setEndpoint(
@@ -54,3 +64,121 @@ export async function getList(
     throw error;
   }
 }
+export async function uploadClientFile(aFile: File): Promise<string> {
+  console.log("uploader triggered");
+  const fileId = ID.unique().toString();
+  console.log(fileId);
+  const storageClient = await storage();
+  const promise = await storageClient.createFile({
+    bucketId: process.env.NEXT_PUBLIC_APPWRITE_BUCKET,
+    fileId,
+    file: aFile,
+    // permissions: ["read("any")"] // optional
+  });
+  return fileId;
+}
+export async function saveCharacter(
+  character,
+  characterClasses,
+  characterClassAbilities,
+) {
+  const characterId = ID.unique().toString();
+  const account = getAuthenticatedAccount();
+  const user = await account.get();
+  const client = new Client()
+    .setEndpoint("https://nyc.cloud.appwrite.io/v1")
+    .setProject(process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID);
+
+  const tablesDB = new TablesDB(client);
+  function classId(className: string): string {
+    switch (className) {
+      case "Rogue":
+        return "68cce0da0000f82f2635";
+        break;
+      case "Ranger":
+        return "68ccf8de001f138663ae";
+        break;
+      case "Mage":
+        return "68cce8880023fa387f8c";
+        break;
+      case "Cleric":
+        return "68cce0da0000f82f2635";
+        break;
+      case "Fighter":
+        return "68ccddc00032af80cb06";
+        break;
+    }
+  }
+
+  try {
+    characterClassAbilities.forEach((ability: CharacterTypes.ClassAbility) => {
+      tablesDB.createRow({
+        databaseId: process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID,
+        tableId: "characterclassabilities",
+        rowId: ID.unique(),
+        data: {
+          level: ability.level,
+          characterId,
+          classAbilityId: ability.$id,
+        },
+      });
+    });
+    characterClasses.forEach((value, key) => {
+      tablesDB.createRow({
+        databaseId: process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID,
+        tableId: "characterclasses",
+        rowId: ID.unique(),
+        data: {
+          characterId,
+          classes: classId(key),
+          level: value,
+        },
+      });
+    });
+    tablesDB.createRow({
+      databaseId: process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID,
+      tableId: "characters",
+      rowId: ID.unique(),
+      data: {
+        memberId: user.$id,
+        name: character.name,
+        race: character.race,
+        subrace: character.subRace,
+        raceAbilities: character.raceAbilities,
+        lightWeapons: character.lightWeapons,
+        mediumWeapons: character.mediumWeapons,
+        heavyWeapons: character.heavyWeapons,
+        heavyArmor: character.heavyArmor,
+        mediumArmor: character.mediumArmor,
+        lightArmor: character.lightArmor,
+        lightShield: character.lightShield,
+        mediumShield: character.mediumShield,
+        heavyShield: character.heavyShield,
+        classAbilities: character.classAbilities,
+        twoWeapon: character.twoWeapon,
+        rangedWeapons: character.rangedWeapons,
+        whiteCloth: character.whiteCloth,
+        greenCloth: character.greenCloth,
+        history: character.history,
+        spellsPackets: character.spellsPackets,
+        imageUrl: character.imageUrl,
+        classDescription: character.classDescription,
+        deity: character.deity,
+        raceDescription: character.raceDescription,
+        raceAbilityDescription: JSON.stringify(
+          character.raceAbilityDescription,
+        ),
+        deityImage: character.deityImage,
+        deityDescription: character.deityDescription,
+        characterId,
+      },
+    });
+    console.log("Character Created");
+  } catch (error) {
+    console.log(error, "Character failed to save");
+  }
+}
+//tableIDs:
+//characterclassabilities
+//characterclasses
+//characters

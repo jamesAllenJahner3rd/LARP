@@ -3,6 +3,8 @@ import Image from "next/image";
 import * as CharacterTypes from "@/lib/types/characterTypes";
 import type { Models } from "appwrite";
 
+import type { storage } from "@/lib/appwrite-node";
+
 type CharacterSummaryProp = {
     characterClassAbilities: CharacterTypes.ClassAbility[];
     character: CharacterTypes.Character;
@@ -87,9 +89,11 @@ const CharacterSummary = ({
                             </tr>
                             <tr>
 
-                                <th scope="row" className='text-end border-t'>Two-Weapon:</th>
+                                <th scope="row" className='text-end border-t'>Two Weapons:</th>
                                 <td className="text-center">{character.twoWeapon ? "\u2705" : "\u26D4"}</td>
-
+                            </tr><tr>
+                                <th scope="row" className='text-end'>Ranged Weapons:</th>
+                                <td className="text-center">{character.rangedWeapons}</td>
                             </tr>
                             <tr>
                                 <th scope="row" className='text-end'>Green Strips:</th>
@@ -118,7 +122,7 @@ const CharacterSummary = ({
                 </div>
 
                 <Image
-                    src="/images/DeanSpencer-Character-moonelf-e1680414816906.webp"
+                    src={character.imageUrl || "/images/Default.png"}
                     alt="Group of characters ready to adventure"
                     width={1200}
                     height={800}

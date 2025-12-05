@@ -4,8 +4,8 @@ export type Character = {
   race: string;
   subRace: string;
   raceDescription: string;
-  raceAbilities: string[];
-  raceAbilityDescription: string[];
+  raceAbilities: string;
+  raceAbilityDescription: string;
   classDescription: string;
   deity: string;
   deityImage: string;
@@ -20,7 +20,7 @@ export type Character = {
   mediumShield: boolean;
   heavyShield: boolean;
   twoWeapon: boolean;
-  rangedWeapons: boolean;
+  rangedWeapons: number;
   whiteCloth: number;
   greenCloth: number;
   history: string;
@@ -51,7 +51,7 @@ export type Class = {
   mediumShield: boolean;
   heavyShield: boolean;
   twoWeapon: boolean;
-  rangedWeapons: boolean;
+  rangedWeapons: number;
   whiteCloth: number;
   greenCloth: number;
   spellsPackets: number;
@@ -62,6 +62,7 @@ export type Deity = {
   description: string;
 };
 export type ClassAbility = {
+  $id: string;
   class: string;
   level: number;
   title: string;

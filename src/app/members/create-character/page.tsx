@@ -40,8 +40,8 @@ const CharacterCreationPage = () => {
             race: "",
             subRace: "",
             raceDescription: "",
-            raceAbilities: [],
-            raceAbilityDescription: [],
+            raceAbilities: "",
+            raceAbilityDescription: "",
             classDescription: "",
             deity: "",
             deityImage: "",
@@ -56,12 +56,12 @@ const CharacterCreationPage = () => {
             mediumShield: false,
             heavyShield: false,
             twoWeapon: false,
-            rangedWeapons: false,
+            rangedWeapons: 0,
             whiteCloth: 0,
             greenCloth: 0,
             history: "",
             spellsPackets: 0,
-            imageUrl: "",
+            imageUrl: "/images/default.png",
         }
     );
     const [characterClasses, setCharacterClasses] = useState<Map<string, number>>(new Map());
@@ -131,9 +131,9 @@ const CharacterCreationPage = () => {
         if (match) {
             setCharacter((character) => ({
                 ...character,
-                raceDescription: match.description,
-                raceAbilities: [match.ability],
-                raceAbilityDescription: [match.ability_description],
+                raceDescription: match.race_description,
+                raceAbilities: match.ability,
+                raceAbilityDescription: match.ability_description,
             }))
         }
     }, [character?.subRace])
@@ -175,6 +175,8 @@ const CharacterCreationPage = () => {
                         formInputs={formInputs}
                         setFormInputs={setFormInputs}
                         characterClassAbilities={characterClassAbilities} setCharacterClassAbilities={setCharacterClassAbilities}
+                        classAbilitiesList={classAbilitiesList}
+                        raceList={raceList}
                         {...classLogic}
                     />
                 </section >

@@ -1,12 +1,14 @@
 "use client";
 import { useEffect, useState } from 'react'
-import { getClient, getList } from "@/lib/appwrite";
+import { getClient, getList, uploadClientFile, saveCharacter } from "@/lib/appwrite";
 import { Query, TablesDB, Models } from "appwrite";
 import { useAuth } from "@/app/providers/AuthProvider";
 import Image from "next/image";
 import * as CharacterTypes from "@/lib/types/characterTypes"
 import useCharacterClasses from "./hooks/useCharacterClasses"
 import { totalLevel } from "@/app/members/create-character/hooks/useCharacterClasses"
+import { toast } from 'react-toastify';
+
 type CharacterFormProp = {
     character: CharacterTypes.Character;
     setCharacter: React.Dispatch<React.SetStateAction<CharacterTypes.Character>>;
@@ -24,8 +26,10 @@ type CharacterFormProp = {
     classSelected: (className: CharacterTypes.ClassName) => void;
     increaseLevel: () => void;
     decreaseLevel: () => void;
-    setCharacterClassAbilities: React.Dispatch<React.SetStateAction<CharacterTypes.ClassAbilities>>
-    characterClassAbilities: CharacterTypes.ClassAbilities
+    setCharacterClassAbilities: React.Dispatch<React.SetStateAction<CharacterTypes.ClassAbilities>>;
+    characterClassAbilities: CharacterTypes.ClassAbilities;
+    classAbilitiesList: Models.RowList<Models.DefaultRow>;
+    raceList: Models.RowList<Models.DefaultRow>;
 };
 const CharacterForm = ({
     character,
@@ -45,14 +49,35 @@ const CharacterForm = ({
     setCharacterClassAbilities,
     classSelected,
     increaseLevel,
-    decreaseLevel
+    decreaseLevel,
+    classAbilitiesList,
+    raceList
 }:
     CharacterFormProp
 ) => {
-
+    async function handleSubmit(e: React.FormEvent) {
+        e.preventDefault()
+        const characterTotalLevel = Array.from(characterClasses.values()).reduce((a, c) => a + c, 0)
+        try {
+            if (character && character.name && character.subRace && character.deity && characterClasses.size === 1, characterTotalLevel === 1) {
+                const result = await saveCharacter(character, characterClasses, characterClassAbilities)
+                toast.success("Character saved")
+            }
+        } catch (error) {
+            console.error(error, "Unable to save character")
+            toast.error("Unable to save character")
+        }
+    }
+    async function imageHandler(aFile: File) {
+        const fileId = await uploadClientFile(aFile);
+        setCharacter((character) => ({
+            ...character,
+            imageUrl: `https://nyc.cloud.appwrite.io/v1/storage/buckets/68c11c240013701075bb/files/${fileId}/view?project=68bb084a0032b02608c4&mode=admin`
+        }))
+    }
 
     return (
-        <form action="" className='border-2 border-black rounded-2xl w-full justify-self-center md:w-fit flex flex-col  bg-neutral-500'>
+        <form onSubmit={handleSubmit} className='border-2 border-black rounded-2xl w-full justify-self-center md:w-fit flex flex-col  bg-neutral-500'>
             <div className='flex justify-between'>
                 <label htmlFor='name' className='ml-2 w-2/5'>Name:</label>
                 <input type="text" name="name"
@@ -76,7 +101,9 @@ const CharacterForm = ({
             <div className='flex justify-between'>
                 <label htmlFor='subRace' className='ml-2 w-2/5'>Sub-Race:</label>
                 <select name="subRace" id="subRaceList" className=" border-2 border-black rounded-2xl px-2 bg-white m-2 w-3/5 text-black" onChange={(e) => setCharacter((character) => ({
-                    ...character, subRace: e.target.value
+                    ...character,
+                    subRace: e.target.value,
+                    raceDescription: (raceList.rows.find((row) => row.races === e.target.value)).race_description
                 }))}>
                     <option value="choose">Choose...</option>
                     {SUBRACE_OPTIONS[character.race]?.map((subrace) => (
@@ -122,8 +149,20 @@ const CharacterForm = ({
                     className='text-black border-2 border-black rounded-2xl px-2 bg-white m-2' />
             </div>
             <div className='flex justify-center content-center'>
-                <button
-                    className='flex  btn btn-secondary'> Upload Image</button>
+                <input type="file" id="uploader" className='flex  btn btn-secondary' name="Upload Image" accept="image/png, image/jpeg, image/webp"
+                    onChange={(e) => {
+                        if (e.target.files?.[0]) {
+                            imageHandler(e.target.files?.[0])            // full File object with data
+                        } else {
+                            setCharacter((character) => {
+                                return ({
+                                    ...character,
+                                    imageUrl: "/images/default.png"
+                                })
+                            })
+                        }
+                    }}
+                />
                 <input type='submit' value='Create' className='flex btn btn-secondary' />
             </div>
         </form >

@@ -72,6 +72,7 @@ const useCharacterClasses = ({
 
         if (existingIndex === -1) {
           correctLevelAbilities.push({
+            $id: ability.$id,
             class: ability.class,
             level: ability.level,
             title: ability.title,
@@ -83,6 +84,7 @@ const useCharacterClasses = ({
           correctLevelAbilities[existingIndex].scaling <= ability.scaling
         ) {
           correctLevelAbilities[existingIndex] = {
+            $id: ability.$id,
             class: ability.class,
             level: ability.level,
             title: ability.title,

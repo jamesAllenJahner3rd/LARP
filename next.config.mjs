@@ -1,4 +1,4 @@
-// next.config.js
+// next.config.mjs
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -7,10 +7,17 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "nyc.cloud.appwrite.io",
-        // Optional: you can add a pathname if you want to be more specific
-        // pathname: '/v1/storage/buckets/**',
+        // Optional: add pathname if you want to be more specific
+        // pathname: "/v1/storage/buckets/**",
       },
     ],
   },
+  turbo: {
+    cache: {
+      // Directory for Turbopack cache storage
+      path: ".next/cache",
+    },
+  },
 };
+
 export default nextConfig;
