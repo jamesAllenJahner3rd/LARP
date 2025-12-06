@@ -83,6 +83,7 @@ export async function saveCharacter(
   characterClassAbilities,
 ) {
   const characterId = ID.unique().toString();
+  console.log(process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID);
   const account = getAuthenticatedAccount();
   const user = await account.get();
   const client = new Client()
@@ -109,36 +110,12 @@ export async function saveCharacter(
         break;
     }
   }
-
+  console.log(process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID);
   try {
-    characterClassAbilities.forEach((ability: CharacterTypes.ClassAbility) => {
-      tablesDB.createRow({
-        databaseId: process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID,
-        tableId: "characterclassabilities",
-        rowId: ID.unique(),
-        data: {
-          level: ability.level,
-          characterId,
-          classAbilityId: ability.$id,
-        },
-      });
-    });
-    characterClasses.forEach((value, key) => {
-      tablesDB.createRow({
-        databaseId: process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID,
-        tableId: "characterclasses",
-        rowId: ID.unique(),
-        data: {
-          characterId,
-          classes: classId(key),
-          level: value,
-        },
-      });
-    });
     tablesDB.createRow({
       databaseId: process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID,
       tableId: "characters",
-      rowId: ID.unique(),
+      rowId: characterId,
       data: {
         memberId: user.$id,
         name: character.name,
@@ -173,6 +150,31 @@ export async function saveCharacter(
         characterId,
       },
     });
+    characterClassAbilities.forEach((ability: CharacterTypes.ClassAbility) => {
+      tablesDB.createRow({
+        databaseId: process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID,
+        tableId: "characterclassabilities",
+        rowId: ID.unique(),
+        data: {
+          level: ability.level,
+          characterId,
+          classAbilityId: ability.$id,
+        },
+      });
+    });
+    characterClasses.forEach((value, key) => {
+      tablesDB.createRow({
+        databaseId: process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID,
+        tableId: "characterclasses",
+        rowId: ID.unique(),
+        data: {
+          characterId,
+          classes: classId(key),
+          level: value,
+        },
+      });
+    });
+
     console.log("Character Created");
   } catch (error) {
     console.log(error, "Character failed to save");

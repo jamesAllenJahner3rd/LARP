@@ -28,7 +28,7 @@ import { TablesDB, Query } from "appwrite";
 
 const CharacterPage = () => {
 
-    const DATABASE_ID = process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID//"68c1161d0005b831d8b7"
+    const DATABASE_ID = process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID
     const TABLE_ID = "characters"
 
 
@@ -63,7 +63,7 @@ const CharacterPage = () => {
         fetchData();
         return () => { active = false };
     }, [])
-    console.dir(characterList)
+    console.log(process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID)
     // console.dir(characterList.rows)
     return (
         <>
