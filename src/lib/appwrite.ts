@@ -83,9 +83,11 @@ export async function saveCharacter(
   characterClassAbilities,
 ) {
   const characterId = ID.unique().toString();
-  console.log(process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID);
   const account = getAuthenticatedAccount();
   const user = await account.get();
+
+  const databaseId = process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID;
+  console.log("appwrite.ts databaseId", databaseId);
   const client = new Client()
     .setEndpoint("https://nyc.cloud.appwrite.io/v1")
     .setProject(process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID);
@@ -110,10 +112,13 @@ export async function saveCharacter(
         break;
     }
   }
-  console.log(process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID);
+  console.log(
+    "database,appwrite 2",
+    process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID,
+  );
   try {
     tablesDB.createRow({
-      databaseId: process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID,
+      databaseId,
       tableId: "characters",
       rowId: characterId,
       data: {
@@ -152,7 +157,7 @@ export async function saveCharacter(
     });
     characterClassAbilities.forEach((ability: CharacterTypes.ClassAbility) => {
       tablesDB.createRow({
-        databaseId: process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID,
+        databaseId,
         tableId: "characterclassabilities",
         rowId: ID.unique(),
         data: {
@@ -164,7 +169,7 @@ export async function saveCharacter(
     });
     characterClasses.forEach((value, key) => {
       tablesDB.createRow({
-        databaseId: process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID,
+        databaseId,
         tableId: "characterclasses",
         rowId: ID.unique(),
         data: {

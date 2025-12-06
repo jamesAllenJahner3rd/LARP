@@ -63,7 +63,7 @@ const CharacterPage = () => {
         fetchData();
         return () => { active = false };
     }, [])
-    console.log(process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID)
+    console.log("database, characterpage", process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID)
     // console.dir(characterList.rows)
     return (
         <>
