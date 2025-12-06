@@ -12,12 +12,12 @@ const nextConfig = {
       },
     ],
   },
-  turbo: {
-    cache: {
-      // Directory for Turbopack cache storage
-      path: ".next/cache",
-    },
-  },
+  // turbo: {
+  //   cache: {
+  //     // Directory for Turbopack cache storage
+  //     path: ".next/cache",
+  //   },
+  // },
 };
 
 export default nextConfig;
