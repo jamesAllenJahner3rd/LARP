@@ -28,7 +28,7 @@ import { TablesDB, Query } from "appwrite";
 
 const CharacterPage = () => {
 
-    const DATABASE_ID = process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID
+    const DATABASE_ID = process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID || "68ccc1ab0001250042a8"
     const TABLE_ID = "characters"
 
 
