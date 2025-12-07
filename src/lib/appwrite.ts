@@ -82,11 +82,12 @@ export async function saveCharacter(
   characterClasses,
   characterClassAbilities,
 ) {
+  
   const characterId = ID.unique().toString();
   const account = getAuthenticatedAccount();
   const user = await account.get();
 
-  const databaseId = process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID;
+  const databaseId = process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID || 68ccc1ab0001250042a8
   console.log("appwrite.ts databaseId", databaseId);
   const client = new Client()
     .setEndpoint("https://nyc.cloud.appwrite.io/v1")
