@@ -17,29 +17,33 @@ const About = () => {
             <section className="var(--background) md:flex md:flex-row md:m-4">
 
 
-                <ul className="md:flex md:flex-col  md:w-2/5 md:justify-center">
-                    <li><h2> What Sets Eldarlands Apart</h2></li>
-                    <li>
-                        <strong>Custom Game System:</strong> Designed from the ground up to
-                        balance heavy combat with rich roleplay, Eldarlands supports both
-                        warriors and noncombatants alike.
-                    </li>
-                    <li>
-                        <strong>Player-Driven Storytelling:</strong> Characters evolve
-                        through interaction, conflict, and collaboration. The world responds
-                        to your choices.
-                    </li>
-                    <li>
-                        <strong>Safety First:</strong> All combat follows strict rules and
-                        weapon regulations to ensure a safe and enjoyable experience for
-                        everyone.
-                    </li>
-                    <li>
-                        <strong>Inclusive Community:</strong> We welcome players of all ages
-                        and backgrounds. Whether you want to swing a sword or cast a spell,
-                        there&#39;s a place for you here.
-                    </li>
-                </ul>
+                <article className="md:flex md:flex-col  md:w-5/5 md:justify-center">
+                    <h2> What Sets Eldarlands Apart</h2>
+                    <ul className="md:flex md:flex-row  md:w-5/5 md:justify-center">
+                        <li>
+                            <strong>Custom Game System:</strong> Designed from the ground up to
+                            balance heavy combat with rich roleplay, Eldarlands supports both
+                            warriors and noncombatants alike.
+                        </li>
+                        <li>
+                            <strong>Player-Driven Storytelling:</strong> Characters evolve
+                            through interaction, conflict, and collaboration. The world responds
+                            to your choices.
+                        </li>
+                    </ul>
+                    <ul className="md:flex md:flex-row md:w-5/5 md:justify-center">
+                        <li>
+                            <strong>Safety First:</strong> All combat follows strict rules and
+                            weapon regulations to ensure a safe and enjoyable experience for
+                            everyone.
+                        </li>
+                        <li>
+                            <strong>Inclusive Community:</strong> We welcome players of all ages
+                            and backgrounds. Whether you want to swing a sword or cast a spell,
+                            there&#39;s a place for you here.
+                        </li>
+                    </ul>
+                </article>
 
 
             </section>

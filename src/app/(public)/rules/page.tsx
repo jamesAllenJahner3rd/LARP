@@ -7,7 +7,7 @@ const Rules = () => {
     return (
 
         <>
-
+            public\images\hfa_scroll.webp
             <main className={`bg-[url('/images/hfa_scroll.webp')] bg-center bg-cover bg-origin-border ${screenBG} bg-blend-overlay`} >
                 <section className="var(--background) md:flex md:flex-row md:m-4">
                     {/* <Image

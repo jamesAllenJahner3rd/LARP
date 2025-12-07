@@ -157,8 +157,8 @@ const CharacterCreationPage = () => {
         <><section className='w-full relative '>
             {/* {races && <p>{`${JSON.stringify(races?.rows.find((row) => row.races === "Minotaur"))}`}</p>}
             {races && <p>{`${JSON.stringify(races?.rows.find((row) => row.races === "Minotaur"))}`}</p>} */}
-            <section className='w-full flex '>
-                <section className='w-2/5 self-center item-center'>
+            <section className='w-full block md:flex '>
+                <section className='w-full md:w-1/3 item-center var(--background-alpha)'>
                     <h1 className='h1 flex justify-center m-5 text-black'>Character Creation</h1>
                     <CharacterForm
                         character={character}

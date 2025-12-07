@@ -77,7 +77,7 @@ const CharacterForm = ({
     }
 
     return (
-        <form onSubmit={handleSubmit} className='border-2 border-black rounded-2xl w-full justify-self-center md:w-fit flex flex-col  bg-neutral-500'>
+        <form onSubmit={handleSubmit} className='border-2 border-black rounded-2xl w-full justify-self-center flex flex-col  bg-neutral-400'>
             <div className='flex justify-between'>
                 <label htmlFor='name' className='ml-2 w-2/5'>Name:</label>
                 <input type="text" name="name"
@@ -149,7 +149,8 @@ const CharacterForm = ({
                     className='text-black border-2 border-black rounded-2xl px-2 bg-white m-2' />
             </div>
             <div className='flex justify-center content-center'>
-                <input type="file" id="uploader" className='flex  btn btn-secondary' name="Upload Image" accept="image/png, image/jpeg, image/webp"
+                <label htmlFor='uploader' className='flex  btn btn-secondary w-2/3'>Upload Image</label>
+                <input type="file" id="uploader" className='opacity-0 absolute  btn btn-secondary' name="Upload Image" accept="image/png, image/jpeg, image/webp"
                     onChange={(e) => {
                         if (e.target.files?.[0]) {
                             imageHandler(e.target.files?.[0])            // full File object with data
@@ -163,7 +164,7 @@ const CharacterForm = ({
                         }
                     }}
                 />
-                <input type='submit' value='Create' className='flex btn btn-secondary' />
+                <input type='submit' value='Create' className='flex btn btn-secondary w-1/3' />
             </div>
         </form >
     )

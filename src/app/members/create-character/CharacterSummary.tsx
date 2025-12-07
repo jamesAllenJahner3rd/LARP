@@ -23,10 +23,10 @@ const CharacterSummary = ({
 ) => {
     // use character, characterClasses, etc. directly
 
-
+    // public/images/parchment.png
     return (
-        <section className='w-3/5 flex flex-col bg-green-200'>
-            <div className='flex justify-between'>
+        <section className='w-full md:w-2/3 block md:flex flex-col bg-[url(/images/parchment.png)]'>
+            <div className='block md:flex justify-between'>
                 <div>
 
                     <div className='flex'><h2>Name:  </h2> <p> {character.name}</p></div>
@@ -127,8 +127,8 @@ const CharacterSummary = ({
                     width={1200}
                     height={800}
 
-                    className="object-scale-down flex w-1/2
-                              right-50rem top-0"
+                    className="object-scale-down block md:flex w-full md:w-1/2
+                              right-50rem self-start"
                 />
             </div >
             <div></div>
