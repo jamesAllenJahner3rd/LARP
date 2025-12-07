@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react'
 import HamburgerMenu from '../HamburgerMenu'
 import Image from 'next/image'
 import { usePathname, useRouter } from "next/navigation"
-import { getNavForPath } from '@/lib/navConfig'
 import { useAuth } from "@/app/providers/AuthProvider";
 import { getAuthenticatedAccount } from '@/lib/appwrite'
 import { toast } from 'react-toastify'
@@ -36,7 +35,6 @@ import { toast } from 'react-toastify'
 const NavBar = () => {
     const { loggedInUser, logout, setLoggedInUser } = useAuth();
     const pathname = usePathname();
-    const { heading, hyperRef } = getNavForPath(pathname);
     const [loaded, setLoaded] = useState(false);
     const router = useRouter();
     useEffect(() => {
@@ -65,9 +63,7 @@ const NavBar = () => {
         <>
             <HamburgerMenu openMenu={openMenu} setOpenMenu={setOpenMenu} />
             <nav className={`${navCss}  ${navMedium} z-2`}>
-                <Link href={hyperRef[0]} className=""><h3 className={`${h3Css} delay-0 `} onClick={() => setOpenMenu(!openMenu)}>{heading[0]} </h3></Link>
-                <Link href={hyperRef[1]} className=""><h3 className={`${h3Css} delay-2000`} onClick={() => setOpenMenu(!openMenu)}>{heading[1]}</h3></Link>
-                <Link href="/" className="rounded-lg w-full size-1/1 " onClick={() => setOpenMenu(!openMenu)}><Image
+                <Link href="/" className="rounded-lg w-full size-1/1 " ><Image
                     src="/images/NavBarIcon.webp"
                     alt="Group of characters ready to adventure"
                     width={1200}
@@ -76,9 +72,20 @@ const NavBar = () => {
                     priority
                     className="rounded-lg w-full size-1/1 "
                 /></Link>
-                <Link href={hyperRef[2]} className=""><h3 className={`${h3Css} delay-1000`} onClick={() => setOpenMenu(!openMenu)}>{heading[2]}</h3></Link>
-                {!loggedInUser && (<Link href={hyperRef[3]} className=""><h3 className={`${h3Css} delay-3000`} onClick={() => setOpenMenu(!openMenu)}>{heading[3]}</h3></Link>)}
-                {loggedInUser && (<h3 className={`${h3Css} flex  items-center delay-3000`} onClick={logoutHandler}>Log Out</h3>)}
+                <Link href="/pantheon" className=""><h3 className={`${h3Css} delay-1000 `} >Pantheon </h3></Link>
+                {!loggedInUser && (<Link href="/register" className=""><h3 className={`${h3Css} delay-1500`} >Register</h3></Link>)}
+                {loggedInUser && (<Link href="/members" className=""><h3 className={`${h3Css} delay-1500`} >Members </h3></Link>)}
+                <Link href="/resources" className=""><h3 className={`${h3Css} delay-2000 `} >Resources </h3></Link>
+                <Link href="/storyline" className=""><h3 className={`${h3Css} delay-2500`} >Storyline </h3></Link>
+                <Link href="https://armstreet.com/collections/fireside-family-larp-costume-basics-and-more" className=""><h3 className={`${h3Css} delay-4500`} >Shop</h3></Link>
+                <Link href="/about" className=""><h3 className={`${h3Css} delay-3500 `} >Explore </h3></Link>
+                {!loggedInUser && (<Link href="/login" className=""><h3 className={`${h3Css} delay-4000`} >Log In</h3></Link>)}
+                {loggedInUser && (<h3 className={`${h3Css} flex  items-center delay-4000`} onClick={logoutHandler}>Log Out</h3>)}
+                <Link href="/rules" className=""><h3 className={`${h3Css} delay-3000 `} >Rules</h3></Link>
+                <Link href="/events" className=""><h3 className={`${h3Css} delay-5000`} >Events</h3></Link>
+
+
+
 
             </nav >
         </>
