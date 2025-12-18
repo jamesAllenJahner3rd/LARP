@@ -6,8 +6,8 @@ import type { Models } from "appwrite";
 import type { storage } from "@/lib/appwrite-node";
 
 type CharacterSummaryProp = {
-    characterClassAbilities: CharacterTypes.ClassAbility[];
-    character: CharacterTypes.Character;
+    characterClassAbilities: CharacterTypes.ClassAbilitiesRowList;
+    character: CharacterTypes.CharacterSheetRow;
     deitiesList: Models.RowList<Models.DefaultRow> | null;
     characterClasses: Map<string, number>;
 }
@@ -35,7 +35,7 @@ const CharacterSummary = ({
                     {characterClasses.size > 0 &&
                         Array.from(characterClasses.keys()).map((className) => (
                             <React.Fragment key={className}>
-                                <div className='flex'>  <h2 className="ml-4">Class:</h2><span> {className} {characterClasses.get(className)} lvl</span></div>
+                                <div className='flex'> <span> {className} {characterClasses.get(className)} lvl</span></div>
                                 <div className='flex'></div>
                             </React.Fragment>
                         ))}
@@ -111,14 +111,7 @@ const CharacterSummary = ({
 
                         </tbody>
                     </table>
-                    <div>
-                        <div>
-                            <h2>{character.raceAbilities}: </h2> <p>{character.raceAbilityDescription}</p>
-                        </div>
-                        <div>
-                            <h2> Class Skills:</h2>
-                        </div>
-                    </div>
+
                 </div>
 
                 <Image
@@ -131,10 +124,17 @@ const CharacterSummary = ({
                               right-50rem self-start"
                 />
             </div >
-            <div></div>
-            {/* <div className='flex '><h2>Class Skills: </h2> <p> {JSON.stringify(classAbilities.rows)}</p></div> */}
+            <div>
+                <div>
+                    <h2>{character.raceAbilities}: </h2> <p>{character.raceAbilityDescription}</p>
+                </div>
+                <div>
+                    <h2> Class Skills:</h2>
+                </div>
+            </div>
+
             <ol>
-                {characterClassAbilities.length && characterClassAbilities.map((li, i) => (
+                {characterClassAbilities.total && characterClassAbilities.rows.map((li, i) => (
                     <li key={i}>
                         <h2>
                             {li.title}

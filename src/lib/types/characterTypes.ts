@@ -1,4 +1,5 @@
-export type Character = {
+import {Models} from "appwrite"
+export type CharacterSheetRow = Models.Row & {
   memberId: string;
   name: string;
   race: string;
@@ -27,9 +28,9 @@ export type Character = {
   spellsPackets: number;
   imageUrl: string;
 };
-export type CharacterClass = {
+export type CharacterClassRow = Models.Row & {
   character: string;
-  class: string;
+  classes: string;
   level: number;
 };
 export type ClassName = "Fighter" | "Cleric" | "Ranger" | "Mage" | "Rogue" | "";
@@ -38,8 +39,8 @@ export type FormInputs = {
   class: ClassName;
   level: number;
 };
-export type Class = {
-  name: string;
+export type ClassRow = Models.Row &{
+  classes: string;
   description: string;
   lightWeapons: boolean;
   mediumWeapons: boolean;
@@ -56,12 +57,12 @@ export type Class = {
   greenCloth: number;
   spellsPackets: number;
 };
-export type Deity = {
+export type DeityRow = Models.Row & {
   image: string;
   name: string;
   description: string;
 };
-export type ClassAbility = {
+export type ClassAbilityRow = Models.Row & {
   $id: string;
   class: string;
   level: number;
@@ -69,11 +70,52 @@ export type ClassAbility = {
   scaling: number;
   description: string;
 };
-export type ClassAbilities = ClassAbility[];
+export type ClassAbilitiesRowList = Models.RowList<ClassAbilityRow>;
 export type Race = {
   name: string;
-
   description: string;
   ability: string;
   ability_description: string;
 };
+export type RaceRow = Models.Row & {
+races:string;
+race_description: string;
+ability: string;
+ability_description: string;
+ability_array: string[];
+};
+export type RaceRowList = Models.RowList<RaceRow>;
+
+export type CompleteCharacterSheet ={ 
+  memberId: string;
+  name: string;
+  race: string;
+  subRace: string;
+  raceDescription: string;
+  raceAbilities: string;
+  raceAbilityDescription: string;
+  classDescription: string;
+  deity: string;
+  deityImage: string;
+  deityDescription: string;
+  lightWeapons: boolean;
+  mediumWeapons: boolean;
+  heavyWeapons: boolean;
+  heavyArmor: boolean;
+  mediumArmor: boolean;
+  lightArmor: boolean;
+  lightShield: boolean;
+  mediumShield: boolean;
+  heavyShield: boolean;
+  twoWeapon: boolean;
+  rangedWeapons: number;
+  whiteCloth: number;
+  greenCloth: number;
+  history: string;
+  spellsPackets: number;
+  imageUrl: string;
+  class?: [string, number][];
+  classAbilities?: { title: string; description: string }[];
+};
+
+

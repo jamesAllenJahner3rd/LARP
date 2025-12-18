@@ -33,7 +33,7 @@ const CharacterCreationPage = () => {
     const QUERIES = [Query.equal("memberId", "68ccbf0f0026eb9a8d4f")];
     const { loggedInUser, logout } = useAuth();
 
-    const [character, setCharacter] = useState<CharacterTypes.Character>(
+    const [character, setCharacter] = useState<CharacterTypes.CharacterSheetRow>(
         {
             memberId: loggedInUser?.$id,
             name: "",
@@ -65,7 +65,7 @@ const CharacterCreationPage = () => {
         }
     );
     const [characterClasses, setCharacterClasses] = useState<Map<string, number>>(new Map());
-    const [characterClassAbilities, setCharacterClassAbilities] = useState<CharacterTypes.ClassAbilities | null>([])
+    const [characterClassAbilities, setCharacterClassAbilities] = useState<CharacterTypes.ClassAbilitiesRowList | null>([])
     const [formInputs, setFormInputs] = useState<CharacterTypes.FormInputs>({
         class: "",
         level: 0,
@@ -74,10 +74,10 @@ const CharacterCreationPage = () => {
 
 
 
-    const [raceList, setRaceList] = useState<Models.RowList<Models.DefaultRow> | null>(null);
+    const [raceList, setRaceList] = useState<Models.RowList<> | null>(null);
     const [subRaceList, setSubRaceList] = useState<Models.RowList<Models.DefaultRow> | null>(null);
     const [classList, setClassList] = useState<Models.RowList<Models.DefaultRow> | null>(null);
-    const [deitiesList, setDeitiesList] = useState<Models.RowList<Models.DefaultRow> | null>(null);
+    const [deitiesList, setDeitiesList] = useState<Models.RowList<CharacterTypes.DeityRow> | null>(null);
     const [classAbilitiesList, setClassAbilitiesList] = useState<Models.RowList<Models.DefaultRow> | null>(null);
     const [error, setError] = useState(null)
 

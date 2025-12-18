@@ -13,7 +13,7 @@
     "@appwrite.io/pink-icons": "^1.0.0",
     "@tailwindcss/postcss": "^4.1.11",
     "antd": "^5.27.3",
-    "appwrite": "^20.0.0",
+    "appwrite": "^20.1.0",
     "clsx": "^2.1.1",
     "eslint-plugin-tailwind-grouping": "^1.0.1",
     "next": "^15.5.2",
@@ -27,6 +27,7 @@
   "devDependencies": {
     "@types/node": "24.3.1",
     "@types/react": "19.1.12",
+    "@typescript/native-preview": "^7.0.0-dev.20251208.1",
     "prettier": "3.6.2",
     "prettier-plugin-tailwindcss": "^0.6.14",
     "typescript": "5.9.2"

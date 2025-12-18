@@ -48,9 +48,11 @@ export function storage() {
   return new Storage(client);
 }
 
+
 export async function getList(
   dbId: string,
   tableId: string,
+  queires:[],
 ): Promise<Models.RowList<Models.DefaultRow>> {
   try {
     const client = getClient();
@@ -156,7 +158,7 @@ export async function saveCharacter(
         characterId,
       },
     });
-    characterClassAbilities.forEach((ability: CharacterTypes.ClassAbility) => {
+    characterClassAbilities.forEach((ability: CharacterTypes.ClassAbilityRow) => {
       tablesDB.createRow({
         databaseId,
         tableId: "characterclassabilities",

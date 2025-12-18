@@ -10,15 +10,15 @@ import { totalLevel } from "@/app/members/create-character/hooks/useCharacterCla
 import { toast } from 'react-toastify';
 
 type CharacterFormProp = {
-    character: CharacterTypes.Character;
-    setCharacter: React.Dispatch<React.SetStateAction<CharacterTypes.Character>>;
+    character: CharacterTypes.CharacterSheetRow;
+    setCharacter: React.Dispatch<React.SetStateAction<CharacterTypes.CharacterSheetRow>>;
     characterClasses: Map<string, number>;
     setCharacterClasses: React.Dispatch<React.SetStateAction<Map<string, number>>>;
-    deitiesList: Models.RowList<Models.DefaultRow> | null;
+    deitiesList: Models.Row[] | null;
     SUBRACE_OPTIONS: Record<string, string[]>;
     RACES: string[];
-    classList: Models.RowList<Models.DefaultRow>;
-    setClassList: React.Dispatch<React.SetStateAction<Models.RowList<Models.DefaultRow>>>;
+    classList: Models.Row[];
+    setClassList: React.Dispatch<React.SetStateAction<Models.Row[]>>;
     formInputs: CharacterTypes.FormInputs;
     setFormInputs: React.Dispatch<React.SetStateAction<CharacterTypes.FormInputs>>;
     DEITIES: string[];
@@ -26,10 +26,10 @@ type CharacterFormProp = {
     classSelected: (className: CharacterTypes.ClassName) => void;
     increaseLevel: () => void;
     decreaseLevel: () => void;
-    setCharacterClassAbilities: React.Dispatch<React.SetStateAction<CharacterTypes.ClassAbilities>>;
-    characterClassAbilities: CharacterTypes.ClassAbilities;
-    classAbilitiesList: Models.RowList<Models.DefaultRow>;
-    raceList: Models.RowList<Models.DefaultRow>;
+    setCharacterClassAbilities: React.Dispatch<React.SetStateAction<CharacterTypes.ClassAbilitiesRowList>>;
+    characterClassAbilities: CharacterTypes.ClassAbilitiesRowList;
+    classAbilitiesList: CharacterTypes.ClassAbilitiesRowList;
+    raceList: CharacterTypes.RaceRowList;
 };
 const CharacterForm = ({
     character,
@@ -150,7 +150,7 @@ const CharacterForm = ({
             </div>
             <div className='flex justify-center content-center'>
                 <label htmlFor='uploader' className='flex  btn btn-secondary w-2/3'>Upload Image</label>
-                <input type="file" id="uploader" className='opacity-0 absolute  btn btn-secondary' name="Upload Image" accept="image/png, image/jpeg, image/webp"
+                <input type="file" id="uploader" className='-z-1 opacity-0 absolute  btn btn-secondary' name="Upload Image" accept="image/png, image/jpeg, image/webp"
                     onChange={(e) => {
                         if (e.target.files?.[0]) {
                             imageHandler(e.target.files?.[0])            // full File object with data
@@ -164,7 +164,7 @@ const CharacterForm = ({
                         }
                     }}
                 />
-                <input type='submit' value='Create' className='flex btn btn-secondary w-1/3' />
+                <input type='submit' value='Create' className='z-2 flex btn btn-secondary w-1/3' />
             </div>
         </form >
     )
