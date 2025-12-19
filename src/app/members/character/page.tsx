@@ -114,17 +114,17 @@ const CharacterPage = () => {
 
     return (
         <>
-            <section className='flex flex-col w-full justify-between h-full' id="whole page">
+            <section className='flex flex-col w-full justify-between h-full overflow-auto md:max-w-[1080px]' id="whole page">
                 {characterSelected &&
-                    <section className=" flex flex-col w-full bg-[url(/images/parchment.png)]" id="Character">
-                        <section id="primaryAndImage" className='flex flex-row w-6/7'>
-                            <section className='flex  md:w-2/3 flex-col' id="notDescription">
+                    <section className=" flex flex-col w-full h-6/7 bg-[url(/images/parchment.png)] overflow-auto" id="Character">
+                        <section id="primaryAndImage" className='flex flex-row w-7/7'>
+                            <section className='flex md:max-w-fit md:w-2/3 flex-col' id="notDescription">
                                 <section className='flex flex-col
                      w-full' id="main&Image">
                                     <div className='flex'>
                                         <div>
                                             <h1 className=''>Your Characters </h1>
-                                            <dl className='grid grid-cols-2  w-full'>
+                                            <dl className='grid grid-cols-2  w-full '>
                                                 <dt className='text-end'>Name: </dt>
                                                 <dd className='text-center'>{characterSelected.name}</dd>
                                                 <dt className='text-end'>Class: </dt>
@@ -142,53 +142,56 @@ const CharacterPage = () => {
 
                                 </section>
 
+                                <section id='tools' className=' flex flex-col '>
+
+                                    <table border={1} className="grid-cols-3 grid-row-3 w-full border-1 p-1 border-collapse ">
+                                        <thead className="text-center">
+                                            <tr>
+                                                <th>Item</th>
+                                                <th scope='col'>Light</th>
+                                                <th scope="col">Medium</th>
+                                                <th scope="col">Heavy</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody className=''>
+                                            <tr>
+                                                <th scope="row" className='text-end'>Weapons:</th>
+                                                <td className="text-center">{characterSelected.lightWeapons ? "\u2705" : "\u26D4"}</td>
+                                                <td className="text-center">{characterSelected.mediumWeapons ? "\u2705" : "\u26D4"}</td>
+                                                <td className="text-center">{characterSelected.heavyWeapons ? "\u2705" : "\u26D4"}</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row" className='text-end'>Armor:</th>
+                                                <td className="text-center">{characterSelected.lightArmor ? "\u2705" : "\u26D4"}</td>
+                                                <td className="text-center">{characterSelected.mediumArmor ? "\u2705" : "\u26D4"}</td>
+                                                <td className="text-center">{characterSelected.heavyArmor ? "\u2705" : "\u26D4"}</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row" className='text-end'>Shield:</th>
+                                                <td className="text-center">{characterSelected.lightShield ? "\u2705" : "\u26D4"}</td>
+                                                <td className="text-center">{characterSelected.mediumShield ? "\u2705" : "\u26D4"}</td>
+                                                <td className="text-center">{characterSelected.heavyShield ? "\u2705" : "\u26D4"}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <dl className='grid grid-cols-2 w-full border-1 border-collapse'>Clothes:
+                                        <dt className='text-end col-start-1'>White: </dt>
+                                        <dd className='text-center'>{characterSelected.whiteCloth}</dd>
+                                        <dt className='text-end col-start-1'>Green: </dt>
+                                        <dd className='text-center '>{characterSelected.greenCloth}</dd>
+                                        <dt className='text-end col-start-1'>Spell Packets: </dt>
+                                        <dd className='text-center content-end'>{characterSelected.spellsPackets}</dd>
+
+                                    </dl>
+                                </section>
                             </section>
+
                             <Image src={characterSelected.imageUrl} alt="Group of characters ready to adventure"
                                 width={1200}
                                 height={800}
-                                sizes="100%" className='w-1/2 flex h-fit' />
-                        </section><section id='tools' className=' flex flex-row '>
-
-                            <table border={1} className="grid-cols-3 grid-row-3 w-full border-r-1 p-1 m-1">
-                                <thead className="text-center">
-                                    <tr>
-                                        <th>Item</th>
-                                        <th scope='col'>Light</th>
-                                        <th scope="col">Medium</th>
-                                        <th scope="col">Heavy</th>
-                                    </tr>
-                                </thead>
-                                <tbody className=''>
-                                    <tr>
-                                        <th scope="row" className='text-end'>Weapons:</th>
-                                        <td className="text-center">{characterSelected.lightWeapons ? "\u2705" : "\u26D4"}</td>
-                                        <td className="text-center">{characterSelected.mediumWeapons ? "\u2705" : "\u26D4"}</td>
-                                        <td className="text-center">{characterSelected.heavyWeapons ? "\u2705" : "\u26D4"}</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row" className='text-end'>Armor:</th>
-                                        <td className="text-center">{characterSelected.lightArmor ? "\u2705" : "\u26D4"}</td>
-                                        <td className="text-center">{characterSelected.mediumArmor ? "\u2705" : "\u26D4"}</td>
-                                        <td className="text-center">{characterSelected.heavyArmor ? "\u2705" : "\u26D4"}</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row" className='text-end'>Shield:</th>
-                                        <td className="text-center">{characterSelected.lightShield ? "\u2705" : "\u26D4"}</td>
-                                        <td className="text-center">{characterSelected.mediumShield ? "\u2705" : "\u26D4"}</td>
-                                        <td className="text-center">{characterSelected.heavyShield ? "\u2705" : "\u26D4"}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <dl className='grid grid-cols-2 w-full '>Clothes:
-                                <dt className='text-end col-start-1'>White: </dt>
-                                <dd className='text-center'>{characterSelected.whiteCloth}</dd>
-                                <dt className='text-end col-start-1'>Green: </dt>
-                                <dd className='text-center '>{characterSelected.greenCloth}</dd>
-                                <dt className='text-end col-start-1'>Spell Packets: </dt>
-                                <dd className='text-center content-end'>{characterSelected.spellsPackets}</dd>
-
-                            </dl>
+                                sizes="100%" className='max-w-[500px] w-1/2  flex h-fit' />
                         </section>
+
                         <section className='flex flex-col w-full' id="description">
                             <h1>Description:</h1>
                             <p>{characterSelected.history}</p>
@@ -211,8 +214,8 @@ const CharacterPage = () => {
                             </ul>
                         </section>
                     </section>}
-                <section className='bg-[url(/images/parchment.png)] h-fit w-full sticky top-full flex flex-col  overflow-x-scroll scrollbar-thin touch-pan-x' >
-                    <ul className=" h-[100px] w-max inline-flex">
+                <section className='bg-[url(/images/parchment.png)] h-100%  w-fit absolute bottom-0 flex flex-col box-border overflow-x-scroll  touch-pan-x md:h-[125px] md:w-full md:sticky md:top-full' >
+                    <ul className=" h-100% w-max inline-flex">
                         {characterList && characterList.rows.map((character, i) => (
                             <li key={character.$id} className="w-fit object-scale-down flex flex-col mx-3 snap-center"  > < Image loading="lazy"
                                 src={character.imageUrl}

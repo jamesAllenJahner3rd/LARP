@@ -16,9 +16,9 @@ type useCharacterClassesProps = {
     React.SetStateAction<CharacterTypes.FormInputs>
   >;
   classList: Models.RowList<Models.DefaultRow> | null;
-  characterClassAbilities: CharacterTypes.ClassAbilities | null;
+  characterClassAbilities: CharacterTypes.ClassAbilityRow | null;
   setCharacterClassAbilities: React.Dispatch<
-    React.SetStateAction<CharacterTypes.ClassAbilities>
+    React.SetStateAction<CharacterTypes.ClassAbilityRow>
   >;
   classAbilitiesList: Models.RowList<Models.DefaultRow> | null;
 };
@@ -47,7 +47,7 @@ const useCharacterClasses = ({
   const getCharacterAbilities = (
     characterClasses: Map<string, number>,
     setCharacterClassAbilities: React.Dispatch<
-      React.SetStateAction<CharacterTypes.ClassAbilities>
+      React.SetStateAction<CharacterTypes.ClassAbilityRow>
     >,
     classAbilitiesList: Models.RowList<Models.DefaultRow> | null,
   ) => {
@@ -61,7 +61,7 @@ const useCharacterClasses = ({
       );
       CharacterAbilitiesList.push(...abilitiesArray);
     });
-    const correctLevelAbilities: CharacterTypes.ClassAbilities = [];
+    const correctLevelAbilities: CharacterTypes.ClassAbilityRow = [];
 
     CharacterAbilitiesList.forEach((ability) => {
       const level = characterClasses.get(ability.class);
