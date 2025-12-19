@@ -9,8 +9,8 @@ type useCharacterClassesProps = {
     React.SetStateAction<Map<string, number>>
   >;
   characterClasses: Map<string, number>;
-  character: CharacterTypes.Character;
-  setCharacter: React.Dispatch<React.SetStateAction<CharacterTypes.Character>>;
+  character: CharacterTypes.CharacterSheetRow;
+  setCharacter: React.Dispatch<React.SetStateAction<CharacterTypes.CharacterSheetRow>>;
   formInputs: CharacterTypes.FormInputs;
   setFormInputs: React.Dispatch<
     React.SetStateAction<CharacterTypes.FormInputs>
