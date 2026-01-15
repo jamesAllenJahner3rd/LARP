@@ -1,8 +1,5 @@
 
 //appwrite is not enabled streaming on Appwrite hosting
-export const dynamic = "force-dynamic";
-export const runtime = "nodejs";
-import { addClient, removeClient } from "@/lib/sse";
 /**
  * GET /api/slack/stream
  *
