@@ -56,7 +56,20 @@ export async function POST(req: Request) {
       username: body.event.user,
       text: body.event.text,
     };
-    broadcast(normalized);
+    // broadcast(normalized);
+    await fetch("https://cloud.appwrite.io/v1/functions/69687db0000e87979d30/executions", {
+      method: "POST",
+      headers: {
+        "X-Appwrite-Project": process.env.APPWRITE_PROJECT_ID,
+        "X-Appwrite-Key": process.env.APPWRITE_API_KEY,
+        "X-Appwrite-User-Agent": "NextJS-Slack-Bridge",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        username: body.event.user,
+        text: body.event.text
+      })
+    });
     console.log("broadcasting:", normalized);
   }
 
