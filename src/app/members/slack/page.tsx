@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { getClient, getAuthenticatedAccount } from "@/lib/appwrite";
 
 import Image from 'next/image'
-import { TablesDB, Query } from "appwrite";
+import { TablesDB, Query, Databases, Functions } from "appwrite";
 // import { getClassAbilitiesArray, getClassAndLevelMap } from './getCharacterData';
 import { Models } from 'appwrite';
 import { CompleteCharacterSheet } from "@/lib/types/characterTypes"
@@ -16,18 +16,17 @@ import { CompleteCharacterSheet } from "@/lib/types/characterTypes"
  * Purpose:
  *   Provides a real‑time chat interface where a logged‑in user can speak
  *   as their selected character. Integrates with the backend Slack bridge
- *   via Server‑Sent Events (SSE) for live message updates.
+ *   via polling for live message updates.
  *
  * Responsibilities:
  *   - Load the user's selected character from localStorage.
- *   - Establish a persistent SSE connection to /api/slack/stream.
- *   - Append incoming Slack messages to local UI state.
+ *   - Poll the Appwrite database for new Slack messages.
  *   - Allow the user to send messages as the selected character via POST /api/slack/send.
  *   - Render the full character sheet alongside the chat interface.
  *
  * Behavior:
- *   - SSE connection opens once on mount and closes on unmount.
- *   - Messages are appended in arrival order; no pagination or history loading.
+ *   - Polling starts on mount and runs every 5 seconds.
+ *   - Messages are fetched in order; no pagination or history loading beyond the last 50.
  *   - Character data is assumed to be valid JSON stored in localStorage.
  *   - If no character is selected, the character panel does not render.
  *
@@ -36,16 +35,15 @@ import { CompleteCharacterSheet } from "@/lib/types/characterTypes"
  *     and a message input box.
  *
  * Dependencies:
- *   - /api/slack/stream for real‑time events.
+ *   - Appwrite database for message storage.
  *   - /api/slack/send for outbound messages.
  *   - AuthProvider for user authentication context.
  *   - CompleteCharacterSheet type for character structure.
  *
  * Notes for Future Maintainers:
- *   - If you add authentication to SSE, do it before creating EventSource.
- *   - If you add message history, load it before attaching SSE listeners.
+ *   - If you add message history, increase the limit or add pagination.
  *   - If you add multiple characters, ensure localStorage key remains stable.
- *   - SSE is sensitive to caching; keep the backend headers strict.
+ *   - Polling is less efficient than SSE; consider WebSockets if available.
  */
 const SlackPage = (characterId) => {
     const [characterSelected, setCharacterSelected] = useState<CompleteCharacterSheet>(null)
@@ -62,34 +60,41 @@ const SlackPage = (characterId) => {
 
 
         useEffect(() => {
-            console.log("SSE connecting...");
+            const client = getClient();
+            const databases = new Databases(client);
 
-            const events = new EventSource(
-                "/api/slack/stream"
-            );
-            events.onopen = () => console.log("SSE connection opened");
-            events.onerror = (err) => console.log("SSE error:", err);
-
-            events.onmessage = (e) => {
-                console.log("SSE:", e.data);
-                const data = JSON.parse(e.data);
-                setMessages((prev) => [...prev, data]);
+            const poll = async () => {
+                try {
+                    const response = await databases.listDocuments('default', 'messages', [
+                        Query.orderDesc('timestamp'),
+                        Query.limit(50)
+                    ]);
+                    const msgs = response.documents.map(doc => ({
+                        username: doc.username,
+                        text: doc.text
+                    }));
+                    setMessages(msgs);
+                } catch (err) {
+                    console.log('Poll error:', err);
+                }
             };
 
-            return () => events.close();
+            poll(); // initial fetch
+            const interval = setInterval(poll, 5000); // poll every 5 seconds
+
+            return () => clearInterval(interval);
         }, []);
 
 
 
     const send = async () => {
-        await fetch("/api/slack/send", {
-            method: "POST",
-            body: JSON.stringify({
-                name: characterSelected.name,
-                imageUrl: characterSelected.imageUrl,
-                text
-            }),
-        });
+        const client = getClient();
+        const functions = new Functions(client);
+        await functions.createExecution('69687c8e001e2e994c2a', JSON.stringify({
+            name: characterSelected.name,
+            imageUrl: characterSelected.imageUrl,
+            text
+        }));
         console.log("Message sent.");
 
         setText("");

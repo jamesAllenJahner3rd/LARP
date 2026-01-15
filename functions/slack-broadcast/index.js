@@ -1,4 +1,4 @@
-export default async function(req, res) {
+module.exports = async function(req, res) {
   const { name, imageUrl, text } = JSON.parse(req.body);
 
   const payload = {
@@ -23,5 +23,5 @@ export default async function(req, res) {
   console.log("Slack response:", json);
 
   res.json({ ok: true });
-}
+};
 
