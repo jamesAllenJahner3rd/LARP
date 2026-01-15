@@ -40,6 +40,9 @@ import { addClient, removeClient } from "@/lib/sse";
  *   - If you add authentication, do it *before* creating the stream.
  *   - If you add heartbeat/ping messages, send them via broadcast() every 20–30 seconds.
  */
+export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
+import { addClient, removeClient } from "@/lib/sse";
 export async function GET() {
   let ctrl;
 

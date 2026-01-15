@@ -65,7 +65,7 @@ const SlackPage = (characterId) => {
             console.log("SSE connecting...");
 
             const events = new EventSource(
-                "https://cloud.appwrite.io/v1/functions/69687c8e001e2e994c2a/executions"
+                "/api/slack/stream"
             );
             events.onopen = () => console.log("SSE connection opened");
             events.onerror = (err) => console.log("SSE error:", err);
