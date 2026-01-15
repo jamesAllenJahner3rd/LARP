@@ -64,7 +64,7 @@ const SlackPage = (characterId) => {
         useEffect(() => {
             console.log("SSE connecting...");
 
-            new EventSource(
+            const events = new EventSource(
                 "https://cloud.appwrite.io/v1/functions/<YOUR_STREAM_FUNCTION_ID>/executions"
             );
             events.onopen = () => console.log("SSE connection opened");
