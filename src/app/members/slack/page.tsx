@@ -65,7 +65,7 @@ const SlackPage = (characterId) => {
 
             const poll = async () => {
                 try {
-                    const response = await databases.listDocuments('default', 'messages', [
+                    const response = await databases.listDocuments(process.env.NEXT_PUBLIC_APPWRITE_STORYLINE_DATABASE_ID, 'messages', [
                         Query.orderDesc('timestamp'),
                         Query.limit(50)
                     ]);
