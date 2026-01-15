@@ -1,4 +1,4 @@
-import {Models} from "appwrite"
+import { Models } from "appwrite"
 export type CharacterSheetRow = Models.Row & {
   memberId: string;
   name: string;
@@ -27,6 +27,7 @@ export type CharacterSheetRow = Models.Row & {
   history: string;
   spellsPackets: number;
   imageUrl: string;
+  experience: number;
 };
 export type CharacterClassRow = Models.Row & {
   character: string;
@@ -39,7 +40,25 @@ export type FormInputs = {
   class: ClassName;
   level: number;
 };
-export type ClassRow = Models.Row &{
+export type ClassRow = Models.Row & {
+  classes: string;
+  description: string;
+  lightWeapons: boolean;
+  mediumWeapons: boolean;
+  heavyWeapons: boolean;
+  heavyArmor: boolean;
+  mediumArmor: boolean;
+  lightArmor: boolean;
+  lightShield: boolean;
+  mediumShield: boolean;
+  heavyShield: boolean;
+  twoWeapon: boolean;
+  rangedWeapons: number;
+  whiteCloth: number;
+  greenCloth: number;
+  spellsPackets: number;
+};
+export type ClassProps = {
   classes: string;
   description: string;
   lightWeapons: boolean;
@@ -59,7 +78,12 @@ export type ClassRow = Models.Row &{
 };
 export type DeityRow = Models.Row & {
   image: string;
-  name: string;
+  God: string;
+  description: string;
+};
+export type DeityProps = {
+  image: string;
+  God: string;
   description: string;
 };
 export type ClassAbilityRow = Models.Row & {
@@ -70,7 +94,16 @@ export type ClassAbilityRow = Models.Row & {
   scaling: number;
   description: string;
 };
-export type ClassAbilitiesRowList = Models.RowList<ClassAbilityRow>;
+export type ClassAbilityProps = {
+  $id: string;
+  class: string;
+  level: number;
+  title: string;
+  scaling: number;
+  description: string;
+}
+
+export type ClassAbilitiesList = ClassAbilityProps[];
 export type Race = {
   name: string;
   description: string;
@@ -78,16 +111,24 @@ export type Race = {
   ability_description: string;
 };
 export type RaceRow = Models.Row & {
-races:string;
-race_description: string;
-ability: string;
-ability_description: string;
-ability_array: string[];
+  races: string;
+  race_description: string;
+  ability: string;
+  ability_description: string;
+  ability_array: string[];
+};
+export type RaceProps = {
+  races: string;
+  race_description: string;
+  ability: string;
+  ability_description: string;
+  ability_array: string[];
 };
 export type RaceRowList = Models.RowList<RaceRow>;
 
-export type CompleteCharacterSheet ={ 
+export type CompleteCharacterSheet = {
   memberId: string;
+  characterId?: string;
   name: string;
   race: string;
   subRace: string;
@@ -116,6 +157,6 @@ export type CompleteCharacterSheet ={
   imageUrl: string;
   class?: [string, number][];
   classAbilities?: { title: string; description: string }[];
+  experience?: number;
 };
-
 

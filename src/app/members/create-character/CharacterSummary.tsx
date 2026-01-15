@@ -6,9 +6,9 @@ import type { Models } from "appwrite";
 import type { storage } from "@/lib/appwrite-node";
 
 type CharacterSummaryProp = {
-    characterClassAbilities: CharacterTypes.ClassAbilitiesRowList;
-    character: CharacterTypes.CharacterSheetRow;
-    deitiesList: Models.RowList<Models.DefaultRow> | null;
+    characterClassAbilities: CharacterTypes.ClassAbilitiesList;
+    character: CharacterTypes.CompleteCharacterSheet;
+    deitiesList: CharacterTypes.DeityProps[] | null;
     characterClasses: Map<string, number>;
 }
 
@@ -134,7 +134,7 @@ const CharacterSummary = ({
             </div>
 
             <ol>
-                {characterClassAbilities.total && characterClassAbilities.rows.map((li, i) => (
+                {characterClassAbilities.length && characterClassAbilities.map((li, i) => (
                     <li key={i}>
                         <h2>
                             {li.title}

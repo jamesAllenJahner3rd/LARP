@@ -7,7 +7,7 @@ import { TablesDB, Query } from "appwrite";
 import { getClassAbilitiesArray, getClassAndLevelMap } from './getCharacterData';
 import { Models } from 'appwrite';
 
-import type { CharacterSheetRow, CompleteCharacterSheet } from '@/lib/types/characterTypes';
+import type * as CharacterTypes from '@/lib/types/characterTypes';
 
 /**
  * CharacterPage
@@ -40,8 +40,8 @@ const CharacterPage = () => {
     const tableDB = new TablesDB(client);
     const { loggedInUser, logout } = useAuth();
     const [error, setError] = useState(null)
-    const [characterSelected, setCharacterSelected] = useState<CompleteCharacterSheet | null>(null)
-    const [characterList, setCharacterList] = useState<Models.RowList<CharacterSheetRow> | null>(null)
+    const [characterSelected, setCharacterSelected] = useState<CharacterTypes.CompleteCharacterSheet | null>(null);
+    const [characterList, setCharacterList] = useState<CharacterTypes.CompleteCharacterSheet[] | null>(null);
 
     useEffect(() => {
         let active = true;
@@ -53,14 +53,14 @@ const CharacterPage = () => {
 
                 const QUERIES = [Query.equal("memberId", user.$id)]
 
-                const data = await tableDB.listRows<CharacterSheetRow>({
+                const data = await tableDB.listRows<CharacterTypes.CharacterSheetRow>({
                     databaseId: DATABASE_ID,
                     tableId: TABLE_ID,
                     queries: QUERIES,
 
                 });
                 if (active) {
-                    setCharacterList(data)
+                    setCharacterList(data.rows)
                 }
             } catch (err) {
                 if (active) setError(err);
@@ -69,66 +69,74 @@ const CharacterPage = () => {
         fetchData();
         return () => { active = false };
     }, [DATABASE_ID, TABLE_ID,])
+    useEffect(() => {
+        localStorage.setItem("characterSelected", JSON.stringify(characterSelected))
+    }, [characterSelected])
     async function handleCharacterInfo(i: number) {
         setCharacterSelected({
-            memberId: characterList.rows[i].memberId,
-            name: characterList.rows[i].name,
-            race: characterList.rows[i].race,
-            subRace: characterList.rows[i].subRace,
-            raceDescription: characterList.rows[i].raceDescription,
-            raceAbilities: characterList.rows[i].raceAbilities,
-            raceAbilityDescription: characterList.rows[i].raceAbilityDescription,
-            classDescription: characterList.rows[i].classDescription,
-            deity: characterList.rows[i].deity,
-            deityImage: characterList.rows[i].deityImage,
-            deityDescription: characterList.rows[i].deityDescription,
-            lightWeapons: characterList.rows[i].lightWeapons,
-            mediumWeapons: characterList.rows[i].mediumWeapons,
-            heavyWeapons: characterList.rows[i].heavyWeapons,
-            heavyArmor: characterList.rows[i].heavyArmor,
-            mediumArmor: characterList.rows[i].mediumArmor,
-            lightArmor: characterList.rows[i].lightArmor,
-            lightShield: characterList.rows[i].lightShield,
-            mediumShield: characterList.rows[i].mediumShield,
-            heavyShield: characterList.rows[i].heavyShield,
-            twoWeapon: characterList.rows[i].twoWeapon,
-            rangedWeapons: characterList.rows[i].rangedWeapons,
-            whiteCloth: characterList.rows[i].whiteCloth,
-            greenCloth: characterList.rows[i].greenCloth,
-            history: characterList.rows[i].history,
-            spellsPackets: characterList.rows[i].spellsPackets,
-            imageUrl: characterList.rows[i].imageUrl
+            memberId: characterList[i].memberId,
+            characterId: characterList[i].characterId,
+            name: characterList[i].name,
+            race: characterList[i].race,
+            subRace: characterList[i].subRace,
+            raceDescription: characterList[i].raceDescription,
+            raceAbilities: characterList[i].raceAbilities,
+            raceAbilityDescription: characterList[i].raceAbilityDescription,
+            classDescription: characterList[i].classDescription,
+            deity: characterList[i].deity,
+            deityImage: characterList[i].deityImage,
+            deityDescription: characterList[i].deityDescription,
+            lightWeapons: characterList[i].lightWeapons,
+            mediumWeapons: characterList[i].mediumWeapons,
+            heavyWeapons: characterList[i].heavyWeapons,
+            heavyArmor: characterList[i].heavyArmor,
+            mediumArmor: characterList[i].mediumArmor,
+            lightArmor: characterList[i].lightArmor,
+            lightShield: characterList[i].lightShield,
+            mediumShield: characterList[i].mediumShield,
+            heavyShield: characterList[i].heavyShield,
+            twoWeapon: characterList[i].twoWeapon,
+            rangedWeapons: characterList[i].rangedWeapons,
+            whiteCloth: characterList[i].whiteCloth,
+            greenCloth: characterList[i].greenCloth,
+            history: characterList[i].history,
+            spellsPackets: characterList[i].spellsPackets,
+            imageUrl: characterList[i].imageUrl,
+            experience: characterList[i].experience
         })
 
-        const classesAndLevelMap = await getClassAndLevelMap(characterList.rows[i]?.$id)
-        const Ablities = await getClassAbilitiesArray(characterList.rows[i]?.$id, classesAndLevelMap)
+        const classesAndLevelMap = await getClassAndLevelMap(characterList[i]?.characterId)
+        const Ablities = await getClassAbilitiesArray(characterList[i]?.memberId, classesAndLevelMap)
         let clssLVL = Array.from(classesAndLevelMap.entries())
         setCharacterSelected(prev =>
         ({
             ...prev,
             "class": clssLVL,
-            "classAbilities": Ablities.rows.map(row => ({ title: row.title, description: row.description })),
+            "classAbilities": Ablities.map(row => ({ title: row.title, description: row.description })),
         })
         );
+
+
     }
 
     return (
         <>
             <section className='flex flex-col w-full justify-between h-full overflow-auto md:max-w-[1080px]' id="whole page">
                 {characterSelected &&
-                    <section className=" flex flex-col w-full h-6/7 bg-[url(/images/parchment.png)] overflow-auto" id="Character">
+                    <section className=" flex flex-col w-full h-5/7 bg-[url(/images/parchment.png)] overflow-auto" id="Character">
                         <section id="primaryAndImage" className='flex flex-row w-7/7'>
                             <section className='flex md:max-w-fit md:w-2/3 flex-col' id="notDescription">
-                                <section className='flex flex-col
-                     w-full' id="main&Image">
+                                <section className='flex flex-col justify-between w-full' id="main&Image">
                                     <div className='flex'>
                                         <div>
                                             <h1 className=''>Your Characters </h1>
                                             <dl className='grid grid-cols-2  w-full '>
                                                 <dt className='text-end'>Name: </dt>
                                                 <dd className='text-center'>{characterSelected.name}</dd>
+                                                <dt className='text-end'>XP: </dt>
+                                                <dd className='text-center'>{characterSelected.experience}</dd>
                                                 <dt className='text-end'>Class: </dt>
-                                                {characterSelected?.class?.map((clss) => <dd className='text-center'>{clss[0]} {clss[1]} lvl</dd>)}
+                                                {characterSelected?.class?.map((clss) => <dd className='text-center' key={clss[0]}>{clss[0]} {clss[1]} lvl</dd>)}
                                                 <dt className='text-end'>Race: </dt>
                                                 <dd className='text-center'>{characterSelected.race}</dd>
                                                 <dt className='text-end'>Deity: </dt>
@@ -189,7 +197,7 @@ const CharacterPage = () => {
                             <Image src={characterSelected.imageUrl} alt="Group of characters ready to adventure"
                                 width={1200}
                                 height={800}
-                                sizes="100%" className='max-w-[500px] w-1/2  flex h-fit' />
+                                sizes="100%" className='max-w-[500px] w-1/2  flex h-fit ' />
                         </section>
 
                         <section className='flex flex-col w-full' id="description">
@@ -214,10 +222,11 @@ const CharacterPage = () => {
                             </ul>
                         </section>
                     </section>}
-                <section className='bg-[url(/images/parchment.png)] h-100%  w-fit absolute bottom-0 flex flex-col box-border overflow-x-scroll  touch-pan-x md:h-[125px] md:w-full md:sticky md:top-full' >
+                <section className='bg-[url(/images/parchment.png)] h-100%  w-fit flex flex-col box-border overflow-x-scroll  touch-pan-x md:h-2/7 md:w-full 
+                 md:top-full' >
                     <ul className=" h-100% w-max inline-flex">
-                        {characterList && characterList.rows.map((character, i) => (
-                            <li key={character.$id} className="w-fit object-scale-down flex flex-col mx-3 snap-center"  > < Image loading="lazy"
+                        {characterList && characterList.map((character, i) => (
+                            <li key={character.characterId} className="w-[125px] object-scale-down flex flex-col mx-3 snap-center"  > < Image loading="lazy"
                                 src={character.imageUrl}
                                 alt="Group of characters ready to adventure"
                                 width={1200}

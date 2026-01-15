@@ -10,15 +10,15 @@ import { totalLevel } from "@/app/members/create-character/hooks/useCharacterCla
 import { toast } from 'react-toastify';
 
 type CharacterFormProp = {
-    character: CharacterTypes.CharacterSheetRow;
-    setCharacter: React.Dispatch<React.SetStateAction<CharacterTypes.CharacterSheetRow>>;
+    character: CharacterTypes.CompleteCharacterSheet;
+    setCharacter: React.Dispatch<React.SetStateAction<CharacterTypes.CompleteCharacterSheet>>;
     characterClasses: Map<string, number>;
     setCharacterClasses: React.Dispatch<React.SetStateAction<Map<string, number>>>;
     deitiesList: Models.Row[] | null;
     SUBRACE_OPTIONS: Record<string, string[]>;
     RACES: string[];
-    classList: Models.Row[];
-    setClassList: React.Dispatch<React.SetStateAction<Models.Row[]>>;
+    classList: CharacterTypes.ClassProps[];
+    setClassList: React.Dispatch<React.SetStateAction<CharacterTypes.ClassProps[]>>;
     formInputs: CharacterTypes.FormInputs;
     setFormInputs: React.Dispatch<React.SetStateAction<CharacterTypes.FormInputs>>;
     DEITIES: string[];
@@ -26,10 +26,10 @@ type CharacterFormProp = {
     classSelected: (className: CharacterTypes.ClassName) => void;
     increaseLevel: () => void;
     decreaseLevel: () => void;
-    setCharacterClassAbilities: React.Dispatch<React.SetStateAction<CharacterTypes.ClassAbilitiesRowList>>;
-    characterClassAbilities: CharacterTypes.ClassAbilitiesRowList;
-    classAbilitiesList: CharacterTypes.ClassAbilitiesRowList;
-    raceList: CharacterTypes.RaceRowList;
+    setCharacterClassAbilities: React.Dispatch<React.SetStateAction<CharacterTypes.ClassAbilitiesList>>;
+    characterClassAbilities: CharacterTypes.ClassAbilitiesList;
+    classAbilitiesList: CharacterTypes.ClassAbilitiesList;
+    raceList: CharacterTypes.RaceProps[];
 };
 const CharacterForm = ({
     character,
@@ -103,7 +103,7 @@ const CharacterForm = ({
                 <select name="subRace" id="subRaceList" className=" border-2 border-black rounded-2xl px-2 bg-white m-2 w-3/5 text-black" onChange={(e) => setCharacter((character) => ({
                     ...character,
                     subRace: e.target.value,
-                    raceDescription: (raceList.rows.find((row) => row.races === e.target.value)).race_description
+                    raceDescription: (raceList.find((row) => row.races === e.target.value)).race_description
                 }))}>
                     <option value="choose">Choose...</option>
                     {SUBRACE_OPTIONS[character.race]?.map((subrace) => (

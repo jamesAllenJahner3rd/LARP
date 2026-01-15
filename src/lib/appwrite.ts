@@ -49,15 +49,15 @@ export function storage() {
 }
 
 
-export async function getList(
+export async function getList<T extends Models.Row>(
   dbId: string,
   tableId: string,
-  queires:[],
-): Promise<Models.RowList<Models.DefaultRow>> {
+  queires?:[],
+): Promise<Models.RowList<T>> {
   try {
     const client = getClient();
     const tablesDB = new TablesDB(client);
-    const result = await tablesDB.listRows(dbId, tableId, [Query.limit(81)]);
+    const result = await tablesDB.listRows<T>(dbId, tableId, [Query.limit(81)]);
     console.log("Table was found:", dbId);
 
     return await result;

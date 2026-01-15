@@ -4,23 +4,23 @@ import { useState, useCallback } from "react";
 import { Models } from "appwrite";
 import * as CharacterTypes from "@/lib/types/characterTypes";
 
-type useCharacterClassesProps = {
+type UseCharacterClassesProps = {
   setCharacterClasses: React.Dispatch<
     React.SetStateAction<Map<string, number>>
   >;
   characterClasses: Map<string, number>;
-  character: CharacterTypes.CharacterSheetRow;
-  setCharacter: React.Dispatch<React.SetStateAction<CharacterTypes.CharacterSheetRow>>;
+  character: CharacterTypes.CompleteCharacterSheet;
+  setCharacter: React.Dispatch<React.SetStateAction<CharacterTypes.CompleteCharacterSheet>>;
   formInputs: CharacterTypes.FormInputs;
   setFormInputs: React.Dispatch<
     React.SetStateAction<CharacterTypes.FormInputs>
   >;
-  classList: Models.RowList<Models.DefaultRow> | null;
-  characterClassAbilities: CharacterTypes.ClassAbilityRow | null;
+  classList: CharacterTypes.ClassProps[] | null;
+  characterClassAbilities: CharacterTypes.ClassAbilityProps[] | null;
   setCharacterClassAbilities: React.Dispatch<
-    React.SetStateAction<CharacterTypes.ClassAbilityRow>
+    React.SetStateAction<CharacterTypes.ClassAbilityProps[]>
   >;
-  classAbilitiesList: Models.RowList<Models.DefaultRow> | null;
+  classAbilitiesList: CharacterTypes.ClassAbilitiesList | null;
 };
 type UseCharacterClassesReturn = {
   decreaseLevel: () => void;
@@ -40,28 +40,28 @@ const useCharacterClasses = ({
   characterClassAbilities,
   setCharacterClassAbilities,
   classAbilitiesList,
-}: useCharacterClassesProps): UseCharacterClassesReturn => {
-  //const useCharacterClasses = (props: useCharacterClassesProps): UseCharacterClassesReturn => { ... }
+}: UseCharacterClassesProps): UseCharacterClassesReturn => {
+  //const useCharacterClasses = (props: UseCharacterClassesProps): UseCharacterClassesReturn => { ... }
   const CLASSNAMES = ["Fighter", "Cleric", "Ranger", "Mage", "Rogue"];
   // The responsibility of this function is to return the list of class abilities to display in the summary.
   const getCharacterAbilities = (
     characterClasses: Map<string, number>,
     setCharacterClassAbilities: React.Dispatch<
-      React.SetStateAction<CharacterTypes.ClassAbilityRow>
+      React.SetStateAction<CharacterTypes.ClassAbilitiesList>
     >,
-    classAbilitiesList: Models.RowList<Models.DefaultRow> | null,
+    classAbilitiesList: CharacterTypes.ClassAbilitiesList | null,
   ) => {
-    if (!classAbilitiesList) return [];
+    if (classAbilitiesList.length === 0) return [];
 
     const CharacterAbilitiesList: any[] = [];
 
     characterClasses.forEach((level: number, className: string) => {
-      const abilitiesArray = classAbilitiesList.rows.filter(
+      const abilitiesArray = classAbilitiesList.filter(
         (ability) => ability.level <= level && ability.class === className,
       );
       CharacterAbilitiesList.push(...abilitiesArray);
     });
-    const correctLevelAbilities: CharacterTypes.ClassAbilityRow = [];
+    const correctLevelAbilities: CharacterTypes.ClassAbilitiesList = [];
 
     CharacterAbilitiesList.forEach((ability) => {
       const level = characterClasses.get(ability.class);
@@ -102,7 +102,7 @@ const useCharacterClasses = ({
     if (!classList) return;
     const currentClasses = Array.from(characterClasses?.keys());
     const matched = currentClasses.map((className) =>
-      classList.rows.find((row) => row.classes === className),
+      classList.find((row) => row.classes === className),
     );
     const reducedClassInfo = matched.reduce(
       (acc, cur) => {
@@ -137,7 +137,7 @@ const useCharacterClasses = ({
         mediumShield: false,
         heavyShield: false,
         twoWeapon: false,
-        rangedWeapons: false,
+        rangedWeapons: 0,
         whiteCloth: 0,
         greenCloth: 0,
         spellsPackets: 0,

@@ -10,6 +10,15 @@ import Image from "next/image";
 import * as CharacterTypes from "@/lib/types/characterTypes"
 import CharacterSummary from './CharacterSummary';
 import useCharacterClasses from './hooks/useCharacterClasses';
+
+type ClassAbilityProps = {
+    $id: string;
+    class: string;
+    level: number;
+    title: string;
+    scaling: number;
+    description: string;
+}
 const SUBRACE_OPTIONS: Record<string, string[]> = {
     Chimera: ["Artanos", "Felinos", "Lacetros", "Lykinthros", "Minotaur", "Satyr", "Vulpine"],
     Dwarf: ["Dark Dwarf", "Hill Dwarf"],
@@ -33,7 +42,7 @@ const CharacterCreationPage = () => {
     const QUERIES = [Query.equal("memberId", "68ccbf0f0026eb9a8d4f")];
     const { loggedInUser, logout } = useAuth();
 
-    const [character, setCharacter] = useState<CharacterTypes.CharacterSheetRow>(
+    const [character, setCharacter] = useState<CharacterTypes.CompleteCharacterSheet>(
         {
             memberId: loggedInUser?.$id,
             name: "",
@@ -65,7 +74,8 @@ const CharacterCreationPage = () => {
         }
     );
     const [characterClasses, setCharacterClasses] = useState<Map<string, number>>(new Map());
-    const [characterClassAbilities, setCharacterClassAbilities] = useState<CharacterTypes.ClassAbilitiesRowList | null>([])
+    const [characterClassAbilities, setCharacterClassAbilities] = useState
+        <CharacterTypes.ClassAbilitiesList | null>([])
     const [formInputs, setFormInputs] = useState<CharacterTypes.FormInputs>({
         class: "",
         level: 0,
@@ -74,11 +84,11 @@ const CharacterCreationPage = () => {
 
 
 
-    const [raceList, setRaceList] = useState<Models.RowList<> | null>(null);
+    const [raceList, setRaceList] = useState<CharacterTypes.RaceProps[] | null>(null);
     const [subRaceList, setSubRaceList] = useState<Models.RowList<Models.DefaultRow> | null>(null);
-    const [classList, setClassList] = useState<Models.RowList<Models.DefaultRow> | null>(null);
-    const [deitiesList, setDeitiesList] = useState<Models.RowList<CharacterTypes.DeityRow> | null>(null);
-    const [classAbilitiesList, setClassAbilitiesList] = useState<Models.RowList<Models.DefaultRow> | null>(null);
+    const [classList, setClassList] = useState<CharacterTypes.ClassProps[] | null>(null);
+    const [deitiesList, setDeitiesList] = useState<CharacterTypes.DeityRow[]>([]);
+    const [classAbilitiesList, setClassAbilitiesList] = useState<CharacterTypes.ClassAbilitiesList | null>(null);
     const [error, setError] = useState(null)
 
     const classLogic = useCharacterClasses({
@@ -103,16 +113,16 @@ const CharacterCreationPage = () => {
         (async () => {
             try {
                 const [DEITIES, RACES, CLASSES, CLASS_ABILITES] = await Promise.all([
-                    getList(DATABASE_ID, DEITIES_TABLE_ID),
-                    getList(DATABASE_ID, RACES_TABLE_ID),
-                    getList(DATABASE_ID, CLASSES_TABLE_ID),
-                    getList(DATABASE_ID, CLASS_ABILITES_TABLE_ID)
+                    getList<CharacterTypes.DeityRow>(DATABASE_ID, DEITIES_TABLE_ID),
+                    getList<CharacterTypes.RaceRow>(DATABASE_ID, RACES_TABLE_ID),
+                    getList<CharacterTypes.ClassRow>(DATABASE_ID, CLASSES_TABLE_ID),
+                    getList<CharacterTypes.ClassAbilityRow>(DATABASE_ID, CLASS_ABILITES_TABLE_ID)
                 ])
                 if (active) {
-                    setClassAbilitiesList(CLASS_ABILITES)
-                    setRaceList(RACES)
-                    setClassList(CLASSES)
-                    setDeitiesList(DEITIES)
+                    setClassAbilitiesList(CLASS_ABILITES.rows)
+                    setRaceList(RACES.rows)
+                    setClassList(CLASSES.rows)
+                    setDeitiesList(DEITIES.rows)
 
                 }
             } catch (error) {
@@ -127,7 +137,7 @@ const CharacterCreationPage = () => {
 
     //RACES
     useEffect(() => {
-        const match = raceList?.rows.find((row) => row.races === character.subRace)
+        const match = raceList?.find((row) => row.races === character.subRace)
         if (match) {
             setCharacter((character) => ({
                 ...character,
@@ -142,7 +152,7 @@ const CharacterCreationPage = () => {
 
     //DEITIES
     useEffect(() => {
-        const match = deitiesList?.rows.find((row) => row.God === character.deity);
+        const match = deitiesList?.find((row) => row.God === character.deity);
         if (match) {
             setCharacter((character) => ({
                 ...character,
