@@ -39,21 +39,25 @@ import { NextResponse } from "next/server";
  *   - If you add character lookup, do it server‑side (never trust client‑provided identity).
  */
 export async function POST(req: Request) {
-  const body = await req.text();
+  const { name, imageUrl, text } = await req.json();
 
-  // Call the Appwrite function for sending
-  const res = await fetch("https://cloud.appwrite.io/v1/functions/69687c8e001e2e994c2a/executions", {
+  const payload = {
+    channel: process.env.SLACK_CHANNEL_ID,
+    text,
+    username: name,
+    icon_url: imageUrl,
+  };
+
+  const res = await fetch("https://slack.com/api/chat.postMessage", {
     method: "POST",
     headers: {
-      "X-Appwrite-Project": process.env.APPWRITE_PROJECT_ID,
-      "X-Appwrite-Key": process.env.APPWRITE_API_KEY,
-      "Content-Type": "application/json"
+      Authorization: `Bearer ${process.env.SLACK_BOT_TOKEN}`,
+      "Content-Type": "application/json; charset=utf-8",
     },
-    body: body
+    body: JSON.stringify(payload),
   });
-
   const json = await res.json();
-  console.log("Appwrite response:", json);
+  console.log("Slack response:", json);
 
   return NextResponse.json({ ok: true });
 }
