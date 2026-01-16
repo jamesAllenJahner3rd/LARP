@@ -90,6 +90,8 @@ const SlackPage = (characterId) => {
     const send = async () => {
         const client = getClient();
         const functions = new Functions(client);
+        console.log("Calling Appwrite function…");
+
         const result = await functions.createExecution({
             functionId: '69687c8e001e2e994c2a',
             body: JSON.stringify({
@@ -99,11 +101,7 @@ const SlackPage = (characterId) => {
             }),
             async: true,
         });
-        await functions.createExecution('69687c8e001e2e994c2a', JSON.stringify({
-            name: characterSelected.name,
-            imageUrl: characterSelected.imageUrl,
-            text
-        })); console.log(result);
+        console.log("Execution result:", result);
         console.log("Message sent.");
 
         setText("");
