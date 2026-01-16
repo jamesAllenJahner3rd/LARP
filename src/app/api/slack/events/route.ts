@@ -1,7 +1,7 @@
 // /app/api/slack/events/route.ts
 import { NextResponse } from "next/server";
 import { broadcast } from "@/lib/sse";
-
+import { Client, Functions } from "node-appwrite";
 /**
  * POST /api/slack/events
  *
@@ -42,35 +42,37 @@ import { broadcast } from "@/lib/sse";
  *   - If you add support for more Slack event types, normalize them consistently.
  *   - If you add persistence, do it outside the request‑response path.
  */
+
+
 export async function POST(req: Request) {
-  console.log("post triggered")
+  console.log("post triggered");
   const body = await req.json();
 
-  // Slack URL verification challenge
   if (body.type === "url_verification") {
     return new Response(body.challenge);
   }
 
   if (body.event?.type === "message") {
-    const normalized = {
-      username: body.event.user,
-      text: body.event.text,
-    };
-    // broadcast(normalized);
-    await fetch("https://cloud.appwrite.io/v1/functions/69687db0000e87979d30/executions", {
-      method: "POST",
-      headers: {
-        "X-Appwrite-Project": process.env.APPWRITE_PROJECT_ID,
-        "X-Appwrite-Key": process.env.APPWRITE_API_KEY,
-        "X-Appwrite-User-Agent": "NextJS-Slack-Bridge",
-        "Content-Type": "application/json"
-      },
+    const client = new Client()
+      .setEndpoint("https://cloud.appwrite.io/v1")
+      .setProject(process.env.APPWRITE_PROJECT_ID!)
+      .setKey(process.env.APPWRITE_API_KEY!);
+
+    const functions = new Functions(client);
+
+    await functions.createExecution({
+      functionId: "69687db0000e87979d30",
       body: JSON.stringify({
         username: body.event.user,
         text: body.event.text
-      })
+      }),
+      async: true
     });
-    console.log("broadcasting:", normalized);
+
+    console.log("broadcasting:", {
+      username: body.event.user,
+      text: body.event.text
+    });
   }
 
   return NextResponse.json({ ok: true });
