@@ -17,6 +17,7 @@ module.exports = async function(req, res) {
       "Content-Type": "application/json; charset=utf-8",
     },
     body: JSON.stringify(payload),
+   
   });
 
   const json = await slackRes.json();
