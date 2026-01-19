@@ -1,7 +1,9 @@
 // /app/api/slack/events/route.ts
 import { NextResponse } from "next/server";
 import { broadcast } from "@/lib/sse";
-import { Client, Functions } from "node-appwrite";
+import { Client, Functions, ID } from "node-appwrite";
+import { postData } from "@/lib/database";
+export const runtime = "nodejs";
 /**
  * POST /api/slack/events
  *
@@ -43,7 +45,6 @@ import { Client, Functions } from "node-appwrite";
  *   - If you add persistence, do it outside the request‑response path.
  */
 
-
 export async function POST(req: Request) {
   console.log("post triggered");
   const body = await req.json();
@@ -64,14 +65,20 @@ export async function POST(req: Request) {
       functionId: "69687db0000e87979d30",
       body: JSON.stringify({
         username: body.event.user,
-        text: body.event.text
+        text: body.event.text,
       }),
-      async: true
+      async: true,
     });
+    postData(
+      process.env.NEXT_PUBLIC_APPWRITE_STORYLINE_DATABASE_ID,
+      "messages",
+      ID.unique(),
+      body.event,
 
+    )
     console.log("broadcasting:", {
       username: body.event.user,
-      text: body.event.text
+      text: body.event.text,
     });
   }
 
