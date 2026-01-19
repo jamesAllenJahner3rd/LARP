@@ -2,7 +2,7 @@
 import { NextResponse } from "next/server";
 import { broadcast } from "@/lib/sse";
 import { Client, Functions, ID, Databases } from "node-appwrite";
-import { postData } from "@/lib/database";
+
 export const runtime = "nodejs";
 /**
  * POST /api/slack/events
@@ -69,13 +69,7 @@ export async function POST(req: Request) {
       }),
       async: true,
     });
-    postData(
-      process.env.NEXT_PUBLIC_APPWRITE_STORYLINE_DATABASE_ID,
-      "messages",
-      ID.unique(),
-      body.event,
 
-    )
     const databases = new Databases(client);
     await databases.createDocument({
       databaseId: process.env.NEXT_PUBLIC_APPWRITE_STORYLINE_DATABASE_ID!,
