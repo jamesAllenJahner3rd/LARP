@@ -1,7 +1,7 @@
 // /app/api/slack/events/route.ts
 import { NextResponse } from "next/server";
 import { broadcast } from "@/lib/sse";
-import { Client, Functions, ID } from "node-appwrite";
+import { Client, Functions, ID, Databases } from "node-appwrite";
 import { postData } from "@/lib/database";
 export const runtime = "nodejs";
 /**
@@ -76,6 +76,18 @@ export async function POST(req: Request) {
       body.event,
 
     )
+    const databases = new Databases(client);
+    await databases.createDocument({
+      databaseId: process.env.NEXT_PUBLIC_APPWRITE_STORYLINE_DATABASE_ID!,
+      collectionId: "messages",
+      documentId: ID.unique(),
+      data: {
+        username: body.event.user,
+        text: body.event.text,
+        timestamp: body.event.ts
+      }
+    });
+
     console.log("broadcasting:", {
       username: body.event.user,
       text: body.event.text,
