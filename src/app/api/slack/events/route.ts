@@ -1,7 +1,7 @@
 // /app/api/slack/events/route.ts
 import { NextResponse } from "next/server";
 import { broadcast } from "@/lib/sse";
-import{}
+
 import { Client, Databases, ID } from "node-appwrite";
 
 /**
