@@ -1,6 +1,7 @@
 // /app/api/slack/events/route.ts
 import { NextResponse } from "next/server";
 import { broadcast } from "@/lib/sse";
+import { Client, Databases, ID } from "node-appwrite";
 
 /**
  * POST /api/slack/events
@@ -43,7 +44,7 @@ import { broadcast } from "@/lib/sse";
  *   - If you add persistence, do it outside the request‑response path.
  */
 export async function POST(req: Request) {
-  console.log("post triggered")
+  console.log("post triggered");
   const body = await req.json();
 
   // Slack URL verification challenge
@@ -57,18 +58,33 @@ export async function POST(req: Request) {
       text: body.event.text,
     };
     // broadcast(normalized);
-    await fetch("https://cloud.appwrite.io/v1/functions/69687db0000e87979d30/executions", {
-      method: "POST",
-      headers: {
-        "X-Appwrite-Project": process.env.APPWRITE_PROJECT_ID,
-        "X-Appwrite-Key": process.env.APPWRITE_API_KEY,
-        "X-Appwrite-User-Agent": "NextJS-Slack-Bridge",
-        "Content-Type": "application/json"
+    await fetch(
+      "https://cloud.appwrite.io/v1/functions/69687db0000e87979d30/executions",
+      {
+        method: "POST",
+        headers: {
+          "X-Appwrite-Project": process.env.APPWRITE_PROJECT_ID,
+          "X-Appwrite-Key": process.env.APPWRITE_API_KEY,
+          "X-Appwrite-User-Agent": "NextJS-Slack-Bridge",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: body.event.user,
+          text: body.event.text,
+        }),
       },
-      body: JSON.stringify({
+    );
+    const client = new Client();
+    const databases = new Databases(client);
+    await databases.createDocument({
+      databaseId: process.env.NEXT_PUBLIC_APPWRITE_STORYLINE_DATABASE_ID!,
+      collectionId: "messages",
+      documentId: ID.unique(),
+      data: {
         username: body.event.user,
-        text: body.event.text
-      })
+        text: body.event.text,
+        timestamp: body.event.ts,
+      },
     });
     console.log("broadcasting:", normalized);
   }
