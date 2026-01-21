@@ -5,9 +5,7 @@ import { useEffect, useState } from "react";
 import { getClient, getAuthenticatedAccount } from "@/lib/appwrite";
 
 import Image from 'next/image'
-import { TablesDB, Query } from "appwrite";
-// import { getClassAbilitiesArray, getClassAndLevelMap } from './getCharacterData';
-import { Models } from 'appwrite';
+import { TablesDB, Query, Databases } from "appwrite";
 import { CompleteCharacterSheet } from "@/lib/types/characterTypes"
 
 /**
@@ -53,11 +51,36 @@ const SlackPage = (characterId) => {
 
     const [messages, setMessages] = useState([]);
     const [text, setText] = useState("");
+    const [offset, setOffset] = useState(0);
+    const [hasMore, setHasMore] = useState(true);
+
+    const loadMessages = async (loadMore = false) => {
+        const client = getClient();
+        const databases = new Databases(client);
+        const queries = [Query.orderDesc('timestamp'), Query.limit(20)];
+        if (loadMore) {
+            queries.push(Query.offset(offset));
+        }
+        const response = await databases.listDocuments(
+            process.env.NEXT_PUBLIC_APPWRITE_STORYLINE_DATABASE_ID!,
+            'messages',
+            queries
+        );
+        const fetched = response.documents.map(doc => ({ username: doc.username, text: doc.text }));
+        if (loadMore) {
+            setMessages(prev => [...fetched.reverse(), ...prev]);
+        } else {
+            setMessages(fetched.reverse());
+        }
+        setOffset(prev => prev + fetched.length);
+        if (fetched.length < 20) setHasMore(false);
+    };
 
 
     useEffect(() => {
         const stored = localStorage.getItem("characterSelected");
         if (stored) setCharacterSelected(JSON.parse(stored));
+        loadMessages();
     }, []),
 
 
@@ -213,6 +236,17 @@ const SlackPage = (characterId) => {
                     </div>
                 ))}
             </div>
+
+            {hasMore && (
+                <div className="p-4 text-center">
+                    <button
+                        className="bg-blue-600 px-4 py-2 rounded"
+                        onClick={() => loadMessages(true)}
+                    >
+                        Load More
+                    </button>
+                </div>
+            )}
 
             <div className="p-4 flex gap-2">
                 <input
