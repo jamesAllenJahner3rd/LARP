@@ -1,6 +1,7 @@
 // /app/api/slack/events/route.ts
 import { NextResponse } from "next/server";
 import { broadcast } from "@/lib/sse";
+import{}
 import { Client, Databases, ID } from "node-appwrite";
 
 /**
@@ -74,7 +75,10 @@ export async function POST(req: Request) {
         }),
       },
     );
-    const client = new Client();
+    const client = new Client()
+      .setEndpoint(process.env.APPWRITE_ENDPOINT!)
+      .setProject(process.env.APPWRITE_PROJECT_ID!)
+      .setKey(process.env.APPWRITE_API_KEY!);
     const databases = new Databases(client);
     await databases.createDocument({
       databaseId: process.env.NEXT_PUBLIC_APPWRITE_STORYLINE_DATABASE_ID!,
