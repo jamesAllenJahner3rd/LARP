@@ -119,10 +119,10 @@ const SlackPage = (characterId) => {
     };
 
     return (
-        <div className="flex flex-col h-full">
+        <div className="flex flex-col h-full md:flex-row">
             <section className='flex flex-col w-full justify-between h-full overflow-auto md:max-w-[1080px]' id="whole page">
                 {characterSelected &&
-                    <section className=" flex flex-col w-full h-6/7 bg-[url(/images/parchment.png)] overflow-auto" id="Character">
+                    <section className=" flex flex-col w-full h-6/7 md:h-full bg-[url(/images/parchment.png)] overflow-auto" id="Character">
                         <section id="primaryAndImage" className='flex flex-row w-7/7'>
                             <section className='flex md:max-w-fit md:w-2/3 flex-col' id="notDescription">
                                 <section className='flex flex-col
@@ -227,41 +227,43 @@ const SlackPage = (characterId) => {
             </section >
 
 
+            <div id="chatInterface" className="h-1/3 md:h-full md:w-1/3 lg:w-2/3 flex flex-col border-t border-gray-700">
+                <div className="flex-1 overflow-y-auto space-y-2 p-4">
+                    {messages.map((m, i) => (
+                        <div key={i} className="p-2 bg-gray-100 rounded">
+                            <div className="font-bold">{m.username}</div>
+                            <div>{m.text}</div>
+                        </div>
+                    ))}
+                </div>
 
-            <div className="flex-1 overflow-y-auto space-y-2 p-4">
-                {messages.map((m, i) => (
-                    <div key={i} className="p-2 bg-gray-800 rounded">
-                        <div className="font-bold">{m.username}</div>
-                        <div>{m.text}</div>
+                {hasMore && (
+                    <div className="p-4 text-center">
+                        <button
+                            className="bg-blue-600 px-4 py-2 rounded"
+                            onClick={() => loadMessages(true)}
+                        >
+                            Load More
+                        </button>
                     </div>
-                ))}
-            </div>
+                )}
 
-            {hasMore && (
-                <div className="p-4 text-center">
+                <div className="p-4 flex gap-2">
+                    <input
+                        className="flex-1 bg-white p-2 rounded"
+                        value={text}
+                        onChange={(e) => setText(e.target.value)}
+                    />
                     <button
                         className="bg-blue-600 px-4 py-2 rounded"
-                        onClick={() => loadMessages(true)}
+                        onClick={send}
                     >
-                        Load More
+                        Send
                     </button>
                 </div>
-            )}
-
-            <div className="p-4 flex gap-2">
-                <input
-                    className="flex-1 bg-white p-2 rounded"
-                    value={text}
-                    onChange={(e) => setText(e.target.value)}
-                />
-                <button
-                    className="bg-blue-600 px-4 py-2 rounded"
-                    onClick={send}
-                >
-                    Send
-                </button>
             </div>
         </div>
+
     );
 
 }
