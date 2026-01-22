@@ -47,7 +47,8 @@ import { Client, Databases, ID } from "node-appwrite";
 export async function POST(req: Request) {
   console.log("post triggered");
   const body = await req.json();
-
+  console.log("body", body);
+  console.dir(body);
   // Slack URL verification challenge
   if (body.type === "url_verification") {
     return new Response(body.challenge);
@@ -75,6 +76,8 @@ export async function POST(req: Request) {
         }),
       },
     );
+    console.log("body 2", body);
+    console.dir(body);
     const client = new Client()
       .setEndpoint(process.env.APPWRITE_ENDPOINT!)
       .setProject(process.env.APPWRITE_PROJECT_ID!)
