@@ -2,7 +2,7 @@
 import { NextResponse } from "next/server";
 import { broadcast } from "@/lib/sse";
 import crypto from "node:crypto";
-import { Client, Databases, ID } from "node-appwrite";
+import { Client, Databases, ID, Query } from "node-appwrite";
 
 /**
  * POST /api/slack/events
@@ -71,6 +71,7 @@ export async function POST(req: Request) {
   let avatar: string = "";
   let email: string = "";
   let isBot = false;
+  let text = "";
 
   if (body.type === "url_verification") {
     return new Response(body.challenge, { status: 200 });
@@ -128,7 +129,7 @@ export async function POST(req: Request) {
         if (data.ok && data.user) {
           const user = data.user;
           isBot = !!user.is_bot || !!user.is_app_user;
-
+          text = body.event.text
           username = user.profile?.display_name ||
             user.profile?.real_name ||
             user.real_name ||
@@ -146,9 +147,24 @@ export async function POST(req: Request) {
 
     } else if (body.event.bot_profile) {
       // fallback for bot messages
-      username = body.event.bot_profile.name;
-      avatar = body.event.bot_profile.icons?.image_72 || null;
+
+      username = body.event.text.split(":")[0].trim()//bot_profile.name;
+      try {
+        const response = await databases.listDocuments({
+          databaseId: process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID,
+          collectionId: "characters",
+          queries: [
+            Query.equal('name', username.trim()),
+          ]
+        })
+
+        avatar = response.documents[0].imageUrl || "/images/default.png";
+      } catch (error) {
+        console.error(error, "Couldn't Get character Info.");
+      };
+
       isBot = true;
+      text = body.event.text.split(":")[1];
     }
 
 
@@ -158,7 +174,7 @@ export async function POST(req: Request) {
       avatar,
       email,
       isBot,
-      text: body.event.text,
+      text,
       channel: body.event.channel,
       ts: body.event.ts,
     };

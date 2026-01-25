@@ -246,7 +246,7 @@ const SlackPage = (characterId) => {
                 <div className="flex-1 overflow-y-auto space-y-2 p-4">
                     {messages.map((m, i) => (
                         <div key={i} className="p-2 bg-gray-100 rounded">
-                            <div className="font-bold">{m.isBot ? m.username : m.text.split(":")[0]}</div>
+                            <div className="font-bold">{!m.isBot && m.username}</div>
                             <div>{m.text}</div>
                         </div>
                     ))}
