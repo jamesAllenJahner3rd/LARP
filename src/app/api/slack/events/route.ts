@@ -148,7 +148,7 @@ export async function POST(req: Request) {
     } else if (body.event.bot_profile) {
       // fallback for bot messages
 
-      username = body.event.text//.split(":")[0].trim()//bot_profile.name;
+      username = body.event.text.split(":")[0].trim();
       try {
         const response = await databases.listDocuments({
           databaseId: process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID,
@@ -166,7 +166,7 @@ export async function POST(req: Request) {
       };
 
       isBot = true;
-      text = body.event.text.split(":")[1];
+      text = body.event.text.split(":")[1].trim();
     }
 
 
@@ -181,6 +181,7 @@ export async function POST(req: Request) {
       ts: body.event.ts,
     };
     broadcast(normalized);
+
     await databases.createDocument({
       databaseId: process.env.NEXT_PUBLIC_APPWRITE_STORYLINE_DATABASE_ID!,
       collectionId: "messages",
