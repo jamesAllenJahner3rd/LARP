@@ -10,6 +10,13 @@ const nextConfig = {
         // Optional: add pathname if you want to be more specific
         // pathname: "/v1/storage/buckets/**",
       },
+      {
+        protocol: "https",
+        hostname: "avatars.slack-edge.com",
+        port: "",
+        pathname: "/**"
+      }
+
     ],
   },
   // turbo: {

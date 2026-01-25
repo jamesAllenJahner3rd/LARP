@@ -66,7 +66,7 @@ export async function POST(req: Request) {
 
   const body = JSON.parse(verification.rawBody!);
   const userId = body.event.user;
-
+  console.dir(body)
   let username: string = "";
   let avatar: string = "";
   let email: string = "";
@@ -148,7 +148,7 @@ export async function POST(req: Request) {
     } else if (body.event.bot_profile) {
       // fallback for bot messages
 
-      username = body.event.text.split(":")[0].trim()//bot_profile.name;
+      username = body.event.text//.split(":")[0].trim()//bot_profile.name;
       try {
         const response = await databases.listDocuments({
           databaseId: process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID,

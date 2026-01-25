@@ -55,6 +55,7 @@ const SlackPage = (characterId) => {
     const [hasMore, setHasMore] = useState(true);
     const client = getClient();
     const databases = new Databases(client);
+    const ICON_SIZE = 16
 
     const loadMessages = async (loadMore = false) => {
 
@@ -70,7 +71,7 @@ const SlackPage = (characterId) => {
             );
 
 
-            const fetched = response.documents.map(doc => ({ username: doc.username, text: doc.text }));
+            const fetched = response.documents;//.map(doc => ({ username: doc.username, text: doc.text }));
             if (loadMore) {
                 setMessages(prev => [...fetched.reverse(), ...prev]);
             } else {
@@ -246,7 +247,13 @@ const SlackPage = (characterId) => {
                 <div className="flex-1 overflow-y-auto space-y-2 p-4">
                     {messages.map((m, i) => (
                         <div key={i} className="p-2 bg-gray-100 rounded">
-                            <div className="font-bold">{!m.isBot && m.username}</div>
+                            {console.dir(m)}
+                            <div className="flex flex-row"><Image src={`${m.avatar}`} alt="character Image"
+                                width={ICON_SIZE}
+                                height={ICON_SIZE}
+                                sizes="100%" loading="lazy" className="w-[1rem]" />
+                                <div className="font-bold">{!m.isBot && m.username}</div></div>
+
                             <div>{m.text}</div>
                         </div>
                     ))}
