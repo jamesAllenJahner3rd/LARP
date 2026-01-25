@@ -1,7 +1,7 @@
 "use client";
 
 import { useAuth } from "@/app/providers/AuthProvider";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getClient, getAuthenticatedAccount } from "@/lib/appwrite";
 
 import Image from 'next/image'
@@ -48,15 +48,16 @@ import { CompleteCharacterSheet } from "@/lib/types/characterTypes"
 const SlackPage = (characterId) => {
     const [characterSelected, setCharacterSelected] = useState<CompleteCharacterSheet>(null)
     const { loggedInUser, logout } = useAuth();
-
+    const seen = useRef(new Set());
     const [messages, setMessages] = useState([]);
     const [text, setText] = useState("");
     const [offset, setOffset] = useState(0);
     const [hasMore, setHasMore] = useState(true);
+    const client = getClient();
+    const databases = new Databases(client);
 
     const loadMessages = async (loadMore = false) => {
-        const client = getClient();
-        const databases = new Databases(client);
+
         const queries = [Query.orderDesc('timestamp'), Query.limit(20)];
         if (loadMore) {
             queries.push(Query.offset(offset));
@@ -86,23 +87,27 @@ const SlackPage = (characterId) => {
     useEffect(() => {
         const stored = localStorage.getItem("characterSelected");
         if (stored) setCharacterSelected(JSON.parse(stored));
-        loadMessages();
+
     }, []),
 
 
         useEffect(() => {
             console.log("SSE connecting...");
-
+            loadMessages();
             const events = new EventSource(
                 "/api/slack/stream"
             );
             events.onopen = () => console.log("SSE connection opened");
-            events.onerror = (err) => console.log("SSE error:", err);
+            events.onerror = (error) => console.log("SSE error:", error);
 
             events.onmessage = (e) => {
                 console.log("SSE:", e.data);
-                const data = JSON.parse(e.data);
-                setMessages((prev) => [...prev, data]);
+
+                const payload = JSON.parse(e.data);
+                if (!seen.current.has(payload.ts)) {
+                    seen.current.add(payload.ts)
+                    setMessages((prev) => [...prev, payload]);
+                }
             };
 
             return () => events.close();

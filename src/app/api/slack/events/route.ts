@@ -162,6 +162,7 @@ export async function POST(req: Request) {
       channel: body.event.channel,
       ts: body.event.ts,
     };
+    broadcast(normalized);
     await databases.createDocument({
       databaseId: process.env.NEXT_PUBLIC_APPWRITE_STORYLINE_DATABASE_ID!,
       collectionId: "messages",

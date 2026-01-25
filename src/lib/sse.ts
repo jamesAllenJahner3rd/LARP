@@ -31,13 +31,13 @@ export function removeClient(controller: ReadableStreamDefaultController<string>
 
 export function broadcast(data: unknown) {
     const payload = `data: ${JSON.stringify(data)}\n\n`;
-    for (const c of Array.from(clients)) {
+    for (const controller of Array.from(clients)) {
         try {
-            c.enqueue(payload);
+            controller.enqueue(payload);
         } catch (err) {
             console.warn("SSE: enqueue failed, removing client", err);
-            try { c.close?.(); } catch {}
-            clients.delete(c);
+            try { controller.close?.(); } catch { }
+            clients.delete(controller);
         }
     }
 }
