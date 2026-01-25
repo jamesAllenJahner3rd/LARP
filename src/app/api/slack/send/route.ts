@@ -43,9 +43,23 @@ export async function POST(req: Request) {
 
   const payload = {
     channel: process.env.SLACK_CHANNEL_ID,
-    text,
-    username: name,
-    icon_url: imageUrl,
+    text: `${name}: ${text}`, // fallback for notifications and clients that don't render blocks
+    blocks: [
+      {
+        type: "context",
+        elements: [
+          {
+            type: "image",
+            image_url: imageUrl,
+            alt_text: name
+          },
+          {
+            type: "mrkdwn",
+            text: `*${name}* : ${text}`
+          }
+        ]
+      }
+    ]
   };
 
   const res = await fetch("https://slack.com/api/chat.postMessage", {

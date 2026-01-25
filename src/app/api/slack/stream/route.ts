@@ -36,25 +36,78 @@
  *   - If you modify the SSE headers, test in all major browsers; SSE is sensitive to caching.
  *   - If you add authentication, do it *before* creating the stream.
  *   - If you add heartbeat/ping messages, send them via broadcast() every 20–30 seconds.
- */
-export const dynamic = "force-dynamic";
+ */export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
+
 import { addClient, removeClient } from "@/lib/sse";
+
 export async function GET() {
-  console.log("SSE /api/slack/stream triggered");
-  let ctrl;
+  let isClosed = false;
+  let keepAliveTimer: ReturnType<typeof setTimeout> | null = null;
+  let controllerRef: ReadableStreamDefaultController | null = null;
 
   const stream = new ReadableStream({
     start(controller) {
-      controller.enqueue("event: connected\ndata: ok\n\n");
-      setInterval(() => {
-        controller.enqueue(": keep-alive/n/n")
-      }, 25000)
-      ctrl = controller;
+      controllerRef = controller;
+
+      const cleanup = () => {
+        if (isClosed) return;
+        isClosed = true;
+
+        if (keepAliveTimer) {
+          clearTimeout(keepAliveTimer);
+          keepAliveTimer = null;
+        }
+
+        if (controllerRef) {
+          try { controllerRef.close?.(); } catch { }
+          removeClient(controllerRef);
+          controllerRef = null;
+        }
+      };
+
+      // initial event synchronously
+      try {
+        controller.enqueue("event: connected\ndata: ok\n\n");
+      } catch (err) {
+        // controller already closed — ensure cleanup and return
+        try { cleanup(); } catch { }
+        return;
+      }
+
       addClient(controller);
+
+      // recursive keep-alive: schedule next only after successful enqueue
+      const scheduleKeepAlive = () => {
+        if (isClosed || !controllerRef) return;
+        keepAliveTimer = setTimeout(() => {
+          if (isClosed || !controllerRef) return;
+          try {
+            controllerRef.enqueue(": keep-alive\n\n");
+            // only schedule the next tick if this one succeeded
+            scheduleKeepAlive();
+          } catch (err) {
+            // enqueue failed — clean up immediately
+            try { cleanup(); } catch { }
+          }
+        }, 25000);
+      };
+
+      scheduleKeepAlive();
     },
+
     cancel() {
-      removeClient(ctrl);
+      // client closed connection: immediate cleanup
+      isClosed = true;
+      if (keepAliveTimer) {
+        clearTimeout(keepAliveTimer);
+        keepAliveTimer = null;
+      }
+      if (controllerRef) {
+        try { controllerRef.close?.(); } catch { }
+        removeClient(controllerRef);
+        controllerRef = null;
+      }
     },
   });
 
@@ -62,7 +115,7 @@ export async function GET() {
     headers: {
       "Content-Type": "text/event-stream",
       "Cache-Control": "no-cache, no-transform",
-      "Connection": "keep-alive"
+      "Connection": "keep-alive",
     },
   });
 }
