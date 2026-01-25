@@ -51,6 +51,11 @@ const client = new Client()
 const databases = new Databases(client);
 export async function POST(req: Request) {
   console.log("post triggered");
+  // at top of POST handler
+  if (!process.env.SLACK_SIGNING_SECRET) {
+    console.error("SLACK_SIGNING_SECRET missing at runtime — check env config and runtime setting");
+    return new Response("Server misconfigured", { status: 500 });
+  }
   const verification = await verifySlackRequest(req);
   if (!verification.ok) {
     console.warn("Slack verification failed:", verification.reason);
