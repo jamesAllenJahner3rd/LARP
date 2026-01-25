@@ -75,7 +75,7 @@ const SlackPage = (characterId) => {
             if (loadMore) {
                 setMessages(prev => [...fetched.reverse(), ...prev]);
             } else {
-                setMessages(fetched.reverse());
+                setMessages(fetched);
             }
             setOffset(prev => prev + fetched.length);
             if (fetched.length < 20) setHasMore(false);
@@ -245,7 +245,7 @@ const SlackPage = (characterId) => {
 
             <div id="chatInterface" className="h-1/3 md:h-full md:w-1/3 lg:w-2/3 flex flex-col border-t border-gray-700">
                 <div className="flex-1 overflow-y-auto space-y-2 p-4">
-                    {messages.reverse().map((m, i) => (
+                    {messages.map((m, i) => (
                         <div key={i} className="p-2 bg-gray-100 rounded">
                             {/* {console.dir(m)} */}
                             <div className="flex flex-row"><Image src={`${m.avatar}`} alt="character Image"
@@ -276,6 +276,12 @@ const SlackPage = (characterId) => {
                         className="flex-1 bg-white p-2 rounded"
                         value={text}
                         onChange={(e) => setText(e.target.value)}
+                        onKeyDown={(event) => {
+                            if (event.key === "Enter") {
+                                event.preventDefault();
+                                send();
+                            }
+                        }}
                     />
                     <button
                         className="bg-blue-600 px-4 py-2 rounded"
