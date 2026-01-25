@@ -145,7 +145,22 @@ export async function POST(req: Request) {
         console.error(error, "Failed to connect to slack")
       }
 
-    } else if (body.event.bot_profile) {
+      if (isBot) {
+        try {
+          const response = await databases.listDocuments({
+            databaseId: process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID,
+            collectionId: "characters",
+            queries: [
+              Query.equal('name', username.trim()),
+            ]
+          })
+          if (response.documents.length > 0) {
+            avatar = response.documents[0].imageUrl || avatar;
+          }
+        } catch (error) {
+          console.error(error, "Couldn't Get character Info for bot.");
+        };
+      }
       // fallback for bot messages
 
       username = body.event.text.split(":")[0].trim();
@@ -160,11 +175,11 @@ export async function POST(req: Request) {
         console.log("image")
         console.dir(response.documents[0])
         avatar = response.documents[0].imageUrl || "/images/default.png";
-
+        console.dir(avatar)
       } catch (error) {
         console.error(error, "Couldn't Get character Info.");
       };
-
+      console.dir(avatar)
       isBot = true;
       text = body.event.text.split(":")[1].trim();
     }

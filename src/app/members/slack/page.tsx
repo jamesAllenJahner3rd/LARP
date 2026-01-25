@@ -245,7 +245,7 @@ const SlackPage = (characterId) => {
 
             <div id="chatInterface" className="h-1/3 md:h-full md:w-1/3 lg:w-2/3 flex flex-col border-t border-gray-700">
                 <div className="flex-1 overflow-y-auto space-y-2 p-4">
-                    {messages.map((m, i) => (
+                    {messages.reverse().map((m, i) => (
                         <div key={i} className="p-2 bg-gray-100 rounded">
                             {/* {console.dir(m)} */}
                             <div className="flex flex-row"><Image src={`${m.avatar}`} alt="character Image"
