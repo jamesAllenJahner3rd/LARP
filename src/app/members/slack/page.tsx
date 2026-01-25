@@ -252,10 +252,10 @@ const SlackPage = (characterId) => {
                                 width={ICON_SIZE}
                                 height={ICON_SIZE}
                                 sizes="100%" loading="lazy" className="w-[1rem]" />
-                                <div className="font-bold">{!m.isBot ? m.username : m.text.split(":")[0]}</div>
+                                <div className="font-bold">{m.username}</div>
                             </div>
 
-                            <div>{!m.isBot ? m.text : m.text.split(":")[1]}</div>
+                            <div>{m.text}</div>
                         </div>
                     ))}
                 </div>

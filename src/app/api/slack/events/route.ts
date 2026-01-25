@@ -146,6 +146,9 @@ export async function POST(req: Request) {
       }
 
       if (isBot) {
+        // For bot messages, parse username from text like "CharacterName: message"
+        username = body.event.text.split(":")[0].trim();
+        text = body.event.text.split(":")[1]?.trim() || body.event.text;
         try {
           const response = await databases.listDocuments({
             databaseId: process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID,
@@ -161,6 +164,8 @@ export async function POST(req: Request) {
           console.error(error, "Couldn't Get character Info for bot.");
         };
       }
+
+    } else if (body.event.bot_profile) {
       // fallback for bot messages
 
       username = body.event.text.split(":")[0].trim();
