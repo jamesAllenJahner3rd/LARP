@@ -61,19 +61,25 @@ const SlackPage = (characterId) => {
         if (loadMore) {
             queries.push(Query.offset(offset));
         }
-        const response = await databases.listDocuments(
-            process.env.NEXT_PUBLIC_APPWRITE_STORYLINE_DATABASE_ID!,
-            'messages',
-            queries
-        );
-        const fetched = response.documents.map(doc => ({ username: doc.username, text: doc.text }));
-        if (loadMore) {
-            setMessages(prev => [...fetched.reverse(), ...prev]);
-        } else {
-            setMessages(fetched.reverse());
+        try {
+            const response = await databases.listDocuments(
+                process.env.NEXT_PUBLIC_APPWRITE_STORYLINE_DATABASE_ID!,
+                'messages',
+                queries
+            );
+
+
+            const fetched = response.documents.map(doc => ({ username: doc.username, text: doc.text }));
+            if (loadMore) {
+                setMessages(prev => [...fetched.reverse(), ...prev]);
+            } else {
+                setMessages(fetched.reverse());
+            }
+            setOffset(prev => prev + fetched.length);
+            if (fetched.length < 20) setHasMore(false);
+        } catch (error) {
+            console.error(error, "Failed to retrieve messages")
         }
-        setOffset(prev => prev + fetched.length);
-        if (fetched.length < 20) setHasMore(false);
     };
 
 
@@ -105,15 +111,19 @@ const SlackPage = (characterId) => {
 
 
     const send = async () => {
-        await fetch("/api/slack/send", {
-            method: "POST",
-            body: JSON.stringify({
-                name: characterSelected.name,
-                imageUrl: characterSelected.imageUrl,
-                text
-            }),
-        });
-        console.log("Message sent.");
+        try {
+            await fetch("/api/slack/send", {
+                method: "POST",
+                body: JSON.stringify({
+                    name: characterSelected.name,
+                    imageUrl: characterSelected.imageUrl,
+                    text
+                }),
+            });
+            console.log("Message sent.");
+        } catch (error) {
+            console.error(error, "Failed to fetch slack/send api")
+        }
 
         setText("");
     };

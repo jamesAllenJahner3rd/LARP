@@ -67,7 +67,7 @@ export async function POST(req: Request) {
   const body = JSON.parse(verification.rawBody!);
   const userId = body.event.user;
 
-  let displayName: string = "";
+  let username: string = "";
   let avatar: string = "";
   let email: string = "";
   let isBot = false;
@@ -129,7 +129,7 @@ export async function POST(req: Request) {
           const user = data.user;
           isBot = !!user.is_bot || !!user.is_app_user;
 
-          displayName = user.profile?.display_name ||
+          username = user.profile?.display_name ||
             user.profile?.real_name ||
             user.real_name ||
             user.name;
@@ -146,7 +146,7 @@ export async function POST(req: Request) {
 
     } else if (body.event.bot_profile) {
       // fallback for bot messages
-      displayName = body.event.bot_profile.name;
+      username = body.event.bot_profile.name;
       avatar = body.event.bot_profile.icons?.image_72 || null;
       isBot = true;
     }
@@ -154,7 +154,7 @@ export async function POST(req: Request) {
 
     const normalized = {
       userId,
-      displayName,
+      username,
       avatar,
       email,
       isBot,
@@ -166,11 +166,7 @@ export async function POST(req: Request) {
       databaseId: process.env.NEXT_PUBLIC_APPWRITE_STORYLINE_DATABASE_ID!,
       collectionId: "messages",
       documentId: ID.unique(),
-      data: {
-        username: normalized.displayName,
-        text: normalized.text,
-        timestamp: normalized.ts,
-      },
+      data: normalized,
     });
     console.log("broadcasting:", normalized);
   }
