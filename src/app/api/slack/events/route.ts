@@ -157,7 +157,8 @@ export async function POST(req: Request) {
             Query.equal('name', username.trim()),
           ]
         })
-
+        console.log("image")
+        console.dir(response.documents[0])
         avatar = response.documents[0].imageUrl || "/images/default.png";
 
       } catch (error) {
