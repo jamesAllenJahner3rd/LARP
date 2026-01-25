@@ -247,14 +247,15 @@ const SlackPage = (characterId) => {
                 <div className="flex-1 overflow-y-auto space-y-2 p-4">
                     {messages.map((m, i) => (
                         <div key={i} className="p-2 bg-gray-100 rounded">
-                            {console.dir(m)}
+                            {/* {console.dir(m)} */}
                             <div className="flex flex-row"><Image src={`${m.avatar}`} alt="character Image"
                                 width={ICON_SIZE}
                                 height={ICON_SIZE}
                                 sizes="100%" loading="lazy" className="w-[1rem]" />
-                                <div className="font-bold">{!m.isBot && m.username}</div></div>
+                                <div className="font-bold">{!m.isBot ? m.username : m.text.split(":")[0]}</div>
+                            </div>
 
-                            <div>{m.text}</div>
+                            <div>{!m.isBot ? m.text : m.text.split(":")[1]}</div>
                         </div>
                     ))}
                 </div>

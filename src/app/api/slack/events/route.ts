@@ -159,6 +159,7 @@ export async function POST(req: Request) {
         })
 
         avatar = response.documents[0].imageUrl || "/images/default.png";
+
       } catch (error) {
         console.error(error, "Couldn't Get character Info.");
       };
