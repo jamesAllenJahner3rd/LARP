@@ -41,10 +41,15 @@ export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
 import { addClient, removeClient } from "@/lib/sse";
 export async function GET() {
+  console.log("SSE /api/slack/stream triggered");
   let ctrl;
 
   const stream = new ReadableStream({
     start(controller) {
+      controller.enqueue("event: connected\ndata: ok\n\n");
+      setInterval(() => {
+        controller.enqueue(": keep-alive/n/n")
+      }, 25000)
       ctrl = controller;
       addClient(controller);
     },
