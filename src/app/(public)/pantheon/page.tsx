@@ -39,6 +39,13 @@ const Pantheon = () => {
             </section >
             <h2>The Gods and Goddesses of the Eldarlands Saga</h2>
 
+            {/* “The <aside> provides a viewport-sized, 
+                horizontally scrollable container with smooth, 
+                mandatory scroll snapping; 
+            the <section> is a single-row inline-flex whose w-max makes it overflow horizontally, 
+            and each <figure> becomes a snap point—together they create a touch- and keyboard-friendly horizontal carousel.”
+ */}
+
             <aside className="w-screen flex-col-reverse overflow-x-scroll scroll-p-36  scroll-smooth snap-x snap-mandatory flex scrollbar-thick touch-pan-x ">
 
                 <section className=" w-max inline-flex">

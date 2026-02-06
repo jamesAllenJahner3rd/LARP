@@ -4,7 +4,7 @@ import { getClient, getList, uploadClientFile, saveCharacter } from "@/lib/appwr
 import { Query, TablesDB, Models } from "appwrite";
 import { useAuth } from "@/app/providers/AuthProvider";
 import Image from "next/image";
-import * as CharacterTypes from "@/lib/types/characterTypes"
+import type * as CharacterTypes from "@/lib/types/characterTypes"
 import useCharacterClasses from "./hooks/useCharacterClasses"
 import { totalLevel } from "@/app/members/create-character/hooks/useCharacterClasses"
 import { toast } from 'react-toastify';

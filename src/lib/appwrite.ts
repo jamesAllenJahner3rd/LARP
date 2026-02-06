@@ -8,13 +8,13 @@ import {
   Query,
   ID,
 } from "appwrite";
-import * as CharacterTypes from "@/lib/types/characterTypes";
+import type * as CharacterTypes from "@/lib/types/characterTypes";
 
 export function getAuthenticatedAccount(): Account {
   const client = new Client()
     .setEndpoint(
       process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT ||
-        "https://nyc.cloud.appwrite.io/v1",
+      "https://nyc.cloud.appwrite.io/v1",
     )
     .setProject(
       process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID || "68bb084a0032b02608c4",
@@ -52,7 +52,7 @@ export function storage() {
 export async function getList<T extends Models.Row>(
   dbId: string,
   tableId: string,
-  queires?:[],
+  queires?: [],
 ): Promise<Models.RowList<T>> {
   try {
     const client = getClient();
@@ -188,7 +188,3 @@ export async function saveCharacter(
     console.log(error, "Character failed to save");
   }
 }
-//tableIDs:
-//characterclassabilities
-//characterclasses
-//characters

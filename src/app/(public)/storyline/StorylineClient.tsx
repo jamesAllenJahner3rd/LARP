@@ -6,7 +6,7 @@ import { CaretRightOutlined } from '@ant-design/icons';
 import Form from 'next/form'
 import { createStoryEntry } from '@/app/actions/createStoryEntry';
 import { useAuth } from "@/app/providers/AuthProvider";
-import { StoryEntry } from "@/lib/types/types"
+import type { StoryEntry } from "@/lib/types/types"
 
 const StorylineClient = ({ entries }: { entries: StoryEntry[] }) => {
     const { loggedInUser, isAdmin } = useAuth();

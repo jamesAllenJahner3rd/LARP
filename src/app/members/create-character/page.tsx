@@ -7,7 +7,7 @@ import { Query, TablesDB, Models } from "appwrite";
 // import { RowList } from "@/types";
 import { useAuth } from "@/app/providers/AuthProvider";
 import Image from "next/image";
-import * as CharacterTypes from "@/lib/types/characterTypes"
+import type * as CharacterTypes from "@/lib/types/characterTypes"
 import CharacterSummary from './CharacterSummary';
 import useCharacterClasses from './hooks/useCharacterClasses';
 

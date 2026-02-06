@@ -188,3 +188,123 @@
 //     )
 // }
 // export default React.memo(DynamicForm)
+
+
+// // Theme.js -------
+// import React, { createContext, type useState } from 'react';
+// export const ThemeContext = createContext()
+
+// // App.js --------------
+// import React from 'react';
+// import Page from './Page';
+// import { ThemeContext } from "./Theme"
+// export default function App() {
+//     const [theme, setTheme] = useState("Light"), [theme]);
+//     const themeValue = UseMemo(() => ({ theme, setTheme }))
+//     return (
+//         <ThemeContext.Provider value={themeValue}>
+//             <Page />
+//         </ThemeContext.Provider>
+//     );
+// }
+
+// // Page.js --------------------
+// import React from 'react';
+// import { ThemeContext } from './ThemeContext';
+// import AnotherPage from './AnotherPage';
+// export default function Page() {
+//     const { theme, setTheme } = useContext(ThemeContext)
+//     return (
+//         <div>
+//             <anotherPage />
+//             <button >
+//                 Toggle Theme
+//             </button>
+//         </div>
+//     );
+// }
+// // AnotherPage.js ------------------
+// import React from 'react';
+// import { ThemeContext } from './ThemeContext';
+// export default function AnotherPage() {
+//     const { theme, setTheme } useContext(ThemeContext)
+//     return (
+//         <div>
+//             <button >
+//                 Send
+//             </button>
+//         </div>
+//     );
+// }
+// //Prompt: So I needed toggle between light and dark themes how do I do that.
+// My possible options are prop drill or useContext...
+// since i need to pass to a nested page, useContext() makes sense.
+import React, { createContext } from "react";
+import { ColorButton } from ColorButton;
+function Page() {
+
+    return (
+        <>
+
+        </>
+    )
+};
+export default Page;
+
+import React from "react";
+
+function ColorButton() {
+
+    return (
+        <button>
+
+
+        </button>
+
+    )
+}
+export default ColorButton;
+
+//eTheme.ts----------------
+const ThemeContext = createContext('light')
+export default ThemeContext
+
+//mainPage.tsx------------
+import React from "react";
+import { Button } from "component.tsx"
+function MainPage() {
+
+    return (
+        <Button props={title: color, callback=}/>
+
+   )
+};
+export default MainPage;
+
+
+//component.tsx--------
+import React from "react";
+
+function Button({{ props }: title, callback}: { title: string; callback:(e: string) => void}) {
+
+    return (
+        <button onClick={() => callback}>
+            {title}
+        </button>
+    )
+}
+export default Button
+//layout.tsx--------------
+import React from 'react';
+import { ThemeContext } from eTheme.ts
+function Layout() {
+    // children?
+    return (
+        <ThemeContext.Provider >
+            {/* <children /> */}
+            <MainPage />
+        </ThemeContext.Provider>
+
+    )
+
+}

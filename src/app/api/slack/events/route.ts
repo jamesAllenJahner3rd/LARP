@@ -10,20 +10,23 @@ import { Client, Databases, ID, Query } from "node-appwrite";
  * Purpose:
  *   Acts as the Slack Events API webhook endpoint. Slack sends all subscribed
  *   workspace events here. This route validates Slack’s URL verification
- *   challenge and forwards incoming message events into the server’s SSE
- *   broadcast system.
+ *   challenge, verifies request signatures, enriches user data, persists
+ *   messages, and forwards normalized events into the server’s SSE broadcast system.
  *
  * Responsibilities:
+ *   - Verify Slack request signatures using HMAC.
  *   - Parse the incoming Slack event payload.
  *   - Respond to Slack’s initial URL verification challenge.
  *   - Normalize Slack message events into a consistent internal format.
+ *   - Enrich user data via Slack Web API and Appwrite character collection.
+ *   - Persist normalized messages into Appwrite database.
  *   - Broadcast normalized events to all connected SSE clients.
  *   - Return a 200 OK response within Slack’s required 3‑second window.
  *
  * Behavior:
- *   - Only processes `event.type === "message"`; all other events are ignored.
- *   - Does not perform authentication; Slack signs requests externally.
- *   - Does not persist messages; it only forwards them in real time.
+ *   - Only processes `event.type === "message"` without subtype; all other events are ignored.
+ *   - Performs signature verification before processing.
+ *   - Persists messages and broadcasts them in real time.
  *   - Logs incoming events and outgoing broadcasts for debugging.
  *
  * Returns:
@@ -31,18 +34,21 @@ import { Client, Databases, ID, Query } from "node-appwrite";
  *   - Raw challenge string for Slack’s URL verification handshake.
  *
  * Dependencies:
+ *   - verifySlackRequest(): validates authenticity of Slack requests.
  *   - broadcast(): pushes normalized events to all active SSE clients.
- *   - Slack Events API: sends POST requests to this endpoint.
+ *   - Appwrite Functions: invoked for downstream processing.
+ *   - Appwrite Databases: used for persistence and character lookups.
+ *   - Slack Web API: used to enrich user profile data.
  *
  * Invariants:
  *   - Must always return a 200‑level response within 3 seconds.
- *   - Must never block or perform long‑running work.
+ *   - Must never block or perform long‑running work in the request path.
  *   - Must not mutate the Slack payload; only normalize fields.
  *
  * Notes for Future Maintainers:
- *   - If you add signature verification, do it before reading req.json().
+ *   - Signature verification is required; do not bypass it.
  *   - If you add support for more Slack event types, normalize them consistently.
- *   - If you add persistence, do it outside the request‑response path.
+ *   - Keep persistence and enrichment outside the critical response path (use microtasks).
  */
 const client = new Client()
   .setEndpoint(process.env.APPWRITE_ENDPOINT!)

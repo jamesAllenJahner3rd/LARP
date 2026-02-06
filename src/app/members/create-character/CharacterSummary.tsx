@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import * as CharacterTypes from "@/lib/types/characterTypes";
+import type * as CharacterTypes from "@/lib/types/characterTypes";
 import type { Models } from "appwrite";
 
 import type { storage } from "@/lib/appwrite-node";

@@ -2,7 +2,7 @@
 import React, { useEffect } from "react";
 import { useState, useCallback } from "react";
 import { Models } from "appwrite";
-import * as CharacterTypes from "@/lib/types/characterTypes";
+import type * as CharacterTypes from "@/lib/types/characterTypes";
 
 type UseCharacterClassesProps = {
   setCharacterClasses: React.Dispatch<

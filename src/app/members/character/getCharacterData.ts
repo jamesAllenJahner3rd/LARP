@@ -1,7 +1,7 @@
 
 import { getClient } from "@/lib/appwrite"
 import { Models, Query, TablesDB } from "appwrite"
-import * as CharacterTypes from "@/lib/types/characterTypes";
+import type * as CharacterTypes from "@/lib/types/characterTypes";
 import dynamic from "next/dynamic"
 
 const DATABASE_ID = process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID || "68ccc1ab0001250042a8"

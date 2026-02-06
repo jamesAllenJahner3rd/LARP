@@ -82,7 +82,7 @@ const NavBar = () => {
                 <Link className={`${LinksCss} `} onClick={() => setOpenMenu(!openMenu)} href="/members/userSettings"  >Account settings</Link>
                 <Link className={`${LinksCss} `} onClick={() => setOpenMenu(!openMenu)} href="/members/create-character" >Create Character</Link>
                 <Link className={`${LinksCss} `} onClick={() => setOpenMenu(!openMenu)} href="/members/character" >Characters</Link>
-                <Link className={`${LinksCss} `} onClick={() => setOpenMenu(!openMenu)} href="/members/userSettings" >Factions</Link>
+                <Link className={`${LinksCss} `} onClick={() => setOpenMenu(!openMenu)} href="/members/factions" >Factions</Link>
                 <Link className={`${LinksCss} `} onClick={() => setOpenMenu(!openMenu)} href="/members/slack" >Slack</Link>
                 <Link className={`${LinksCss} `} onClick={() => setOpenMenu(!openMenu)} href="/events" >Events</Link>
                 <Link className={`${LinksCss} `} onClick={() => setOpenMenu(!openMenu)} href="/admin" >Admin Tools</Link>

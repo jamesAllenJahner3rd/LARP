@@ -1,5 +1,5 @@
 "use client";
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { getAuthenticatedAccount } from "@/lib/appwrite";
 import type { Models } from "appwrite";
 import { useRouter } from "next/navigation";
@@ -52,9 +52,14 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             console.error(error, " Authentication, delete session failed, AuthProvider.tsx")
         }
     };
-
+    const value = useMemo(() => ({
+        loggedInUser,
+        setLoggedInUser,
+        logout,
+        isAdmin
+    }), [loggedInUser, isAdmin]);
     return (
-        <AuthContext.Provider value={{ loggedInUser, setLoggedInUser, logout, isAdmin }}>
+        <AuthContext.Provider value={value}>
             {children}
         </AuthContext.Provider>
     );

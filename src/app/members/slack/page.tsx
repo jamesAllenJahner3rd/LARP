@@ -6,7 +6,7 @@ import { getClient, getAuthenticatedAccount } from "@/lib/appwrite";
 
 import Image from 'next/image'
 import { TablesDB, Query, Databases } from "appwrite";
-import { CompleteCharacterSheet } from "@/lib/types/characterTypes"
+import type { CompleteCharacterSheet } from "@/lib/types/characterTypes"
 
 /**
  * SlackPage

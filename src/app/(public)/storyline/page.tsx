@@ -4,7 +4,7 @@ import { Timeline } from "antd";
 import { getList } from '@/lib/database';
 import StorylineClient from './StorylineClient';
 import Image from "next/image";
-import { StoryEntry } from "@/lib/types/types"
+import type { StoryEntry } from "@/lib/types/types"
 
 
 
