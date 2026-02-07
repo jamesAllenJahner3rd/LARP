@@ -19,11 +19,19 @@ function Factions() {
     const [newTeamName, setNewTeamName] = useState<string>("")/////////
     const [selectedTeamId, setSelectedTeamId] = useState<string | null>(null)//////////
     const [selectedMemberId, setSelectedMemberId] = useState<string | null>(null)/////
+
+    const [selectedMemberEmail, setSelectedMemberEmail] = useState<string | null>(null)/////
     const [memberEmail, setMemberEmail] = useState("")//////////
+    const [targetTeam, setTargetTeam] = useState<string>("")
+    const [targetTeamName, setTargetTeamName] = useState<string>("")
+    const [targetEmail, setTargetEmail] = useState<string>("")
+    const [updateTeamName, setUpdateTeamName] = useState<string>("")
+    const [newRoles, setNewRoles] = useState("")
+    setUpdateTeamName
 
     const {
         updateName,//functions
-        updateMmbership,
+        updateMembership,
         updateMembershipStatus,
         loadMembersForTeam,
         list,
@@ -35,22 +43,15 @@ function Factions() {
         createMembership,
 
         newTeamRole,// states
-        targetTeam,
-        targetTeamName,
-        targetEmail,
         ownedTeams,
         allTeams,
         members,
         selectedTeamIsOwned,
-        selectedMemberEmail,
         targetOwnedTeam,
         setTargetOwnedTeam, //setters
-        setSelectedMemberEmail,
         setSelectedTeamIsOwned,
         setAllTeams,
         setOwnedTeams,
-        setTargetEmail,
-        setTargetTeam,
     } = useFactions()
 
     // load teams on mount and split owned vs other based on membership role
@@ -98,7 +99,7 @@ function Factions() {
             <span>{memberEmail}</span>
             <FactionActions
                 updateName={updateName}
-                updateMmbership={updateMmbership}
+                updateMmbership={updateMembership}
                 updateMembershipStatus={updateMembershipStatus}
                 list={list}
                 listMemberships={listMemberships}
@@ -108,8 +109,16 @@ function Factions() {
                 createFaction={createFaction}
                 createMembership={createMembership}
                 setMemberEmail={setMemberEmail}
+                memberEmail={memberEmail}
                 setNewTeamName={setNewTeamName}
-                newTeamName={newTeamName} />
+                newTeamName={newTeamName}
+                targetOwnedTeam={targetOwnedTeam}
+                setUpdateTeamName={setUpdateTeamName}
+                updateTeamName={updateTeamName}
+                setNewRoles={setNewRoles}
+                newRoles={newRoles}
+                targetTeam={targetTeam}
+            />
 
             <div className="mt-4">
                 <FactionList

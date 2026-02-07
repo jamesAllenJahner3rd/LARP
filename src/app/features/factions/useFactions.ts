@@ -9,16 +9,13 @@ function useFactions() {
 
 
     const [newTeamRole, setNewTeamRole] = useState<string>("")
-    const [targetTeam, setTargetTeam] = useState<string>("")
-    const [targetTeamName, setTargetTeamName] = useState<string>("")
-    const [targetEmail, setTargetEmail] = useState<string>("")
     const [ownedTeams, setOwnedTeams] = useState<Models.Team[]>([])
     const [allTeams, setAllTeams] = useState<Models.Team[]>([])
     const [members, setMembers] = useState<any[]>([])
 
     const [selectedTeamIsOwned, setSelectedTeamIsOwned] = useState(false)
 
-    const [selectedMemberEmail, setSelectedMemberEmail] = useState<string | null>(null)
+
     const [targetOwnedTeam, setTargetOwnedTeam] = useState("")
 
     const clientRef = useRef(null);
@@ -29,7 +26,7 @@ function useFactions() {
         clientRef.current = client;
         teamRef.current = new Teams(client);
     }, []);
-    async function createMembership() {
+    async function createMembership(targetOwnedTeam: Models.Team, memberEmail: string) {
 
         const result = await teamRef.current.createMembership({
             teamId: targetOwnedTeam,
@@ -40,7 +37,7 @@ function useFactions() {
 
         console.log(result);
     }
-    async function createFaction(teamname) {
+    async function createFaction(teamname: string) {
         console.log(teamname, "creating faction")
         try {
             const result = await teamRef.current.create({
@@ -53,16 +50,11 @@ function useFactions() {
             console.error(err, " Failed to create a new faction.")
         }
     }
-    async function deleteMembership() {
+    async function deleteMembership(targetTeam: Models.Team, membershipId: string) {
         try {
-            const client = new Client()
-                .setEndpoint(process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT!)
-                .setProject(process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID!);
-            const teams = new Teams(client);
-            const account = new Account(client);
             const result = await teamRef.current.deleteMembership({
                 teamId: targetTeam,
-                membershipId: "" //???
+                membershipId,
             });
 
             console.log(result);
@@ -70,13 +62,8 @@ function useFactions() {
             console.error(err, " Failed to create a new faction.")
         }
     }
-    async function deleteTeam() {
+    async function deleteTeam(targetTeam: Models.Team) {
         try {
-            const client = new Client()
-                .setEndpoint(process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT!)
-                .setProject(process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID!);
-            const teams = new Teams(client);
-            const account = new Account(client);
             const result = await teamRef.current.delete({
                 teamId: targetTeam
             });
@@ -87,16 +74,11 @@ function useFactions() {
             console.error(err, " Failed to create a new faction.")
         }
     }
-    async function getMembership() {
+    async function getMembership(targetTeam: Models.Team, membershipId) {
         try {
-            const client = new Client()
-                .setEndpoint(process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT!)
-                .setProject(process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID!);
-            const teams = new Teams(client);
-            const account = new Account(client);
             const result = await teamRef.current.getMembership({
-                teamId: '<TEAM_ID>',
-                membershipId: '<MEMBERSHIP_ID>'
+                teamId: targetTeam,
+                membershipId,
             });
 
             console.log(result);
@@ -106,26 +88,27 @@ function useFactions() {
         }
     }
 
-    async function listMemberships() {
+    async function listMemberships(targetTeam: Models.Team, queries: string[] = [], search: string = "", total: boolean = false) {
         try {
-            const client = new Client()
-                .setEndpoint(process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT!)
-                .setProject(process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID!);
-            const teams = new Teams(client);
-            const account = new Account(client);
             const result = await teamRef.current.listMemberships({
                 teamId: targetTeam,
+                queries, // optional
+                search, // optional
+                total // optional
             });
-
             console.log(result);
 
         } catch (err) {
             console.error(err, " Failed to create a new faction.")
         }
     }
-    async function list() {
+    async function list(queries: string[] = [], search: string = "", total: boolean = false) {
         try {
-            const result = await teamRef.current.list();
+            const result = await teamRef.current.list({
+                queries, // optional
+                search, // optional
+                total // optional
+            });
 
             console.log(result);
 
@@ -153,23 +136,24 @@ function useFactions() {
             console.error(err, " Failed to create a new faction.")
         }
     }
-    async function updateMmbership() {
+    roles: []
+    async function updateMembership(targetOwnedTeam: Models.Team, membershipId: string, newRoles: string = "") {
         try {
             const result = await teamRef.current.updateMembership({
                 teamId: targetOwnedTeam,
-                membershipId: '<MEMBERSHIP_ID>',
-                roles: []
+                membershipId,
+                roles: newRoles.trim().split(" ")
             });
 
         } catch (err) {
             console.error(err, " Failed to create a new faction.")
         }
     }
-    async function updateName() {
+    async function updateName(targetTeam: Models.Team, name: string) {
         try {
             const result = await teamRef.current.updateName({
                 teamId: targetTeam,
-                name: targetTeamName
+                name,
             });
 
             console.log(result);
@@ -180,7 +164,7 @@ function useFactions() {
 
     return ({
         updateName,//functions
-        updateMmbership,
+        updateMembership,
         updateMembershipStatus,
         loadMembersForTeam,
         list,
@@ -191,22 +175,15 @@ function useFactions() {
         createFaction,
         createMembership,
         newTeamRole,
-        targetTeam,
-        targetTeamName,
-        targetEmail,
         ownedTeams,
         allTeams,
         members,
         selectedTeamIsOwned,
-        selectedMemberEmail,
         targetOwnedTeam,
         setTargetOwnedTeam, //setters
-        setSelectedMemberEmail,
         setSelectedTeamIsOwned,
         setAllTeams,
         setOwnedTeams,
-        setTargetEmail,
-        setTargetTeam,
 
 
 
