@@ -2,6 +2,7 @@
 import { getAuthenticatedAccount, getClient } from "@/lib/appwrite";
 import { Account, Client, ID, Teams, type Models } from "appwrite";
 import React, { useEffect, useRef, useState } from "react";
+import { toast } from "react-toastify";
 
 
 function useFactions() {
@@ -50,8 +51,17 @@ function useFactions() {
             console.error(err, " Failed to create a new faction.")
         }
     }
-    async function deleteMembership(targetTeam: Models.Team, membershipId: string) {
+    async function deleteMembership(targetTeam: Models.Team, membershipId?) {
         try {
+            const account = await getAuthenticatedAccount()
+            const user = await account.get()
+            if (membershipId.length === 0) {
+                if (members) {
+                    const myself = members.find((member) => member.userId === user.$id)
+                    membershipId = myself.$id
+                }
+            }
+
             const result = await teamRef.current.deleteMembership({
                 teamId: targetTeam,
                 membershipId,
@@ -68,10 +78,11 @@ function useFactions() {
                 teamId: targetTeam
             });
 
-            console.log(result);
+            toast.success(" Faction Deleted")
 
         } catch (err) {
             console.error(err, " Failed to create a new faction.")
+            toast.error(" Faction failed to delete")
         }
     }
     async function getMembership(targetTeam: Models.Team, membershipId) {
@@ -81,10 +92,11 @@ function useFactions() {
                 membershipId,
             });
 
-            console.log(result);
+            toast.success(" Faction Membership Found")
 
         } catch (err) {
-            console.error(err, " Failed to create a new faction.")
+            console.error(err, "  Faction Membership not Found.")
+            toast.error("  Faction Membership not Found")
         }
     }
 
@@ -96,10 +108,12 @@ function useFactions() {
                 search, // optional
                 total // optional
             });
-            console.log(result);
+            toast.success(" Faction Memberships Found")
 
         } catch (err) {
-            console.error(err, " Failed to create a new faction.")
+            console.error(err, " Failed to get list of Memberships.")
+            toast.error(" Faction Memberships not Found")
+
         }
     }
     async function list(queries: string[] = [], search: string = "", total: boolean = false) {
@@ -110,10 +124,12 @@ function useFactions() {
                 total // optional
             });
 
-            console.log(result);
+            toast.success(" Faction list Found")
 
         } catch (err) {
-            console.error(err, " Failed to create a new faction.")
+            console.error(err, " Failed to get list of Factions.")
+            toast.error(" Failed to get list of Factions")
+
         }
     }
 
@@ -124,8 +140,11 @@ function useFactions() {
             const list = result.memberships || [];
             console.dir(list)
             setMembers(list);
+
         } catch (err) {
             console.error(err, " Failed to list memberships.");
+            toast.error(" Failed to get list of memberships")
+
             setMembers([]);
         }
     }
@@ -139,14 +158,20 @@ function useFactions() {
     roles: []
     async function updateMembership(targetOwnedTeam: Models.Team, membershipId: string, newRoles: string = "") {
         try {
+            const roles = newRoles.trim().split(" ")
+            console.log(roles)
+
             const result = await teamRef.current.updateMembership({
                 teamId: targetOwnedTeam,
                 membershipId,
-                roles: newRoles.trim().split(" ")
+                roles,
             });
+            toast.success(" Membership role updated")
 
         } catch (err) {
-            console.error(err, " Failed to create a new faction.")
+            console.error(err, "Failed to Update Membership Role.")
+            toast.error(" Failed to Update Membership Role")
+
         }
     }
     async function updateName(targetTeam: Models.Team, name: string) {
@@ -156,9 +181,11 @@ function useFactions() {
                 name,
             });
 
-            console.log(result);
+            toast.success(" Faction Name Updated")
+
         } catch (err) {
-            console.error(err, " Failed to create a new faction.")
+            console.error(err, " Failed to Update Faction Name.")
+            toast.error(" Failed to Update Faction Name.")
         }
     }
 

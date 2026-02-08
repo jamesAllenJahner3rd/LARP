@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { getClient, getAuthenticatedAccount } from "@/lib/appwrite";
 import { useAuth } from "@/app/providers/AuthProvider";
 import Image from 'next/image'
@@ -36,13 +36,13 @@ const CharacterPage = () => {
     const TABLE_ID = "characters"
 
 
-    const client = getClient()
+    const client = getClient();
     const tableDB = new TablesDB(client);
     const { loggedInUser, logout } = useAuth();
-    const [error, setError] = useState(null)
+    const [error, setError] = useState(null);
     const [characterSelected, setCharacterSelected] = useState<CharacterTypes.CompleteCharacterSheet | null>(null);
     const [characterList, setCharacterList] = useState<CharacterTypes.CompleteCharacterSheet[] | null>(null);
-
+    const storedRef = useRef("");
     useEffect(() => {
         let active = true;
         const fetchData = async () => {
@@ -69,8 +69,22 @@ const CharacterPage = () => {
         fetchData();
         return () => { active = false };
     }, [DATABASE_ID, TABLE_ID,])
+
+
     useEffect(() => {
-        localStorage.setItem("characterSelected", JSON.stringify(characterSelected))
+        if (!storedRef.current) {
+            storedRef.current = localStorage.getItem("characterSelected")
+
+            if (storedRef.current) {
+                setCharacterSelected(JSON.parse(localStorage.getItem("characterSelected")))
+            }
+        }
+        if (JSON.stringify(characterSelected) !== storedRef.current) {
+            localStorage.setItem("characterSelected", JSON.stringify(characterSelected))
+            storedRef.current = JSON.stringify(characterSelected)
+        }
+
+
     }, [characterSelected])
     async function handleCharacterInfo(i: number) {
         setCharacterSelected({
