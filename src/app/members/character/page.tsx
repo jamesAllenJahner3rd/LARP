@@ -126,11 +126,11 @@ const CharacterPage = () => {
                     <section className=" flex flex-col w-full h-5/7 bg-[url(/images/parchment.png)] overflow-auto" id="Character">
                         <section id="primaryAndImage" className='flex flex-row w-7/7'>
                             <section className='flex md:max-w-fit md:w-2/3 flex-col' id="notDescription">
-                                <section className='flex flex-col justify-between w-full' id="main&Image">
-                                    <div className='flex'>
+                                <section className='flex  flex-col justify-between w-full' id="main&Image">
+                                    <div className='flex justify-center'>
                                         <div>
-                                            <h1 className=''>Your Characters </h1>
-                                            <dl className='grid grid-cols-2  w-full '>
+                                            <h1 className='flex '>Your Characters </h1>
+                                            <dl className='grid grid-cols-2  w-full  '>
                                                 <dt className='text-end'>Name: </dt>
                                                 <dd className='text-center'>{characterSelected.name}</dd>
                                                 <dt className='text-end'>XP: </dt>
@@ -150,20 +150,20 @@ const CharacterPage = () => {
 
                                 </section>
 
-                                <section id='tools' className=' flex flex-col '>
+                                <section id='tools' className=' flex flex-col mx-2'>
 
-                                    <table border={1} className="grid-cols-3 grid-row-3 w-full border-1 p-1 border-collapse ">
+                                    <table border={1} className="grid-cols-3 grid-row-3 w-full border-1  border-collapse ">
                                         <thead className="text-center">
                                             <tr>
                                                 <th>Item</th>
-                                                <th scope='col'>Light</th>
-                                                <th scope="col">Medium</th>
-                                                <th scope="col">Heavy</th>
+                                                <th scope='col' className="pr-1">Light</th>
+                                                <th scope="col" className="pr-1">Medium</th>
+                                                <th scope="col" className="pr-1">Heavy</th>
                                             </tr>
                                         </thead>
-                                        <tbody className=''>
+                                        <tbody >
                                             <tr>
-                                                <th scope="row" className='text-end'>Weapons:</th>
+                                                <th scope="row" className='text-end pl-1'>Weapons:</th>
                                                 <td className="text-center">{characterSelected.lightWeapons ? "\u2705" : "\u26D4"}</td>
                                                 <td className="text-center">{characterSelected.mediumWeapons ? "\u2705" : "\u26D4"}</td>
                                                 <td className="text-center">{characterSelected.heavyWeapons ? "\u2705" : "\u26D4"}</td>
@@ -182,7 +182,7 @@ const CharacterPage = () => {
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <dl className='grid grid-cols-2 w-full border-1 border-collapse'>Clothes:
+                                    <dl className='grid grid-cols-2 w-full border-1 border-collapse pl-1'>Clothes:
                                         <dt className='text-end col-start-1'>White: </dt>
                                         <dd className='text-center'>{characterSelected.whiteCloth}</dd>
                                         <dt className='text-end col-start-1'>Green: </dt>
@@ -200,16 +200,16 @@ const CharacterPage = () => {
                                 sizes="100%" className='max-w-[500px] w-1/2  flex h-fit ' />
                         </section>
 
-                        <section className='flex flex-col w-full' id="description">
+                        <section className='flex flex-col w-full p-2' id="description">
                             <h1>Description:</h1>
                             <p>{characterSelected.history}</p>
                         </section>
-                        <section className='flex flex-col w-full' id="description">
+                        <section className='flex flex-col w-full p-2' id="description">
                             <h1>Racial Ability:</h1>
                             <h2>{characterSelected.raceAbilities}</h2>
                             <p>{characterSelected.raceAbilityDescription}</p>
                         </section>
-                        <section>
+                        <section className='p-2'>
                             <h1>Class Abilities:</h1>
                             <ul>
                                 {characterSelected?.classAbilities?.map(ability => (

@@ -27,7 +27,7 @@ function Factions() {
     const [targetEmail, setTargetEmail] = useState<string>("")
     const [updateTeamName, setUpdateTeamName] = useState<string>("")
     const [newRoles, setNewRoles] = useState("")
-    setUpdateTeamName
+    const [myID, setMyID] = useState("")
 
     const {
         updateName,//functions
@@ -95,32 +95,35 @@ function Factions() {
 
 
     return (
-        <><span>{newTeamName}</span>
-            <span>{memberEmail}</span>
-            <FactionActions
-                updateName={updateName}
-                updateMmbership={updateMembership}
-                updateMembershipStatus={updateMembershipStatus}
-                list={list}
-                listMemberships={listMemberships}
-                getMembership={getMembership}
-                deleteTeam={deleteTeam}
-                deleteMembership={deleteMembership}
-                createFaction={createFaction}
-                createMembership={createMembership}
-                setMemberEmail={setMemberEmail}
-                memberEmail={memberEmail}
-                setNewTeamName={setNewTeamName}
-                newTeamName={newTeamName}
-                targetOwnedTeam={targetOwnedTeam}
-                setUpdateTeamName={setUpdateTeamName}
-                updateTeamName={updateTeamName}
-                setNewRoles={setNewRoles}
-                newRoles={newRoles}
-                targetTeam={targetTeam}
-            />
+        <section className="flex flex-col"> <h1 className='h1 flex justify-center m-5 text-black'>Character Creation</h1>
+            <section className="flex md:flex-row flex-col">
+                <FactionActions
+                    updateName={updateName}
+                    updateMembership={updateMembership}
+                    updateMembershipStatus={updateMembershipStatus}
+                    list={list}
+                    listMemberships={listMemberships}
+                    getMembership={getMembership}
+                    deleteTeam={deleteTeam}
+                    deleteMembership={deleteMembership}
+                    createFaction={createFaction}
+                    createMembership={createMembership}
+                    setMemberEmail={setMemberEmail}
+                    memberEmail={memberEmail}
+                    setNewTeamName={setNewTeamName}
+                    newTeamName={newTeamName}
+                    targetOwnedTeam={targetOwnedTeam}
+                    setUpdateTeamName={setUpdateTeamName}
+                    updateTeamName={updateTeamName}
+                    setNewRoles={setNewRoles}
+                    newRoles={newRoles}
+                    targetTeam={targetTeam}
+                    selectedMemberId={selectedMemberId}
 
-            <div className="mt-4">
+                    selectedTeamIsOwned={selectedTeamIsOwned}
+                />
+
+
                 <FactionList
                     ownedTeams={ownedTeams}
                     allTeams={allTeams}
@@ -130,6 +133,7 @@ function Factions() {
                     setTargetTeam={setTargetTeam}
                     setTargetOwnedTeam={setTargetOwnedTeam}
                     loadMembersForTeam={loadMembersForTeam}
+                    setSelectedMemberId={setSelectedMemberId}
                 />
 
                 <MemberList
@@ -144,8 +148,9 @@ function Factions() {
                     selectedTeamIsOwned={selectedTeamIsOwned}
                     setTargetOwnedTeam={setTargetOwnedTeam}
                 />
-            </div>
-        </>
+
+            </section>
+        </section>
     )
 }
 export default Factions

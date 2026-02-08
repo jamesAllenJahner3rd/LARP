@@ -15,15 +15,17 @@ function MemberList({
 ) {
 
     return (
-        <>
+        <div className='border-2 border-black rounded-2xl w-full justify-self-center flex flex-col my-2 md:mx-2 bg-neutral-400 pb-2'>
+            <h5 className=" mx-5 ">(Pick One)</h5>
+            <h2 className=" mx-5 mt-0 mb-2">Members:</h2>
             {selectedTeamId && (
-                <div className="mt-4">
-                    <div className="mb-2">Members</div>
-                    <div className="flex gap-2 flex-wrap">
+                <div className="">
+
+                    <div className="flex gap-2 justify-center flex-wrap">
                         {members.map((currentMember: any) => (
                             <button
                                 key={currentMember.$id || currentMember.userId}
-                                className={`btn ${selectedMemberId === (currentMember.$id || currentMember.userId) ? "btn-accent" : ""}`}
+                                className={`btn btn-primary ${selectedMemberId === (currentMember.$id || currentMember.userId) ? "btn-accent" : "btn-primary"}`}
                                 onClick={() => {
                                     setSelectedMemberId(currentMember.$id || currentMember.userId);
                                     setSelectedMemberEmail(currentMember.email || currentMember.name || null);
@@ -38,8 +40,9 @@ function MemberList({
                         ))}
                     </div>
                 </div>
-            )}
-        </>
+            )
+            }
+        </div >
     )
 }
 export default MemberList

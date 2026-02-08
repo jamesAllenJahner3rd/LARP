@@ -25,7 +25,7 @@ const CharacterSummary = ({
 
     // public/images/parchment.png
     return (
-        <section className='w-full md:w-2/3 block md:flex flex-col bg-[url(/images/parchment.png)]'>
+        <section className='w-full md:w-2/3 p-2 block md:flex flex-col bg-[url(/images/parchment.png)]'>
             <div className='block md:flex justify-between'>
                 <div>
 
