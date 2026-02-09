@@ -2,7 +2,7 @@ import React from 'react'
 import Image from 'next/image'
 const Events = () => {
     return (
-        <section>
+        <section className='overflow-y-auto'>
 
             <section className="var(--background) md:flex md:flex-row md:m-4">
                 <Image

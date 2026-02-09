@@ -31,11 +31,12 @@ import { CharacterContext } from '@/app/members/layout'
  *   - Responsive behavior adapts layout for mobile and desktop views.
  */
 
-const NavBar = () => {
+const NavBar = ({ clickedTab, setClickedTab }) => {
     const { characterSelected, setCharacterSelected } = useContext(CharacterContext)
     const { loggedInUser, logout, setLoggedInUser } = useAuth();
     const pathname = usePathname();
     const [loaded, setLoaded] = useState(false);
+
     const router = useRouter();
     useEffect(() => {
         const timeout = setTimeout(() => setLoaded(true), 1000); // slight delay to trigger transition
@@ -61,9 +62,10 @@ const NavBar = () => {
         }
 
     }
-    const tabLinks = "md:bg-[var(--navbar-background)] md:w-35 md:flex md:flex-col md:h-auto md:pl-2 md:shadow-2xs md:border-1 md:border-black md:rounded-[50px_0_0_50px]";
-    const mobileLinks = " bg-[var(--navbar-background)] text-2xl  px-5 btn btn-primary "
+    const tabLinks = "md: md:w-35 md:flex md:flex-col md:h-auto md:pl-2 md:shadow-2xs md:border-1 md:border-black md:rounded-[50px_0_0_50px]";
+    const mobileLinks = " text-2xl  px-5 btn btn-primary "
     const LinksCss = `${(openMenu && window.innerWidth < 481) ? mobileLinks : tabLinks
+
         } `
 
     return (
@@ -81,17 +83,93 @@ const NavBar = () => {
                     priority
                     className="rounded-lg w-full size-1/1 "
                 /></Link>
-                <Link className={`${LinksCss} `} onClick={() => setOpenMenu(!openMenu)} href="/members/userSettings"  >Account settings</Link>
-                <Link className={`${LinksCss} `} onClick={() => setOpenMenu(!openMenu)} href="/members/create-character" >Create Character</Link>
-                <Link className={`${LinksCss} `} onClick={() => setOpenMenu(!openMenu)} href="/members/character" >Characters</Link>
-                {characterSelected && <Link className={`${LinksCss} `} onClick={() => setOpenMenu(!openMenu)} href="/members/slack" >Role Play</Link>}
-                <Link className={`${LinksCss} `} onClick={() => setOpenMenu(!openMenu)} href="/members/factions" >Factions</Link>
-                <Link className={`${LinksCss} `} onClick={() => setOpenMenu(!openMenu)} href="/events" >Events</Link>
-                <Link className={`${LinksCss} `} onClick={() => setOpenMenu(!openMenu)} href="/admin" >Admin Tools</Link>
-                <button className={`${LinksCss} `} onClick={() => {
-                    setOpenMenu(!openMenu);
-                    logoutHandler()
-                }}>Log Out</button>
+                <Link
+                    className={`${LinksCss} ${clickedTab === 1 ? "bg-gray-500" : "md:bg-[var(--navbar-background)]"} `}
+                    onClick={
+                        () => {
+                            setOpenMenu(!openMenu);
+                            setClickedTab(() => 1);
+                        }
+                    }
+                    href="/members/userSettings"
+                >Account settings
+                </Link>
+                <Link
+                    className={`${LinksCss} ${clickedTab === 2 ? "  md:bg-gray-500" : "md:bg-[var(--navbar-background)]"} `}
+                    onClick={
+                        () => {
+                            setOpenMenu(!openMenu);
+                            setClickedTab(() => 2);
+                        }
+                    }
+                    href="/members/create-character"
+                >Create Character
+                </Link>
+                <Link
+                    className={`${LinksCss} ${clickedTab === 3 ? "  md:bg-gray-500" : "md:bg-[var(--navbar-background)]"} `}
+                    onClick={
+                        () => {
+                            setOpenMenu(!openMenu);
+                            setClickedTab(() => 3);
+                        }
+                    }
+                    href="/members/character"
+                >Characters
+                </Link>
+                {characterSelected &&
+                    <Link
+                        className={`${LinksCss} ${clickedTab === 4 ? "  md:bg-gray-500" : "md:bg-[var(--navbar-background)]"}`}
+                        onClick={
+                            () => {
+                                setOpenMenu(!openMenu);
+                                setClickedTab(() => 4);
+                            }
+                        }
+                        href="/members/slack"
+                    >Role Play
+                    </Link>}
+                <Link
+                    className={`${LinksCss} ${clickedTab === 5 ? "  md:bg-gray-500" : "md:bg-[var(--navbar-background)]"} `}
+                    onClick={
+                        () => {
+                            setOpenMenu(!openMenu);
+                            setClickedTab(() => 5);
+                        }
+                    }
+                    href="/members/factions"
+                >Factions
+                </Link>
+                <button
+
+                    className={`${LinksCss} items-start ${clickedTab === 6 ? "  md:bg-gray-500" : "md:bg-[var(--navbar-background)]"} `}
+                    onClick={
+                        () => {
+                            setOpenMenu(!openMenu);
+                            setClickedTab(() => 6);
+                        }
+                    }
+
+                >Events</button>
+                <Link
+                    className={`${LinksCss} ${clickedTab === 7 ? "  md:bg-gray-500" : "md:bg-[var(--navbar-background)]"} `}
+                    onClick={
+                        () => {
+                            setOpenMenu(!openMenu);
+                            setClickedTab(() => 7);
+                        }}
+                    href="/admin"
+                >Admin Tools
+                </Link>
+                <button
+                    className={`${LinksCss} items-start bg-[var(--navbar-background)]`}
+                    onClick={
+                        () => {
+                            setOpenMenu(!openMenu);
+                            logoutHandler()
+                        }
+                    }
+                >Log Out
+                </button>
             </nav >
 
         </>
