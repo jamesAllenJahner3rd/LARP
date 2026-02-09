@@ -1,9 +1,9 @@
 "use client";
 
 import { useAuth } from "@/app/providers/AuthProvider";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useContext } from "react";
 import { getClient, getAuthenticatedAccount } from "@/lib/appwrite";
-
+import { CharacterContext } from "../layout";
 import Image from 'next/image'
 import { TablesDB, Query, Databases } from "appwrite";
 import type { CompleteCharacterSheet } from "@/lib/types/characterTypes"
@@ -46,7 +46,7 @@ import type { CompleteCharacterSheet } from "@/lib/types/characterTypes"
  *   - SSE is sensitive to caching; keep the backend headers strict.
  */
 const SlackPage = (characterId) => {
-    const [characterSelected, setCharacterSelected] = useState<CompleteCharacterSheet>(null)
+    const { characterSelected, setCharacterSelected } = useContext(CharacterContext)
     const { loggedInUser, logout } = useAuth();
     const seen = useRef(new Set());
     const [messages, setMessages] = useState([]);

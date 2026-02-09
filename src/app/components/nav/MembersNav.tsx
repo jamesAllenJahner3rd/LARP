@@ -1,12 +1,13 @@
 "use client"
 import Link from 'next/link'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import HamburgerMenu from '../HamburgerMenu'
 import Image from 'next/image'
 import { usePathname, useRouter } from "next/navigation"
 import { useAuth } from "@/app/providers/AuthProvider";
 import { getAuthenticatedAccount } from '@/lib/appwrite'
 import { toast } from 'react-toastify'
+import { CharacterContext } from '@/app/members/layout'
 
 /**
  * MembersNav
@@ -31,6 +32,7 @@ import { toast } from 'react-toastify'
  */
 
 const NavBar = () => {
+    const { characterSelected, setCharacterSelected } = useContext(CharacterContext)
     const { loggedInUser, logout, setLoggedInUser } = useAuth();
     const pathname = usePathname();
     const [loaded, setLoaded] = useState(false);
@@ -82,15 +84,15 @@ const NavBar = () => {
                 <Link className={`${LinksCss} `} onClick={() => setOpenMenu(!openMenu)} href="/members/userSettings"  >Account settings</Link>
                 <Link className={`${LinksCss} `} onClick={() => setOpenMenu(!openMenu)} href="/members/create-character" >Create Character</Link>
                 <Link className={`${LinksCss} `} onClick={() => setOpenMenu(!openMenu)} href="/members/character" >Characters</Link>
+                {characterSelected && <Link className={`${LinksCss} `} onClick={() => setOpenMenu(!openMenu)} href="/members/slack" >Role Play</Link>}
                 <Link className={`${LinksCss} `} onClick={() => setOpenMenu(!openMenu)} href="/members/factions" >Factions</Link>
-                <Link className={`${LinksCss} `} onClick={() => setOpenMenu(!openMenu)} href="/members/slack" >Slack</Link>
                 <Link className={`${LinksCss} `} onClick={() => setOpenMenu(!openMenu)} href="/events" >Events</Link>
                 <Link className={`${LinksCss} `} onClick={() => setOpenMenu(!openMenu)} href="/admin" >Admin Tools</Link>
                 <button className={`${LinksCss} `} onClick={() => {
                     setOpenMenu(!openMenu);
                     logoutHandler()
                 }}>Log Out</button>
-            </nav>
+            </nav >
 
         </>
     )

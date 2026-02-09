@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useContext, useState, useRef } from 'react'
 import { getClient, getAuthenticatedAccount } from "@/lib/appwrite";
 import { useAuth } from "@/app/providers/AuthProvider";
 import Image from 'next/image'
@@ -8,6 +8,7 @@ import { getClassAbilitiesArray, getClassAndLevelMap } from './getCharacterData'
 import { Models } from 'appwrite';
 
 import type * as CharacterTypes from '@/lib/types/characterTypes';
+import { CharacterContext } from '../layout';
 
 /**
  * CharacterPage
@@ -30,6 +31,7 @@ import type * as CharacterTypes from '@/lib/types/characterTypes';
 
  */
 
+
 const CharacterPage = () => {
 
     const DATABASE_ID = process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID || "68ccc1ab0001250042a8"
@@ -40,7 +42,7 @@ const CharacterPage = () => {
     const tableDB = new TablesDB(client);
     const { loggedInUser, logout } = useAuth();
     const [error, setError] = useState(null);
-    const [characterSelected, setCharacterSelected] = useState<CharacterTypes.CompleteCharacterSheet | null>(null);
+    const { characterSelected, setCharacterSelected } = useContext(CharacterContext)
     const [characterList, setCharacterList] = useState<CharacterTypes.CompleteCharacterSheet[] | null>(null);
     const storedRef = useRef("");
     useEffect(() => {
