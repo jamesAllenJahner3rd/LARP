@@ -89,40 +89,48 @@ const settings = () => {
     }
 
     return (
-        <ol className='flex justify-center center-self flex-col'>
-            <li><h1 className='h1 flex justify-center m-5 text-black'>User Settings Page</h1></li>
-            <li onClick={() => setShowEmailForm(!showEmailForm)} className=' btn btn-secondary cursor-pointer' >Email address</li>
-            {showEmailForm && <form
-                onSubmit={handleEmailUpdate}
-                autoComplete='off'
-                id='newEmailForm'
-                className='border-2 border-black rounded-2xl w-full  content-center self-center md:w-[20rem] flex flex-col  bg-neutral-500'
-            >
-                <div className='flex justify-between'>
-                    <label htmlFor='newEmail' >New Email:</label>
-                    <input
-                        type="email"
-                        name='newEmail'
-                        required
-                        autoComplete='off'
-                        className='text-black border-2 border-black rounded-2xl px-2 bg-white m-2'
-                    // onChange={(e) => setNewEmail(e.target.value)} 
-                    />
-                </div>
-                <div className='flex justify-between'>
-                    <label htmlFor='duplicateEmail' >Confirm Email:</label>
-                    <input type="email" name='duplicateEmail' required autoComplete='off' className='text-black border-2 border-black rounded-2xl px-2 bg-white m-2' />
+        <div className='border-2 border-black rounded-2xl w-fit-content h-auto flex flex-col my-2 md:mx-2 bg-neutral-400  justify-center justify-self-center  center-self'>
+            <h1 className='h1 flex justify-center m-5 text-black'>User Settings Page</h1>
+            <button
+                className={` btn ${!showEmailForm ? "btn-primary" : "btn-accent"}  `}
+                onClick={() => setShowEmailForm(!showEmailForm)}
+            >Update Email address</button>
+            {
+                showEmailForm && <form
+                    onSubmit={handleEmailUpdate}
+                    autoComplete='off'
+                    id='newEmailForm'
+                    className='border-2 border-black rounded-2xl w-full  content-center self-center md:w-[20rem] flex flex-col  bg-neutral-500'
+                >
+                    <div className='flex justify-between'>
+                        <label htmlFor='newEmail' >New Email:</label>
+                        <input
+                            type="email"
+                            name='newEmail'
+                            required
+                            autoComplete='off'
+                            className='text-black border-2 border-black rounded-2xl px-2 bg-white m-2'
+                        // onChange={(e) => setNewEmail(e.target.value)} 
+                        />
+                    </div>
+                    <div className='flex justify-between'>
+                        <label htmlFor='duplicateEmail' >Confirm Email:</label>
+                        <input type="email" name='duplicateEmail' required autoComplete='off' className='text-black border-2 border-black rounded-2xl px-2 bg-white m-2' />
 
-                </div>
-                <div className='flex justify-between'>
-                    <label htmlFor='password' >Password:</label>
-                    <input type="password" name='password' autoComplete='password' required className='text-black border-2 border-black rounded-2xl px-2 bg-white m-2' />
-                </div>
-                <button type='submit' className='btn btn-secondary'>
-                    Update Email
-                </button>
-            </form>}
-            <li onClick={() => setShowPasswordForm(!showPasswordForm)} className='btn btn-secondary'>Password change</li>
+                    </div>
+                    <div className='flex justify-between'>
+                        <label htmlFor='password' >Password:</label>
+                        <input type="password" name='password' autoComplete='password' required className='text-black border-2 border-black rounded-2xl px-2 bg-white m-2' />
+                    </div>
+                    <button type='submit' className='btn btn-secondary'>
+                        Update Email
+                    </button>
+                </form>
+            }
+            <button
+                className={` btn ${!showPasswordForm ? "btn-primary" : "btn-accent"}  `}
+                onClick={() => setShowPasswordForm(!showPasswordForm)}
+            >Update Password </button>
             {
                 showPasswordForm && <form
                     onSubmit={handlePasswordUpdate}
@@ -153,8 +161,12 @@ const settings = () => {
                     </button>
                 </form>
             }
-            <li><button className='btn btn-secondary' onClick={() => setShowDeletionForm(!showDeletionForm)}> Account deletion</button></li>{showDeletionForm && <form onSubmit={handleDeletionForm}><button type="submit" className='btn btn-secondary'>???Are you sure????</button></form>}
-        </ol >
+            <button
+                className={` btn ${!showDeletionForm ? "btn-primary" : "btn-accent"}  `}
+                onClick={() => setShowDeletionForm(!showDeletionForm)}> Account deletion
+            </button>
+            {showDeletionForm && <form onSubmit={handleDeletionForm}><button type="submit" className='btn btn-secondary'>???Are you sure????</button></form>}
+        </div >
     )
 }
 
