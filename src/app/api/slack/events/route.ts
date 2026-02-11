@@ -72,7 +72,6 @@ export async function POST(req: Request) {
 
   const body = JSON.parse(verification.rawBody!);
   const userId = body.event.user;
-  console.dir(body)
   let username: string = "";
   let avatar: string = "";
   let email: string = "";
@@ -183,14 +182,10 @@ export async function POST(req: Request) {
             Query.equal('name', username.trim()),
           ]
         })
-        console.log("image")
-        console.dir(response.documents[0])
         avatar = response.documents[0].imageUrl || "/images/default.png";
-        console.dir(avatar)
       } catch (error) {
         console.error(error, "Couldn't Get character Info.");
       };
-      console.dir(avatar)
       isBot = true;
       text = body.event.text.split(":")[1].trim();
     }

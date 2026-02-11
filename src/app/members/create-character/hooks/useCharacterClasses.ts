@@ -170,8 +170,6 @@ const useCharacterClasses = ({
   }, [characterClasses, classList]);
 
   const decreaseLevel = useCallback(() => {
-    console.log("decrease pressed");
-
     const currentLevel = formInputs.level;
     const currentClass = formInputs.class;
 

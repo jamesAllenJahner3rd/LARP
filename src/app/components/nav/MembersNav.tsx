@@ -32,8 +32,9 @@ import { CharacterContext } from '@/app/members/layout'
  */
 
 const NavBar = ({ clickedTab, setClickedTab }) => {
+    const { logout, loggedInUser, isAdmin, setLoggedInUser } = useAuth();
     const { characterSelected, setCharacterSelected } = useContext(CharacterContext)
-    const { loggedInUser, logout, setLoggedInUser } = useAuth();
+
     const pathname = usePathname();
     const [loaded, setLoaded] = useState(false);
 
@@ -73,7 +74,7 @@ const NavBar = ({ clickedTab, setClickedTab }) => {
         <>
             <HamburgerMenu openMenu={openMenu} setOpenMenu={setOpenMenu} />
 
-            <nav className={`   md:items-end md:mt-5 ${(openMenu && window.innerWidth < 481) ? "flex" : "hidden"} absolute  w-1/1 items-center md:relative md:flex flex-col md:gap-1 md:w-1/7 z-3`}>
+            <nav className={`   md:items-end md:mt-5 ${(openMenu && window.innerWidth < 481) ? "flex bg-neutral-400 rounded-full  border-2 border-black " : "hidden"} absolute  w-1/1 items-center md:relative md:flex flex-col md:gap-1 md:w-1/7 z-3`}>
                 <Link href="/" className="rounded-lg w-full" onClick={() => setOpenMenu(!openMenu)}><Image
                     src="/images/NavBarIcon.webp"
                     alt="Group of characters ready to adventure"
@@ -150,7 +151,7 @@ const NavBar = ({ clickedTab, setClickedTab }) => {
                     }
 
                 >Events</button>
-                <Link
+                {isAdmin && <Link
                     className={`${LinksCss} ${clickedTab === 7 ? "  md:bg-gray-500" : "md:bg-[var(--navbar-background)]"} `}
                     onClick={
                         () => {
@@ -159,7 +160,7 @@ const NavBar = ({ clickedTab, setClickedTab }) => {
                         }}
                     href="/admin"
                 >Admin Tools
-                </Link>
+                </Link>}
                 <button
                     className={`${LinksCss} items-start bg-[var(--navbar-background)]`}
                     onClick={

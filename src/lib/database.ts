@@ -44,7 +44,6 @@ export async function getData(
     const result = withTimeout(
       rowPromise.getRow(dbId, tableId, rowId, queries),
     );
-    console.log("Document retrieved:", dbId);
     return result;
   } catch (error) {
     console.error("Failed to retrieve document:", error);
@@ -58,8 +57,6 @@ export async function getList(
   try {
     const rowPromise = await tablesDB();
     const result = withTimeout(rowPromise.listRows(dbId, tableId));
-    console.log("Table was found:", dbId);
-
     return result;
   } catch (error) {
     console.error("Failed to create document:", error);
@@ -82,7 +79,6 @@ export async function postData<Row extends Models.Row = Models.DefaultRow>(
     const result = await withTimeout(
       rowPromise.createRow(dbId, tableId, rowId, postData, permissions),
     );
-    console.log("Document created:", dbId);
     return result;
   } catch (error) {
     console.error("Failed to create document:", error);
@@ -101,8 +97,6 @@ export async function patchData(
     const result = await withTimeout(
       rowPromise.updateRow(dbId, tableId, rowId, putData, permissions),
     );
-    console.log("Document updated:", dbId);
-    return result;
   } catch (error) {
     console.error("Failed to update document:", error);
     throw error;
@@ -117,7 +111,6 @@ export async function deleteData(
     const rowPromise = await tablesDB();
     const result = withTimeout(rowPromise.deleteRow(dbId, tableId, rowId));
 
-    console.log("Document deleted:", dbId);
   } catch (error) {
     console.error("Failed to delete document:", error);
     throw error;

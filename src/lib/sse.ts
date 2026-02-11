@@ -20,12 +20,10 @@ const clients = new Set<ReadableStreamDefaultController<string>>();
 
 export function addClient(controller: ReadableStreamDefaultController<string>) {
     clients.add(controller);
-    console.log("SSE: client added, total=", clients.size);
 }
 
 export function removeClient(controller: ReadableStreamDefaultController<string>) {
     if (clients.delete(controller)) {
-        console.log("SSE: client removed, total=", clients.size);
     }
 }
 

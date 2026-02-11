@@ -44,6 +44,7 @@ const CharacterPage = () => {
     const [error, setError] = useState(null);
     const { characterSelected, setCharacterSelected } = useContext(CharacterContext)
     const [characterList, setCharacterList] = useState<CharacterTypes.CompleteCharacterSheet[] | null>(null);
+    const [showDeletionForm, setShowDeletionForm] = useState<boolean>(false)
     const storedRef = useRef("");
     useEffect(() => {
         let active = true;
@@ -131,9 +132,19 @@ const CharacterPage = () => {
             "classAbilities": Ablities.map(row => ({ title: row.title, description: row.description })),
         })
         );
-
+    } const handleDeletionForm = async (event) => {
+        event.preventDefault();
+        const account = getAuthenticatedAccount();
+        try {
+            const user = await account.get()
+            await account.updateStatus();
+        } catch (error) {
+            console.error(error, " Authentication errored -usersettings, page.tsx")
+        }
 
     }
+
+
 
     return (
         <>
@@ -214,6 +225,11 @@ const CharacterPage = () => {
                                 width={1200}
                                 height={800}
                                 sizes="100%" className='max-w-[500px] w-1/2  flex h-fit ' />
+                            <button
+                                className={` btn ${!showDeletionForm ? "btn-primary" : "btn-accent"}  `}
+                                onClick={() => setShowDeletionForm(!showDeletionForm)}> Account deletion
+                            </button>
+                            {showDeletionForm && <form onSubmit={handleDeletionForm}><button type="submit" className='btn btn-secondary'>???Are you sure????</button></form>}
                         </section>
 
                         <section className='flex flex-col w-full p-2' id="description">

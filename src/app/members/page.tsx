@@ -7,13 +7,15 @@ const MembersPage = () => {
     const { loggedInUser, logout, isAdmin } = useAuth();
     return (
 
-        <Image
-            src="/images/instructions.webp"
-            alt="Instructions"
-            width={800}
-            height={600}
-        />
+        <figure className="w-fit h-auto">
+            <Image
+                src="/images/instructions.webp"
+                alt="Instructions"
+                width={800}
+                height={600}
 
+            />
+        </figure>
     )
 
 }

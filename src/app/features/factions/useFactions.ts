@@ -35,18 +35,13 @@ function useFactions() {
             email: memberEmail, // optional
             url: process.env.NEXT_PUBLIC_ROOT_URL
         });
-
-        console.log(result);
     }
     async function createFaction(teamname: string) {
-        console.log(teamname, "creating faction")
         try {
             const result = await teamRef.current.create({
                 teamId: ID.unique(),
                 name: teamname,
             });
-
-            console.log(result);
         } catch (err) {
             console.error(err, " Failed to create a new faction.")
         }
@@ -66,8 +61,6 @@ function useFactions() {
                 teamId: targetTeam,
                 membershipId,
             });
-
-            console.log(result);
         } catch (err) {
             console.error(err, " Failed to create a new faction.")
         }
@@ -138,13 +131,11 @@ function useFactions() {
         try {
             const result = await teamRef.current.listMemberships({ teamId });
             const list = result.memberships || [];
-            console.dir(list)
             setMembers(list);
 
         } catch (err) {
             console.error(err, " Failed to list memberships.");
             toast.error(" Failed to get list of memberships")
-
             setMembers([]);
         }
     }
@@ -159,8 +150,6 @@ function useFactions() {
     async function updateMembership(targetOwnedTeam: Models.Team, membershipId: string, newRoles: string = "") {
         try {
             const roles = newRoles.trim().split(" ")
-            console.log(roles)
-
             const result = await teamRef.current.updateMembership({
                 teamId: targetOwnedTeam,
                 membershipId,

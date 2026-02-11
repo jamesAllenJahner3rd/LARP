@@ -17,7 +17,6 @@ export async function getFileURL(bucketId: string, fileId: string) {
         ),
       ),
     ]);
-    console.log(file);
     return file;
   } catch (error) {
     console.error("Failed to get file download URL:", error);

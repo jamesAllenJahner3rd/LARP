@@ -4,9 +4,12 @@ import NavBar from '../components/nav/MembersNav'
 import type { CompleteCharacterSheet } from "@/lib/types/characterTypes"
 import Events from '../(public)/events/page'
 
+
 export const CharacterContext = createContext<{
-    characterSelected: CompleteCharacterSheet | null
-    setCharacterSelected: React.Dispatch<React.SetStateAction<CompleteCharacterSheet | null>>
+    characterSelected: CompleteCharacterSheet | null;
+    setCharacterSelected: React.Dispatch<React.SetStateAction<CompleteCharacterSheet | null>>;
+
+
 }>({
     characterSelected: null,
     setCharacterSelected: () => { }

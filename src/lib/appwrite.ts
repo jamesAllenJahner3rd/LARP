@@ -69,7 +69,6 @@ export async function getList<T extends Models.Row>(
 export async function uploadClientFile(aFile: File): Promise<string> {
   console.log("uploader triggered");
   const fileId = ID.unique().toString();
-  console.log(fileId);
   const storageClient = await storage();
   const promise = await storageClient.createFile({
     bucketId: process.env.NEXT_PUBLIC_APPWRITE_BUCKET,
@@ -90,7 +89,6 @@ export async function saveCharacter(
 
   const databaseId =
     process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID || "68ccc1ab0001250042a8";
-  console.log("appwrite.ts databaseId", databaseId);
   const client = new Client()
     .setEndpoint("https://nyc.cloud.appwrite.io/v1")
     .setProject(process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID);
@@ -115,10 +113,6 @@ export async function saveCharacter(
         break;
     }
   }
-  console.log(
-    "database,appwrite 2",
-    process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID,
-  );
   try {
     tablesDB.createRow({
       databaseId,
@@ -185,6 +179,6 @@ export async function saveCharacter(
 
     console.log("Character Created");
   } catch (error) {
-    console.log(error, "Character failed to save");
+    console.error(error, "Character failed to save");
   }
 }

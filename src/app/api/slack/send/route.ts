@@ -71,7 +71,5 @@ export async function POST(req: Request) {
     body: JSON.stringify(payload),
   });
   const json = await res.json();
-  console.log("Slack response:", json);
-
   return NextResponse.json({ ok: true });
 }

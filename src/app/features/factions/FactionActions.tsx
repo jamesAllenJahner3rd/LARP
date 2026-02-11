@@ -27,9 +27,6 @@ function FactionActions({ updateName,//functions
     selectedMemberId,
     selectedTeamIsOwned
 }) {
-    console.log(selectedTeamIsOwned)
-    console.dir(targetOwnedTeam)
-    console.dir(targetTeam)
     return (
         <div className="flex flex-col md:mx-2 my-2">
 

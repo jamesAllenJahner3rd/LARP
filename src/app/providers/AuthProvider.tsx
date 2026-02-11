@@ -26,7 +26,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             try {
                 const account = await getAuthenticatedAccount()
                 const currentUser = await account.get();
-                console.log("authProvider currentUser:", currentUser)
                 setIsAdmin(currentUser.labels.includes("admin"))
                 setLoggedInUser(currentUser);
                 if (currentUser && !currentUser.emailVerification) {

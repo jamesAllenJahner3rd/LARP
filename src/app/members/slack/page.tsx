@@ -102,8 +102,6 @@ const SlackPage = (characterId) => {
             events.onerror = (error) => console.log("SSE error:", error);
 
             events.onmessage = (e) => {
-                console.log("SSE:", e.data);
-
                 const payload = JSON.parse(e.data);
                 if (!seen.current.has(payload.ts)) {
                     seen.current.add(payload.ts)
@@ -247,7 +245,6 @@ const SlackPage = (characterId) => {
                 <div className="flex-1 overflow-y-auto space-y-2 p-4">
                     {messages.map((m, i) => (
                         <div key={i} className="p-2 bg-gray-100 rounded">
-                            {/* {console.dir(m)} */}
                             <div className="flex flex-row"><Image src={`${m.avatar}`} alt="character Image"
                                 width={ICON_SIZE}
                                 height={ICON_SIZE}
