@@ -3,11 +3,12 @@
 import React, { useEffect, useState } from "react";
 export const dynamic = "force-dynamic";
 import useFactions from "@/app/features/factions/useFactions"
-import { Client, ID, Teams, Account, Models } from "appwrite";
+import { Teams, Models } from "appwrite";
 import { getClient, getAuthenticatedAccount } from "@/lib/appwrite";
 import FactionActions from "@/app/features/factions/FactionActions";
 import FactionList from "@/app/features/factions/FactionList";
-import MemberList from "@/app/features/factions/MemberList"; const account = getAuthenticatedAccount()
+import MemberList from "@/app/features/factions/MemberList";
+const account = getAuthenticatedAccount()
 const client = getClient()
 
 const teams = new Teams(client);
