@@ -15,12 +15,12 @@ function SettingsForms({
     setPasswordFocus
 }) {
     return (
-        <section className={`border-2 border-black rounded-2xl ${isAdmin ? " w-full md:w-1/3" : "w-full md:w-fit-content"} h-auto flex  flex-col my-2 md:mx-2 bg-neutral-400  justify-center justify-self-center  center-self md:justify-start`}>
+        <section className={`border-2 border-black rounded-2xl ${isAdmin ? " w-full md:w-1/3" : "w-full md:w-fit-content"} h-auto flex flex-col my-2 md:mx-2 bg-neutral-400  justify-center justify-self-center  center-self md:justify-start`}>
             <h1 className='h1 flex justify-center m-5 text-black'>User Settings Page</h1>
             <button
                 className={` btn ${!showEmailForm ? "btn-primary" : "btn-accent"}  `}
                 onClick={() => setShowEmailForm(!showEmailForm)}
-            >Update Email address</button>
+            >Update Email address </button>
             {
                 showEmailForm && <form
                     onSubmit={handleEmailUpdate}

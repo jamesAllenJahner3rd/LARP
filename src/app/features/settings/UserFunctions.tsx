@@ -5,7 +5,10 @@ import React from "react"
 // Manages overall layout and conditional rendering based on isAdmin and loggedInUser.
 function UserFunctions({
     targetUser,
-    handleSessions, }
+    handleSessions,
+    islabelsButtonPressed,
+    setIslabelsButtonPressed
+}
 ) {
     return (
         <div className='border-2 border-black rounded-2xl w-full md:w-1/2 justify-self-center   flex flex-col my-2 md:mx-2 bg-neutral-400'>
@@ -18,7 +21,8 @@ function UserFunctions({
                 >listSessions
                 </button>
                 <button
-                    className="btn btn-secondary"
+                    className={`btn ${islabelsButtonPressed ? "btn-btn-primary" : "btn-accent"}`}
+                    onClick={() => setIslabelsButtonPressed((aTruthy) => !aTruthy)}
                 // onClick={() => updateLabels()}
                 >updateLabels
                 </button>
