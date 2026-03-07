@@ -1,11 +1,16 @@
 'use client'
-import React from "react"
+import React, { Dispatch } from "react"
+import { Models } from "appwrite";
 //Displays the user sessions list UI.
 
 // Receives userSessions as props.
-
-function SessionList({
-    userSessions }
+type Props = {
+    userSessions: Models.SessionList;
+    setIslabelsButtonPressed: React.Dispatch<React.SetStateAction<boolean>>;
+};
+function SessionListings({
+    userSessions,
+    setIslabelsButtonPressed }: Props
 
 
 ) {
@@ -65,4 +70,4 @@ function SessionList({
         </div>
     )
 }
-export default SessionList
+export default SessionListings

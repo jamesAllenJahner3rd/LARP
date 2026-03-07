@@ -9,7 +9,7 @@ import { getSessions } from '@/app/actions/settings/getSessions';
 import useSettings from '@/app/features/settings/useSettings';
 import MemberList from '@/app/features/settings/MemberList';
 import SettingsForms from '@/app/features/settings/SettingsForms';
-import SessionList from '@/app/features/settings/SessionList';
+import SessionListings from '@/app/features/settings/SessionList';
 import UserFunctions from '@/app/features/settings/UserFunctions';
 
 /**
@@ -50,7 +50,7 @@ const settings = () => {
     const [showPasswordForm, setShowPasswordForm] = useState(false);
     const [showEmailForm, setShowEmailForm] = useState(false);
     const [passwordFocus, setPasswordFocus] = useState(false);
-    const [islabelsButtonPressed, setIslabelsButtonPressed] = useState: boolean(false)
+    const [islabelsButtonPressed, setIslabelsButtonPressed] = useState<boolean>(false);
     const {
         showDeletionForm,
         setShowDeletionForm,
@@ -91,9 +91,10 @@ const settings = () => {
 
             {isAdmin && loggedInUser &&
                 <section className='w-full h-3rem max-h-[30rem]  border-2 border-black rounded-2xl  md:w-1/2 justify-self-center flex flex-col my-2 md:mx-2 bg-neutral-400'>
-                    <SessionList userSessions={userSessions} />
-                    <
-                        setIslabelsButtonPressed={setIslabelsButtonPressed} />
+                    <SessionListings
+                        userSessions={userSessions}
+                        setIslabelsButtonPressed={setIslabelsButtonPressed}
+                    />
                 </section>
 
             }
