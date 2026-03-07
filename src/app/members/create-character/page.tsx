@@ -1,19 +1,205 @@
 "use client";
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState } from "react";
-import { account, ID } from "@/lib/appwrite";
+import { getClient, getList } from "@/lib/appwrite";
+import CharacterForm from './CharacterForm';
+import { Query, TablesDB, Models } from "appwrite";
+// import { RowList } from "@/types";
 import { useAuth } from "@/app/providers/AuthProvider";
+import Image from "next/image";
+import type * as CharacterTypes from "@/lib/types/characterTypes"
+import CharacterSummary from './CharacterSummary';
+import useCharacterClasses from './hooks/useCharacterClasses';
 
-
+type ClassAbilityProps = {
+    $id: string;
+    class: string;
+    level: number;
+    title: string;
+    scaling: number;
+    description: string;
+}
+const SUBRACE_OPTIONS: Record<string, string[]> = {
+    Chimera: ["Artanos", "Felinos", "Lacetros", "Lykinthros", "Minotaur", "Satyr", "Vulpine"],
+    Dwarf: ["Dark Dwarf", "Hill Dwarf"],
+    Elf: ["Dark Elf", "High Elf", "Wood Elf"],
+    Human: ["Human"],
+    Orc: ["Grunthar Orc", "Moruk Orc", "Uroken Orc"],
+    Troll: ["Jungle Troll"],
+    WeeFolk: ["Buraling", "Gnome", "Halfling"],
+    HalfBreed: ["Half-Elf", "Half-Orc"],
+};
+const DATABASE_ID = "68ccc1ab0001250042a8";
+const CLASS_ABILITES_TABLE_ID = "class_abilities";
+const DEITIES_TABLE_ID = "deities";
+const RACES_TABLE_ID = "races";
+const CLASSES_TABLE_ID = "classes";
+const CLASSNAMES = ["Fighter", "Cleric", "Ranger", "Mage", "Rogue"];
+const DEITIES = ["Celnuntos", "Corin", "Deidre", "Dolus", "Fleatea", "Gromtusk", "Kahlee", "Izaryle", "Melaka", "Osirus", "Ozmodius", "Ragnarous", "Rahul", "Sulis", "Theratis"];
+const RACES = ["Elf", "Dwarf", "Orc", "Chimera", "Troll", "WeeFolk", "HalfBreed"]
 
 const CharacterCreationPage = () => {
-    const { user, logout } = useAuth();
+    const QUERIES = [Query.equal("memberId", "68ccbf0f0026eb9a8d4f")];
+    const { loggedInUser, logout } = useAuth();
+
+    const [character, setCharacter] = useState<CharacterTypes.CompleteCharacterSheet>(
+        {
+            memberId: loggedInUser?.$id,
+            name: "",
+            race: "",
+            subRace: "",
+            raceDescription: "",
+            raceAbilities: "",
+            raceAbilityDescription: "",
+            classDescription: "",
+            deity: "",
+            deityImage: "",
+            deityDescription: "",
+            lightWeapons: false,
+            mediumWeapons: false,
+            heavyWeapons: false,
+            heavyArmor: false,
+            mediumArmor: false,
+            lightArmor: false,
+            lightShield: false,
+            mediumShield: false,
+            heavyShield: false,
+            twoWeapon: false,
+            rangedWeapons: 0,
+            whiteCloth: 0,
+            greenCloth: 0,
+            history: "",
+            spellsPackets: 0,
+            imageUrl: "/images/default.png",
+        }
+    );
+    const [characterClasses, setCharacterClasses] = useState<Map<string, number>>(new Map());
+    const [characterClassAbilities, setCharacterClassAbilities] = useState
+        <CharacterTypes.ClassAbilitiesList | null>([])
+    const [formInputs, setFormInputs] = useState<CharacterTypes.FormInputs>({
+        class: "",
+        level: 0,
+
+    });
+
+
+
+    const [raceList, setRaceList] = useState<CharacterTypes.RaceProps[] | null>(null);
+    const [subRaceList, setSubRaceList] = useState<Models.RowList<Models.DefaultRow> | null>(null);
+    const [classList, setClassList] = useState<CharacterTypes.ClassProps[] | null>(null);
+    const [deitiesList, setDeitiesList] = useState<CharacterTypes.DeityRow[]>([]);
+    const [classAbilitiesList, setClassAbilitiesList] = useState<CharacterTypes.ClassAbilitiesList | null>(null);
+    const [error, setError] = useState(null)
+
+    const classLogic = useCharacterClasses({
+        character,
+        setCharacterClasses,
+        characterClasses,
+        setCharacter,
+        formInputs,
+        setFormInputs,
+        classList,
+        characterClassAbilities,
+        setCharacterClassAbilities,
+        classAbilitiesList,
+    });
+
+    const client = getClient()
+    const tableDB = new TablesDB(client);
+    //GET DATA FROM DATABASE
+    useEffect(() => {
+        console.log("GET DATA FROM DATABASE")
+        let active = true;
+        (async () => {
+            try {
+                const [DEITIES, RACES, CLASSES, CLASS_ABILITES] = await Promise.all([
+                    getList<CharacterTypes.DeityRow>(DATABASE_ID, DEITIES_TABLE_ID),
+                    getList<CharacterTypes.RaceRow>(DATABASE_ID, RACES_TABLE_ID),
+                    getList<CharacterTypes.ClassRow>(DATABASE_ID, CLASSES_TABLE_ID),
+                    getList<CharacterTypes.ClassAbilityRow>(DATABASE_ID, CLASS_ABILITES_TABLE_ID)
+                ])
+                if (active) {
+                    setClassAbilitiesList(CLASS_ABILITES.rows)
+                    setRaceList(RACES.rows)
+                    setClassList(CLASSES.rows)
+                    setDeitiesList(DEITIES.rows)
+
+                }
+            } catch (error) {
+                if (active) setError(error)
+            }
+        })()
+
+
+        return () => { active = false };
+    }, []
+    )
+
+    //RACES
+    useEffect(() => {
+        const match = raceList?.find((row) => row.races === character.subRace)
+        if (match) {
+            setCharacter((character) => ({
+                ...character,
+                raceDescription: match.race_description,
+                raceAbilities: match.ability,
+                raceAbilityDescription: match.ability_description,
+            }))
+        }
+    }, [character?.subRace])
+
+
+
+    //DEITIES
+    useEffect(() => {
+        const match = deitiesList?.find((row) => row.God === character.deity);
+        if (match) {
+            setCharacter((character) => ({
+                ...character,
+                deityDescription: match.description,
+                deityImage: match.image,
+            }));
+        }
+    }, [character.deity, deitiesList]);
+
     return (
-        <><main>
-            <span>Welcome </span>
-        </main>
+
+        <><section className='w-full relative '>
+            {/* {races && <p>{`${JSON.stringify(races?.rows.find((row) => row.races === "Minotaur"))}`}</p>}
+            {races && <p>{`${JSON.stringify(races?.rows.find((row) => row.races === "Minotaur"))}`}</p>} */}
+            <section className='w-full block md:flex '>
+                <section className='w-full md:w-1/3 item-center var(--background-alpha)'>
+                    <h1 className='h1 flex justify-center m-5 text-black'>Character Creation</h1>
+                    <CharacterForm
+                        character={character}
+                        setCharacter={setCharacter}
+                        characterClasses={characterClasses}
+                        setCharacterClasses={setCharacterClasses}
+                        deitiesList={deitiesList}
+                        DEITIES={DEITIES}
+                        SUBRACE_OPTIONS={SUBRACE_OPTIONS}
+                        RACES={RACES}
+                        classList={classList}
+                        setClassList={setClassList}
+                        CLASSNAMES={CLASSNAMES}
+                        formInputs={formInputs}
+                        setFormInputs={setFormInputs}
+                        characterClassAbilities={characterClassAbilities} setCharacterClassAbilities={setCharacterClassAbilities}
+                        classAbilitiesList={classAbilitiesList}
+                        raceList={raceList}
+                        {...classLogic}
+                    />
+                </section >
+                <CharacterSummary
+                    characterClassAbilities={characterClassAbilities}
+                    character={character}
+                    deitiesList={deitiesList}
+                    characterClasses={characterClasses} />
+            </section >
+        </section >
         </>
     )
 }
 
 export default CharacterCreationPage
+

@@ -1,5 +1,37 @@
-import type { Models } from "appwrite";
-import { tablesDB } from "./appwrite";
+import type { Models } from "node-appwrite";
+import { TablesDB } from "node-appwrite";
+import { getServerClient } from "./appwrite-node";
+const tablesDB = async () => {
+  try {
+    const client = await getServerClient();
+    return new TablesDB(client);
+  } catch (error) {
+    console.error(error, " getServerClient not found - database.ts");
+  }
+};
+
+// Small helper to make any promise fail-fast after a timeout so server renders don't hang
+function withTimeout<T>(
+  promise: Promise<T>,
+  timeoutMs = Number(process.env.APPWRITE_REQUEST_TIMEOUT_MS || 5000),
+) {
+  let timer: NodeJS.Timeout | undefined;
+  return new Promise<T>((resolve, reject) => {
+    timer = setTimeout(
+      () => reject(new Error(`Request timed out after ${timeoutMs}ms`)),
+      timeoutMs,
+    );
+    promise
+      .then((v) => {
+        if (timer) clearTimeout(timer);
+        resolve(v);
+      })
+      .catch((err) => {
+        if (timer) clearTimeout(timer);
+        reject(err);
+      });
+  });
+}
 
 export async function getData(
   dbId: string,
@@ -8,19 +40,23 @@ export async function getData(
   queries: any,
 ) {
   try {
-    const result = await tablesDB.getRow(dbId, tableId, rowId, queries);
-    console.log("Document retrieved:", dbId);
+    const rowPromise = await tablesDB();
+    const result = withTimeout(
+      rowPromise.getRow(dbId, tableId, rowId, queries),
+    );
     return result;
   } catch (error) {
     console.error("Failed to retrieve document:", error);
     throw error;
   }
 }
-export async function getList(dbId: string, tableId: string) {
+export async function getList(
+  dbId: string,
+  tableId: string,
+): Promise<Models.RowList<Models.DefaultRow>> {
   try {
-    const result = await tablesDB.listRows(dbId, tableId);
-    console.log("Table was found:", dbId);
-
+    const rowPromise = await tablesDB();
+    const result = withTimeout(rowPromise.listRows(dbId, tableId));
     return result;
   } catch (error) {
     console.error("Failed to create document:", error);
@@ -39,14 +75,10 @@ export async function postData<Row extends Models.Row = Models.DefaultRow>(
   permissions?: string[],
 ): Promise<Row> {
   try {
-    const result = await tablesDB.createRow(
-      dbId,
-      tableId,
-      rowId,
-      postData,
-      permissions,
+    const rowPromise = await tablesDB();
+    const result = await withTimeout(
+      rowPromise.createRow(dbId, tableId, rowId, postData, permissions),
     );
-    console.log("Document created:", dbId);
     return result;
   } catch (error) {
     console.error("Failed to create document:", error);
@@ -61,15 +93,10 @@ export async function patchData(
   permissions: any,
 ) {
   try {
-    const result = await tablesDB.updateRow(
-      dbId,
-      tableId,
-      rowId,
-      putData, // optional
-      permissions, // optional
+    const rowPromise = await tablesDB();
+    const result = await withTimeout(
+      rowPromise.updateRow(dbId, tableId, rowId, putData, permissions),
     );
-    console.log("Document updated:", dbId);
-    return result;
   } catch (error) {
     console.error("Failed to update document:", error);
     throw error;
@@ -81,9 +108,9 @@ export async function deleteData(
   rowId: string,
 ): Promise<void> {
   try {
-    const result = await tablesDB.deleteRow(dbId, tableId, rowId);
+    const rowPromise = await tablesDB();
+    const result = withTimeout(rowPromise.deleteRow(dbId, tableId, rowId));
 
-    console.log("Document deleted:", dbId);
   } catch (error) {
     console.error("Failed to delete document:", error);
     throw error;

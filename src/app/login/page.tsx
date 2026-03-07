@@ -1,32 +1,50 @@
 "use client";
 import { useEffect, useState } from "react";
-import { account } from "@/lib/appwrite";
+import { UserLogin } from "@/lib/appwrite";
 
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/app/providers/AuthProvider";
 import Link from "next/link";
 import { toast } from 'react-toastify'
 
-export const dynamic = "force-dynamic";
-export const fetchCache = "force-no-store";
-// export const revalidate = 0;
+/**
+ * LoginPage
+ *
+ * Purpose:
+ *   Renders the login form and handles user authentication via Appwrite.
+ *
+ * Responsibilities:
+ *   - Collect user credentials (email and password)
+ *   - Authenticate the user using `UserLogin()`
+ *   - Store the authenticated user in context via `setLoggedInUser()`
+ *   - Redirect verified users to /members, or unverified users to /register
+ *   - Display toast notifications for success, failure, or verification prompts
+ *
+ * Dependencies:
+ *   - `useAuth()` from AuthProvider for user context
+ *   - `UserLogin()` from @/lib/appwrite for authentication
+ *   - `useRouter()` from next/navigation for client-side routing
+ *   - `react-toastify` for user feedback
+ *
+ * Notes:
+ *   This is a client-only component (`"use client"`) due to use of React hooks and browser APIs.
+ */
 
 const LoginPage = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const { user, setUser, logout } = useAuth();
+    const { loggedInUser, setLoggedInUser, logout } = useAuth();
     const router = useRouter();
     const inputCSS = "bg-green-200 border-1 rounded";
-    const handleLogin = async (e) => {
+    const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault()
         try {
-            const loggedInUser = await account.createEmailPasswordSession(email, password);
-            const currentUser = await account.get()
-            setUser(currentUser);
-            if (currentUser.emailVerification === true) {
+            const user = await UserLogin(email, password)
+            setLoggedInUser(user);
+            if (user.emailVerification === true) {
                 toast.success("Logged In");
                 setTimeout(() => router.push("/members"), 700);
-            } else if (currentUser.emailVerification === false) {
+            } else {
                 toast.info("You haven't verified your email yet.");
                 router.push("/register");
             }
@@ -36,20 +54,23 @@ const LoginPage = () => {
         }
     };
 
+    useEffect(() => {
+        // Redirect user based on email verification status
 
-    useEffect(() => {
-        if (user && user.emailVerification) {
+        if (!loggedInUser) return;
+        if (loggedInUser.emailVerification) {
             router.push("/members");
-            toast("Loading...")
+        } else {
+            router.push("/register")
+            toast.info("Please verify your email.");
         }
-    }, [user, router]);
-    useEffect(() => {
-        if (user && !user.emailVerification) router.push("/register");;
-    }, [user]);
-    if (user) {
+    }, [loggedInUser, router]);
+
+    if (loggedInUser) {
         return (
-            <section>Loading ...
-            </section>
+            <main className="flex justify-center items-center h-screen">
+                <p className="animate-pulse text-lg text-gray-700">Loading your dashboard...</p>
+            </main>
         );
     }
     const navCss = `transition-all duration-1000 ease-in-out bg-[var(--navbar-background)] flex min-h-fit min-w-fit max-w-[1rem] py-8 px-3 items-center justify-items-center border-1 rounded-full absolute m-auto inset-y-0 justify-self-center`
@@ -58,7 +79,8 @@ const LoginPage = () => {
     const h3Css = `md:h-full md:relative -ease-out md:transition-all md:overflow-hidden duration-1000 md:hover:animate-bounce`
 
     return (
-        <main className="bg-[url('/images/ahf_christmas.webp')] w-full h-[100vh] bg-cover">
+        <main
+            className="bg-[url('/images/ahf_christmas.webp')] w-full h-screen bg-cover">
 
             <div className={`${navCss} ${navMedium} shadow-2xl shadow-black`}>
 
@@ -74,6 +96,7 @@ const LoginPage = () => {
                             onChange={(e) => setEmail(e.target.value)}
                             className={inputCSS}
                             autoComplete="email"
+                            required
                         />
 
                         <label htmlFor="password">Password:</label>
@@ -85,10 +108,11 @@ const LoginPage = () => {
                             name="password"
                             className={inputCSS}
                             autoComplete="password"
+                            required
                         />
-                        <input type="submit" value="LOGIN" className="border-1 rounded shadow-2xl m-3 bg-[var(--background-alpha)]" />
+                        <button type="submit" className="border rounded shadow-2xl m-3 bg-(--background-alpha)" disabled={!email || !password}>LOGIN</button>
                     </form>
-                    <Link href="/register" className="border-1 flex  justify-center rounded shadow-2xl m-3 bg-[var(--background-alpha)]">Register</Link>
+                    <Link href="/register" className="border flex  justify-center rounded shadow-2xl m-3 bg-(--background-alpha)">Register</Link>
 
                 </fieldset>
             </div >

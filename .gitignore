@@ -9,10 +9,10 @@
 !.yarn/plugins
 !.yarn/releases
 !.yarn/versions
-
+.gitignore
 # testing
 /coverage
-
+/src/app/members/create-character copy
 # next.js
 /.next/
 /out/
@@ -56,3 +56,4 @@ public/_next-video
 .git/
 src/app/explore/pantheon/page copy.tsx
 notes.md
+src/app/members/create-character/page copy.tsx

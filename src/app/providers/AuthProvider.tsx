@@ -1,12 +1,15 @@
 "use client";
-import { createContext, useContext, useEffect, useState } from "react";
-import { account } from "@/lib/appwrite";
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { getAuthenticatedAccount } from "@/lib/appwrite";
 import type { Models } from "appwrite";
 import { useRouter } from "next/navigation";
+import {
+
+} from "@/app/providers/AuthProvider";
 
 type AuthContextType = {
-    user: Models.User<Models.Preferences> | null;
-    setUser: (user: Models.User<Models.Preferences> | null) => void;
+    loggedInUser: Models.User<Models.Preferences> | null;
+    setLoggedInUser: (user: Models.User<Models.Preferences> | null) => void;
     logout: () => Promise<void>;
     isAdmin: boolean;
 };
@@ -14,38 +17,54 @@ type AuthContextType = {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-    const [user, setUser] = useState<Models.User<Models.Preferences> | null>(null);
+    const [loggedInUser, setLoggedInUser] = useState<Models.User<Models.Preferences> | null>(null);
     const [isAdmin, setIsAdmin] = useState<boolean>(false);
     const router = useRouter();
 
     useEffect(() => {
         const checkSession = async () => {
             try {
+                const account = await getAuthenticatedAccount()
                 const currentUser = await account.get();
                 setIsAdmin(currentUser.labels.includes("admin"))
-                setUser(currentUser);
+                setLoggedInUser(currentUser);
                 if (currentUser && !currentUser.emailVerification) {
                     router.push("/register/");
                 } else if (!currentUser) router.push("/login/");
 
             } catch {
-                setUser(null);
+                setLoggedInUser(null);
             }
         };
         checkSession();
     }, [router]);
 
     const logout = async () => {
-        await account.deleteSession("current");
-        setUser(null);
-    };
+        if (typeof window === 'undefined') return;
 
+        try {
+            const { getAuthenticatedAccount } = await import('@/lib/appwrite');
+            const account = await getAuthenticatedAccount();
+            await account.deleteSession("current");
+            setLoggedInUser(null);
+        } catch (error) {
+            console.error(error, " Authentication, delete session failed, AuthProvider.tsx")
+        }
+    };
+    const value = useMemo(() => ({
+        loggedInUser,
+        setLoggedInUser,
+        logout,
+        isAdmin
+    }), [loggedInUser, isAdmin]);
     return (
-        <AuthContext.Provider value={{ user, setUser, logout, isAdmin }}>
+        <AuthContext.Provider value={value}>
             {children}
         </AuthContext.Provider>
     );
 };
+
+
 
 export const useAuth = () => {
     const context = useContext(AuthContext);

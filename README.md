@@ -24,6 +24,7 @@ A Next.js (App Router) starter integrated with Appwrite for authentication and d
 - Next.js (App Router) application
 - Appwrite Cloud authentication (email/password, verification)
 - React Context `AuthProvider` for global auth state
+- **TableDB-first Appwrite usage** (replaces legacy `Databases`)
 - Client-only Appwrite SDK usage where required (prevents build-time failures)
 - Tailwind CSS utilities (DaisyUI optional)
 - Toast notifications via `react-toastify`
@@ -72,7 +73,7 @@ NEXT_PUBLIC_APPWRITE_PROJECT_ID = 68bb084a0032b02608c4
 NEXT_PUBLIC_APPWRITE_BUCKET = 68c11c240013701075bb
 NEXT_PUBLIC_APPWRITE_PROJECT_NAME = "EldarLandsLARP"
 NEXT_PUBLIC_APPWRITE_ENDPOINT = "https://nyc.cloud.appwrite.io/v1"
-NEXT_PUBLIC_APPWRITE_DATABASE_ID = 68c1160a001638ade3a0
+NEXT_PUBLIC_APPWRITE_STORYLINE_DATABASE_ID = 68c1160a001638ade3a0
 NEXT_PUBLIC_ROOT_URL ="http://localhost:3000"
 ```
 
@@ -102,23 +103,18 @@ src/
 │   ├── page.tsx                # Public home page
 │   ├── login/page.tsx          # Client login page
 │   ├── register/page.tsx       # Client registration + verification flow
-│   ├── explore/page.tsx        # Lore exploration UI
-│   ├── resources/page.tsx      # Resource hub (docs, links, etc.)
+│   ├── members/                # Authenticated member routes
+│   │   ├── character/page.tsx  # Character viewer
+│   │   ├── create-character/page.tsx # Character creation
+│   │   ├── userSettings/page.tsx     # Email/password update
+│   │   ├── slack/page.tsx      # Slack integration
 │   └── providers/
 │       └── AuthProvider.tsx    # Global auth context
-├── components/                 # Reusable UI components (not expanded here)
+├── components/                 # Reusable UI components
 ├── lib/
-│   └── appwrite.ts             # Appwrite client helper (client-only where needed)
-├── pages/                      # Legacy Next.js routing (may be phased out)
-│   ├── index.tsx               # Entry point fallback
-│   ├── page.tsx                # Redundant with `app/page.tsx`?
-│   ├── api/                    # API route handlers
-│   ├── favicon.ico             # App icon
-│   ├── app.css                 # Legacy styles
-│   ├── globals.css             # Global styles
-├── ts/                         # TypeScript build artifacts
-│   └── tsconfig.buildinfo
-public/                         # Static assets
+│   ├── appwrite.ts             # Appwrite client helpers (TableDB, session, storage — client-only)
+│   └── appwrite-node.ts        # Server-safe Appwrite helpers for actions
+├── public/                     # Static assets
 .env.example                    # Safe-to-share env scaffold
 README.md                       # Project overview and onboarding
 ```
@@ -127,35 +123,46 @@ README.md                       # Project overview and onboarding
 
 ## Authentication flow
 
-- Client login/registration: create sessions from the browser using the Appwrite SDK (e.g. `account.createEmailPasswordSession`) so Appwrite returns a Set-Cookie that the browser stores.
-- After session creation, call `account.get()` from the client to hydrate full user data and update `AuthProvider`.
-- Avoid creating sessions in server actions unless you proxy Appwrite's Set-Cookie header to the browser via a custom API route.
+- **All Appwrite API calls must be client-side unless explicitly proxied.**
+- Use `account.createEmailPasswordSession()` in the browser to ensure cookies are set correctly.
+- After session creation, call `account.get()` to hydrate user context via `AuthProvider`.
 
-Recommended pattern for login (client-side):
+Recommended login pattern:
 
-1. `await account.createEmailPasswordSession(email, password)`
-2. `const me = await account.get()`
-3. `setUser(me)` in `AuthProvider` and redirect
+```ts
+await account.createEmailPasswordSession(email, password);
+const me = await account.get();
+setLoggedInUser(me);
+```
 
-Verification: send verification via `account.createVerification({ url: "${NEXT_PUBLIC_ROOT_URL}/register/verify" })`.
+Verification:
+
+```ts
+await account.createVerification({
+  url: `${NEXT_PUBLIC_ROOT_URL}/register/verify`,
+});
+```
 
 ---
 
 ## Common pitfalls & troubleshooting
 
-- "window is not defined" / build-time Appwrite errors
-  - Do not instantiate Appwrite SDK at module scope for server-rendered code. Import/instantiate inside `useEffect` or in client-only modules.
+- **"window is not defined" / build-time Appwrite errors**
+  - Never instantiate Appwrite SDK at module scope in server-rendered files. Use `"use client"` or dynamic import inside `useEffect`.
 
-- Sessions created on server but not in browser
+- **Using legacy `Databases` instead of TableDB**
+  - Eldarlands uses `TablesDB` for all structured data. Avoid `Databases` unless explicitly migrating old logic.
+
+- **Sessions created on server but not in browser**
   - Server-side session creation sets cookies for the server process, not the browser. Create sessions in browser or proxy Set-Cookie to client.
 
-- Tailwind utilities appear as raw class names in DOM (e.g. `bg-blue-500` with no styles)
+- **Tailwind utilities appear as raw class names in DOM (e.g. `bg-blue-500` with no styles)**
   - Ensure PostCSS is configured with `tailwindcss` and `autoprefixer`, `globals.css` includes Tailwind directives (or your build pipeline generates Tailwind properly), and `tailwind.config` content paths include `src/app/**/*` and `src/components/**/*`.
 
-- `react-toastify` toasts not visible
+- **`react-toastify` toasts not visible**
   - Import `react-toastify/dist/ReactToastify.css` once (recommended in `layout.tsx`) and mount a single `<ToastContainer />` at the app root to persist across route changes.
 
-- Null `user` in components
+- **Null `user` in components**
   - `AuthProvider` initial state is `null` until `account.get()` resolves. Always guard access to `user` (`user?.name`) and consider a small loading state while auth hydrates.
 
 ---

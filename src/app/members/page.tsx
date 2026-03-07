@@ -1,23 +1,24 @@
 "use client";
-import React from 'react'
-import { useState } from "react";
-import { account, ID } from "@/lib/appwrite";
 import { useAuth } from "@/app/providers/AuthProvider";
-
+import Image from "next/image";
 
 const MembersPage = () => {
-    const { user, logout, isAdmin } = useAuth();
-    return (<><main className='bg-cover h-[100vh] bg-bottom w-full bg-[url("/images/town-bg-vertical.webp")]'>
-        <span>Account settings</span>
-        <span>Create Character</span>
-        <span>Characters</span>
-        <span>Factions</span>
-        <span>Slack</span>
-        <span>Events</span>
-        <span>Admin Tools</span>
-    </main>
-    </>)
+
+    const { loggedInUser, logout, isAdmin } = useAuth();
+    return (
+
+        <figure className="w-fit h-auto">
+            <Image
+                src="/images/instructions.webp"
+                alt="Instructions"
+                width={800}
+                height={600}
+
+            />
+        </figure>
+    )
 
 }
 
-export default MembersPage 
+export default MembersPage
+
